@@ -12,7 +12,7 @@ import {
 const RESOLUTION_OPTIONS = ["30m", "10m", "0.3m"];
 const LABEL_OPTIONS = ["Biased", "Representative"];
 const TAB_ITEMS = [
-  { id: "fairness", label: "FairnessSSSS" },
+  { id: "fairness", label: "Fairness" },
   { id: "privacy", label: "Privacy" },
   { id: "transparency", label: "Transparency" },
   { id: "accountability", label: "Accountability" },
