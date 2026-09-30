@@ -15,3 +15,65 @@ body {
 #root {
   @apply min-h-screen;
 }
+
+.map-node {
+  animation: map-pulse 2.6s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.map-heat {
+  animation: map-breathe 3.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.map-track {
+  stroke-dasharray: 10 8;
+  animation: map-dash linear infinite;
+}
+
+.map-scanline {
+  fill: rgba(34, 211, 238, 0.08);
+  animation: map-scan 6.5s linear infinite;
+}
+
+@keyframes map-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.28);
+  }
+}
+
+@keyframes map-breathe {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.62;
+    transform: scale(1.1);
+  }
+}
+
+@keyframes map-dash {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -180;
+  }
+}
+
+@keyframes map-scan {
+  from {
+    transform: translateX(-30px);
+  }
+  to {
+    transform: translateX(860px);
+  }
+}
