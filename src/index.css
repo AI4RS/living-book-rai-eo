@@ -77,3 +77,34 @@ body {
     transform: translateX(860px);
   }
 }
+
+.fairness-region-active {
+  animation: fairness-region-pulse 2.8s ease-in-out infinite;
+}
+
+.fairness-cell {
+  aspect-ratio: 1 / 1;
+  border-radius: 0.22rem;
+  transition: background-color 350ms ease;
+  animation: fairness-cell-flicker 5.5s ease-in-out infinite;
+}
+
+@keyframes fairness-region-pulse {
+  0%,
+  100% {
+    opacity: 0.92;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes fairness-cell-flicker {
+  0%,
+  100% {
+    filter: brightness(0.98);
+  }
+  50% {
+    filter: brightness(1.08);
+  }
+}
