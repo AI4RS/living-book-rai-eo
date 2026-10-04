@@ -5,8 +5,10 @@ import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findApplication } from "../config/navigation";
 import { APPLICATION_CONTENT } from "../content/applications";
 import { casesForApplication } from "../content/cases";
+import AgricultureApplication from "./AgricultureApplication";
 
 const BUILT_PAGES = {
+  agriculture: AgricultureApplication,
 };
 
 export default function ApplicationsPage({ sub }) {

@@ -6,8 +6,10 @@ import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findQuestion } from "../config/navigation";
 import { casesForQuestion } from "../content/cases";
 import { QUESTION_CONTENT } from "../content/questions";
+import FairnessQuestion from "./FairnessQuestion";
 
 const BUILT_PAGES = {
+  fairness: FairnessQuestion,
 };
 
 export default function QuestionsPage({ sub }) {
