@@ -22,14 +22,14 @@ function ApplicationDraft({ id }) {
   const cases = casesForApplication(id);
 
   return (
-    <section className="space-y-4">
+    <article className="space-y-10">
       <DraftBanner note="The cases below come from the earlier principle tabs. Domain framing is still to be written." />
       <ChapterHeader kicker={PAGES.applications.label} title={tab.label} lead={content.intro} />
-      {cases.length > 0 && <CaseGrid cases={cases} />}
+      {cases.length > 0 && <CaseGrid title="Cases" cases={cases} />}
       <RelatedQuestions
         ids={content.relatedQuestions}
         title="Questions this domain touches"
       />
-    </section>
+    </article>
   );
 }

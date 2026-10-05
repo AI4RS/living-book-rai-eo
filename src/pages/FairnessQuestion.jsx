@@ -1,6 +1,6 @@
 import { CheckSquare } from "lucide-react";
 import { CaseGrid } from "../components/CaseCard";
-import ChapterSection, { ChapterHeader } from "../components/ChapterSection";
+import ChapterSection, { BulletList, ChapterHeader } from "../components/ChapterSection";
 import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findQuestion } from "../config/navigation";
 import { casesForQuestion } from "../content/cases";
@@ -13,7 +13,7 @@ export default function FairnessQuestion() {
   const cases = casesForQuestion(ID);
 
   return (
-    <section className="space-y-4">
+    <article className="space-y-10">
       <ChapterHeader
         kicker={`${PAGES.questions.label} · ${findQuestion(ID).label}`}
         title={content.framing}
@@ -21,49 +21,39 @@ export default function FairnessQuestion() {
       />
 
       <ChapterSection title="Why it matters in EO">
-        <ul className="space-y-2 text-sm text-slate-300">
-          {content.whyItMatters.map((item) => (
-            <li key={item} className="flex gap-2">
-              <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-emerald-400" />
-              <span>{item}</span>
-            </li>
-          ))}
-        </ul>
+        <BulletList items={content.whyItMatters} />
       </ChapterSection>
 
       <ChapterSection title="Typical failure modes">
-        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {content.failureModes.map((mode) => (
-            <div
-              key={mode.title}
-              className="rounded-lg border border-rose-700/30 bg-rose-900/10 p-3"
-            >
-              <p className="text-sm font-semibold text-rose-100">{mode.title}</p>
-              <p className="mt-1 text-sm text-slate-300">{mode.text}</p>
+            <div key={mode.title} className="card p-4">
+              <p className="font-serif text-lg font-semibold text-ink">{mode.title}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted">{mode.text}</p>
             </div>
           ))}
         </div>
       </ChapterSection>
 
-      <div className="grid gap-4 lg:grid-cols-2">
+      <div className="grid gap-10 lg:grid-cols-2">
         <ChapterSection title="Best practices">
-          <ul className="space-y-2 text-sm text-slate-300">
-            {content.bestPractices.map((item) => (
-              <li
-                key={item}
-                className="rounded-lg border border-slate-700 bg-slate-800/60 px-3 py-2"
-              >
-                {item}
+          <ol className="space-y-3 leading-relaxed text-ink">
+            {content.bestPractices.map((item, index) => (
+              <li key={item} className="flex gap-3">
+                <span className="w-5 shrink-0 font-serif font-semibold text-accent">
+                  {index + 1}.
+                </span>
+                <span>{item}</span>
               </li>
             ))}
-          </ul>
+          </ol>
         </ChapterSection>
 
         <ChapterSection title="Recommendation checklist">
-          <ul className="space-y-2 text-sm text-slate-300">
+          <ul className="space-y-3 leading-relaxed text-ink">
             {content.checklist.map((item) => (
-              <li key={item} className="flex gap-2">
-                <CheckSquare className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+              <li key={item} className="flex gap-3">
+                <CheckSquare className="mt-1 h-4 w-4 shrink-0 text-accent" aria-hidden="true" />
                 <span>{item}</span>
               </li>
             ))}
@@ -71,12 +61,14 @@ export default function FairnessQuestion() {
         </ChapterSection>
       </div>
 
-      <h3 className="pt-2 text-sm font-semibold uppercase tracking-wide text-slate-300">
-        Cases touching fairness
-      </h3>
-      <CaseGrid cases={cases} linkApplication currentQuestion={ID} />
+      <CaseGrid
+        title="Cases touching fairness"
+        cases={cases}
+        linkApplication
+        currentQuestion={ID}
+      />
 
       <RelatedQuestions ids={content.relatedQuestions} />
-    </section>
+    </article>
   );
 }

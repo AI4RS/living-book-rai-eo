@@ -3,6 +3,10 @@
 
 export const SITE_TITLE = "Responsible AI in Earth Observation Living Book";
 
+// Animated placeholder maps on draft question pages. Set to false to hide them
+// everywhere.
+export const SHOW_PLACEHOLDER_MAPS = true;
+
 export const PAGES = {
   home: { id: "home", label: "Home" },
   applications: {

@@ -1,23 +1,28 @@
+import { useEffect, useRef } from "react";
 import { hrefFor } from "../config/navigation";
 
-// Sub-tab strip shown under the active main page.
+// Text-tab row shown under the active main page. Scrolls horizontally on
+// narrow screens, keeping the active tab in view.
 export default function SubTabs({ page, tabs, active }) {
+  const activeRef = useRef(null);
+
+  useEffect(() => {
+    activeRef.current?.scrollIntoView({ block: "nearest", inline: "center" });
+  }, [page, active]);
+
   return (
-    <div className="flex gap-2 overflow-x-auto pb-2">
+    <div className="flex gap-6 overflow-x-auto">
       {tabs.map((tab) => (
         <a
           key={tab.id}
+          ref={active === tab.id ? activeRef : undefined}
           href={hrefFor(page, tab.id)}
           aria-current={active === tab.id ? "page" : undefined}
-          className={`whitespace-nowrap rounded-lg border px-3 py-1.5 text-xs font-medium transition ${
-            active === tab.id
-              ? "border-emerald-500 bg-emerald-600/20 text-emerald-200"
-              : "border-slate-800 bg-slate-900 text-slate-400 hover:border-slate-500 hover:text-slate-200"
-          }`}
+          className="tab"
         >
           {tab.label}
           {tab.status === "draft" && (
-            <span className="ml-1.5 text-[10px] uppercase tracking-wide text-amber-300/70">
+            <span className="ml-1.5 text-[10px] font-normal uppercase tracking-wide text-muted">
               draft
             </span>
           )}

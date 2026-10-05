@@ -1,31 +1,38 @@
-// Standard titled panel used to lay out chapter pages.
+// Standard titled section used to lay out chapter pages: a thin top rule, a
+// muted uppercase label, optional intro prose, then content.
 export default function ChapterSection({ title, intro, children, className = "" }) {
   return (
-    <section
-      className={`rounded-2xl border border-slate-800 bg-slate-900/70 p-5 ${className}`}
-    >
-      {title && (
-        <h3 className="text-sm font-semibold uppercase tracking-wide text-emerald-300">
-          {title}
-        </h3>
-      )}
-      {intro && <p className="mt-2 text-sm text-slate-300">{intro}</p>}
-      {children && <div className={title || intro ? "mt-3" : ""}>{children}</div>}
+    <section className={`border-t border-line pt-6 ${className}`}>
+      {title && <h3 className="section-label">{title}</h3>}
+      {intro && <p className="mt-2 max-w-prose text-muted">{intro}</p>}
+      {children && <div className={title || intro ? "mt-4" : ""}>{children}</div>}
     </section>
   );
 }
 
-// Page header: small kicker, framing question as title, optional lead.
+// Page header: small kicker, serif title (often the framing question), lead.
 export function ChapterHeader({ kicker, title, lead }) {
   return (
-    <header className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
-      {kicker && (
-        <p className="text-xs font-semibold uppercase tracking-wide text-emerald-300">
-          {kicker}
-        </p>
-      )}
-      <h2 className="mt-1 text-xl font-semibold text-slate-100">{title}</h2>
-      {lead && <p className="mt-2 text-sm text-slate-300">{lead}</p>}
+    <header>
+      {kicker && <p className="section-label">{kicker}</p>}
+      <h2 className="mt-2 max-w-3xl font-serif text-3xl leading-tight text-ink md:text-4xl">
+        {title}
+      </h2>
+      {lead && <p className="mt-4 max-w-prose text-lg leading-relaxed text-muted">{lead}</p>}
     </header>
+  );
+}
+
+// Bulleted prose list with square accent markers.
+export function BulletList({ items }) {
+  return (
+    <ul className="max-w-prose space-y-3 leading-relaxed text-ink">
+      {items.map((item) => (
+        <li key={item} className="flex gap-3">
+          <span className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
   );
 }

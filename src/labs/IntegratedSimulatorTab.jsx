@@ -74,24 +74,32 @@ export default function IntegratedSimulatorTab() {
   }, [resolution, labelDistribution, metrics]);
 
   return (
-    <section>
-      <section className="mb-6 rounded-2xl border border-emerald-700/30 bg-emerald-900/20 p-4">
+    <section className="space-y-8">
+      <header>
+        <p className="section-label">Simulator</p>
+        <h2 className="mt-2 font-serif text-3xl leading-tight text-ink md:text-4xl">
+          Integrated Simulator
+        </h2>
+      </header>
+
+      <section className="callout callout-info">
         <button
           onClick={() => setShowInfo((v) => !v)}
+          aria-expanded={showInfo}
           className="flex w-full items-center justify-between text-left"
         >
-          <span className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-300">
-            <Info className="h-4 w-4" />
+          <span className="inline-flex items-center gap-2 font-semibold text-accent">
+            <Info className="h-4 w-4" aria-hidden="true" />
             Why this simulator matters
           </span>
           {showInfo ? (
-            <ChevronUp className="h-4 w-4 text-emerald-300" />
+            <ChevronUp className="h-4 w-4 text-accent" aria-hidden="true" />
           ) : (
-            <ChevronDown className="h-4 w-4 text-emerald-300" />
+            <ChevronDown className="h-4 w-4 text-accent" aria-hidden="true" />
           )}
         </button>
         {showInfo && (
-          <p className="mt-3 text-sm text-emerald-100/90">
+          <p className="mt-2 max-w-prose leading-relaxed">
             EO systems can improve climate resilience and public services, but
             deployment choices shape ethical impact. Use this tool to reason
             about Responsible AI design decisions before production rollout.
@@ -99,21 +107,16 @@ export default function IntegratedSimulatorTab() {
         )}
       </section>
 
-      <section className="mb-6 grid gap-4 md:grid-cols-2">
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">
-            Spatial Resolution
-          </h2>
+      <section className="grid gap-4 md:grid-cols-2">
+        <div className="card p-4">
+          <h3 className="section-label mb-3">Spatial Resolution</h3>
           <div className="grid grid-cols-3 gap-2">
             {RESOLUTION_OPTIONS.map((option) => (
               <button
                 key={option}
                 onClick={() => setResolution(option)}
-                className={`rounded-xl border px-3 py-2 text-sm font-medium transition ${
-                  resolution === option
-                    ? "border-emerald-500 bg-emerald-600/20 text-emerald-200"
-                    : "border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-500"
-                }`}
+                aria-pressed={resolution === option}
+                className="option-btn"
               >
                 {option}
               </button>
@@ -121,20 +124,15 @@ export default function IntegratedSimulatorTab() {
           </div>
         </div>
 
-        <div className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-slate-300">
-            Training Label Distribution
-          </h2>
+        <div className="card p-4">
+          <h3 className="section-label mb-3">Training Label Distribution</h3>
           <div className="grid grid-cols-2 gap-2">
             {LABEL_OPTIONS.map((option) => (
               <button
                 key={option}
                 onClick={() => setLabelDistribution(option)}
-                className={`rounded-xl border px-3 py-2 text-sm font-medium transition ${
-                  labelDistribution === option
-                    ? "border-emerald-500 bg-emerald-600/20 text-emerald-200"
-                    : "border-slate-700 bg-slate-800 text-slate-300 hover:border-slate-500"
-                }`}
+                aria-pressed={labelDistribution === option}
+                className="option-btn"
               >
                 {option}
               </button>
@@ -143,7 +141,7 @@ export default function IntegratedSimulatorTab() {
         </div>
       </section>
 
-      <section className="mb-6 grid gap-4 md:grid-cols-3">
+      <section className="grid gap-4 md:grid-cols-3">
         <MetricCard
           icon={ShieldAlert}
           title="Privacy Risk Level"
@@ -168,18 +166,21 @@ export default function IntegratedSimulatorTab() {
       <section className="space-y-3">
         {alerts.map((alert, idx) => {
           const tones = {
-            danger: "border-rose-700/40 bg-rose-900/30 text-rose-100",
-            warning: "border-amber-700/40 bg-amber-900/30 text-amber-100",
-            success: "border-emerald-700/40 bg-emerald-900/30 text-emerald-100",
+            danger: { box: "callout-risk", icon: "text-risk" },
+            warning: { box: "callout-warn", icon: "text-warn" },
+            success: { box: "callout-safe", icon: "text-safe" },
           };
 
           return (
             <div
               key={`${alert.tone}-${idx}`}
-              className={`rounded-xl border p-4 ${tones[alert.tone]}`}
+              className={`callout ${tones[alert.tone].box}`}
             >
-              <p className="flex items-start gap-2 text-sm">
-                <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
+              <p className="flex items-start gap-2">
+                <AlertTriangle
+                  className={`mt-0.5 h-4 w-4 shrink-0 ${tones[alert.tone].icon}`}
+                  aria-hidden="true"
+                />
                 <span>{alert.text}</span>
               </p>
             </div>

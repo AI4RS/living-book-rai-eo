@@ -13,7 +13,7 @@ export default function AgricultureApplication() {
   const cases = casesForApplication(ID);
 
   return (
-    <section className="space-y-4">
+    <article className="space-y-10">
       <ChapterHeader
         kicker={PAGES.applications.label}
         title={findApplication(ID).label}
@@ -21,14 +21,11 @@ export default function AgricultureApplication() {
       />
 
       <ChapterSection title="What typically goes wrong in agriculture">
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           {content.whatGoesWrong.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-lg border border-slate-700 bg-slate-800/60 p-3"
-            >
-              <p className="text-sm font-semibold text-slate-100">{item.title}</p>
-              <p className="mt-1 text-sm text-slate-300">{item.text}</p>
+            <div key={item.title} className="card p-4">
+              <p className="font-serif text-lg font-semibold text-ink">{item.title}</p>
+              <p className="mt-1 text-sm leading-relaxed text-muted">{item.text}</p>
             </div>
           ))}
         </div>
@@ -38,7 +35,7 @@ export default function AgricultureApplication() {
         title="Go deeper"
         intro="The general guidance for these problems lives on the question pages."
       >
-        <div className="grid gap-3 md:grid-cols-2">
+        <div className="grid gap-4 md:grid-cols-2">
           <CrossLinkCard
             question="fairness"
             description="Why models trained in one region fail in another, and a checklist for catching it."
@@ -50,15 +47,12 @@ export default function AgricultureApplication() {
         </div>
       </ChapterSection>
 
-      <h3 className="pt-2 text-sm font-semibold uppercase tracking-wide text-slate-300">
-        Cases
-      </h3>
-      <CaseGrid cases={cases} />
+      <CaseGrid title="Cases" cases={cases} />
 
       <RelatedQuestions
         ids={content.relatedQuestions}
         title="All questions this domain touches"
       />
-    </section>
+    </article>
   );
 }

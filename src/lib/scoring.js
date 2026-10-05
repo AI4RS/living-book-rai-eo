@@ -8,12 +8,12 @@ export const levelFromScore = (score) => {
 
 export const barColor = (score, reverse = false) => {
   if (!reverse) {
-    if (score < 34) return "bg-emerald-500";
-    if (score < 67) return "bg-amber-500";
-    return "bg-rose-500";
+    if (score < 34) return "bg-safe";
+    if (score < 67) return "bg-warn";
+    return "bg-risk";
   }
 
-  if (score < 34) return "bg-rose-500";
-  if (score < 67) return "bg-amber-500";
-  return "bg-emerald-500";
+  if (score < 34) return "bg-risk";
+  if (score < 67) return "bg-warn";
+  return "bg-safe";
 };

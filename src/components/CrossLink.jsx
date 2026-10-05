@@ -18,11 +18,11 @@ export default function CrossLink({ question, application }) {
     <a
       href={href}
       title={`${kind}: ${target.label}`}
-      className="inline-flex items-center gap-1 rounded-lg border border-slate-700 bg-slate-800/70 px-2.5 py-1 text-xs font-medium text-slate-200 transition hover:border-emerald-500 hover:text-emerald-200"
+      className="inline-flex items-center gap-1 border border-line-strong bg-surface px-2 py-1 text-xs font-medium text-accent transition-colors hover:border-accent hover:bg-accent-tint"
     >
       {target.label}
-      {target.status === "draft" && <span className="text-amber-300/80">(draft)</span>}
-      <ArrowRight className="h-3 w-3" />
+      {target.status === "draft" && <span className="text-muted">(draft)</span>}
+      <ArrowRight className="h-3 w-3" aria-hidden="true" />
     </a>
   );
 }
@@ -35,19 +35,16 @@ export function CrossLinkCard({ question, application, description }) {
   const kind = question ? PAGES.questions.label : PAGES.applications.label;
 
   return (
-    <a
-      href={href}
-      className="group block rounded-xl border border-slate-700 bg-slate-800/60 p-4 transition hover:border-emerald-500"
-    >
-      <p className="text-xs uppercase tracking-wide text-slate-400">
+    <a href={href} className="card card-interactive group block p-4">
+      <p className="section-label">
         {kind}
-        {target.status === "draft" && <span className="text-amber-300/80"> · draft</span>}
+        {target.status === "draft" && <span className="text-warn"> · draft</span>}
       </p>
-      <p className="mt-1 flex items-center gap-1 font-semibold text-slate-100 group-hover:text-emerald-200">
+      <p className="mt-1 flex items-center gap-1 font-semibold text-accent group-hover:text-accent-hover">
         {target.label}
-        <ArrowRight className="h-4 w-4" />
+        <ArrowRight className="h-4 w-4" aria-hidden="true" />
       </p>
-      {description && <p className="mt-1 text-sm text-slate-400">{description}</p>}
+      {description && <p className="mt-1 text-sm text-muted">{description}</p>}
     </a>
   );
 }

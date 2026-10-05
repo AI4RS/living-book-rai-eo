@@ -2,61 +2,156 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Design tokens (RGB channels, consumed by tailwind.config.js).
+   Change the accent here and the whole site follows. */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+
+  --color-ink: 15 23 42; /* #0f172a body text and headings */
+  --color-muted: 71 85 105; /* #475569 secondary text (AA on white) */
+  --color-line: 226 232 240; /* #e2e8f0 borders */
+  --color-line-strong: 203 213 225; /* #cbd5e1 stronger borders */
+  --color-surface: 255 255 255; /* #ffffff page */
+  --color-subtle: 248 250 252; /* #f8fafc alternate sections */
+
+  --color-accent: 29 78 216; /* #1d4ed8 */
+  --color-accent-hover: 30 64 175; /* #1e40af */
+  --color-accent-tint: 239 246 255; /* #eff6ff */
+
+  /* Semantic colors, used only where meaning requires it. */
+  --color-risk: 185 28 28; /* #b91c1c */
+  --color-risk-tint: 254 242 242; /* #fef2f2 */
+  --color-safe: 15 118 110; /* #0f766e */
+  --color-safe-tint: 240 253 250; /* #f0fdfa */
+  --color-warn: 180 83 9; /* #b45309 */
+  --color-warn-tint: 255 251 235; /* #fffbeb */
 }
 
 body {
-  @apply m-0 min-h-screen bg-slate-950 text-slate-100 antialiased;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
-    Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+  @apply m-0 min-h-screen bg-surface font-sans text-ink antialiased;
 }
 
 #root {
   @apply min-h-screen;
 }
 
+:focus-visible {
+  outline: 2px solid rgb(var(--color-accent));
+  outline-offset: 2px;
+}
+
+@layer components {
+  .section-label {
+    @apply text-xs font-semibold uppercase tracking-wider text-muted;
+  }
+
+  .card {
+    @apply border border-line bg-surface;
+  }
+
+  .card-interactive {
+    @apply transition-shadow;
+  }
+
+  .card-interactive:hover {
+    border-color: rgb(var(--color-line-strong));
+    box-shadow:
+      inset 3px 0 0 rgb(var(--color-accent)),
+      0 1px 3px rgb(15 23 42 / 0.06);
+  }
+
+  .link {
+    @apply text-accent underline-offset-2 hover:text-accent-hover hover:underline;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-1.5 border border-accent bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:border-accent-hover hover:bg-accent-hover;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-1.5 border border-accent bg-surface px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent-tint;
+  }
+
+  /* Selectable option (simulator controls). Selected state via aria-pressed. */
+  .option-btn {
+    @apply border border-line-strong bg-surface px-3 py-2 text-sm font-medium text-ink transition-colors hover:border-accent;
+  }
+
+  .option-btn[aria-pressed="true"] {
+    @apply border-accent bg-accent-tint text-accent;
+  }
+
+  /* Text tabs with a 2px underline for the active item. */
+  .tab {
+    @apply -mb-px whitespace-nowrap border-b-2 border-transparent py-3 text-sm text-muted transition-colors hover:text-ink;
+  }
+
+  .tab[aria-current="page"] {
+    @apply border-accent font-semibold text-accent;
+  }
+
+  /* Thin left border + light tint callouts. */
+  .callout {
+    @apply border-l-4 px-4 py-3 text-sm text-ink;
+  }
+
+  .callout-risk {
+    @apply border-risk bg-risk-tint;
+  }
+
+  .callout-safe {
+    @apply border-safe bg-safe-tint;
+  }
+
+  .callout-warn {
+    @apply border-warn bg-warn-tint;
+  }
+
+  .callout-info {
+    @apply border-accent bg-accent-tint;
+  }
+}
+
+/* Placeholder map animation (draft pages). Kept deliberately subtle. */
 .map-node {
-  animation: map-pulse 2.6s ease-in-out infinite;
+  animation: map-pulse 3.2s ease-in-out infinite;
+  transform-box: fill-box;
   transform-origin: center;
 }
 
 .map-heat {
-  animation: map-breathe 3.4s ease-in-out infinite;
-  transform-origin: center;
+  animation: map-breathe 4.5s ease-in-out infinite;
 }
 
 .map-track {
-  stroke-dasharray: 10 8;
+  stroke-dasharray: 6 6;
   animation: map-dash linear infinite;
 }
 
 .map-scanline {
-  fill: rgba(34, 211, 238, 0.08);
-  animation: map-scan 6.5s linear infinite;
+  fill: rgb(var(--color-accent) / 0.04);
+  animation: map-scan 9s linear infinite;
 }
 
 @keyframes map-pulse {
   0%,
   100% {
-    opacity: 0.75;
+    opacity: 0.85;
     transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.28);
+    transform: scale(1.12);
   }
 }
 
 @keyframes map-breathe {
   0%,
   100% {
-    opacity: 0.35;
-    transform: scale(1);
+    opacity: 0.6;
   }
   50% {
-    opacity: 0.62;
-    transform: scale(1.1);
+    opacity: 1;
   }
 }
 
@@ -65,7 +160,7 @@ body {
     stroke-dashoffset: 0;
   }
   to {
-    stroke-dashoffset: -180;
+    stroke-dashoffset: -120;
   }
 }
 
@@ -75,5 +170,14 @@ body {
   }
   to {
     transform: translateX(860px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .map-node,
+  .map-heat,
+  .map-track,
+  .map-scanline {
+    animation: none;
   }
 }
