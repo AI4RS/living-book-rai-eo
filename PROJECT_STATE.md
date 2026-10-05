@@ -9,18 +9,18 @@ The site is organized as **Home + Applications + Lifecycle Questions + Simulator
 - **Home** introduces RAI in EO, explains the two main pages and how they connect, and links to the simulator.
 - **Applications** has one sub-tab per application area. These pages give domain specifics and concrete cases.
 - **Lifecycle Questions** has one sub-tab per question across the AI lifecycle. These pages give general guidance.
-- **Simulator** is the original Integrated Simulator, unchanged.
+- **Simulator** is the original Integrated Simulator. Its logic is unchanged; it has been restyled.
 
-The first finished pair is **Fairness** (question) and **Agriculture & food security** (application). Both are built around the interactive Fairness Lab (EU-trained crop model transferred to India). All other sub-pages are marked drafts that show the existing case content, so nothing from the earlier principle tabs was lost.
+The first finished pair is **Fairness** (question) and **Agriculture & food security** (application). Neither page currently has an interactive centerpiece: the earlier Fairness Lab and the EU-to-India crop-mapping running example were removed because they were not meaningful to readers. All other sub-pages are marked drafts that show the existing case content.
 
-GitHub Pages has shown intermittent stale-asset serving in the past (see In Progress).
+The site uses a light, publication-style design: white background, one blue accent, sharp corners, serif headings, and theme tokens kept in one place.
 
 ---
 
 ## Architecture and Tech Stack
 
 - **Frontend:** React 19, Vite 7, JavaScript (no TypeScript)
-- **Styling:** Tailwind CSS + custom CSS keyframe animations (dark slate/emerald theme)
+- **Styling:** Tailwind CSS with design tokens (see Visual design system) + a few CSS keyframe animations
 - **Icons:** Lucide React
 - **Routing:** hash-based, no router dependency (`src/lib/router.js`)
 - **Build/Deploy:** `vite build` + `gh-pages -d dist`
@@ -31,18 +31,20 @@ GitHub Pages has shown intermittent stale-asset serving in the past (see In Prog
 
 ```
 src/
-  App.jsx                 Shell: header, top nav, sub-tabs, route switch
-  main.jsx, index.css
-  config/navigation.js    Page names (working titles), sub-tab ids/labels/status, href helpers
+  App.jsx                 Shell: header, main nav, sub-tab bar, route switch
+  main.jsx
+  index.css               Design tokens (CSS variables), component classes, map animations
+  config/navigation.js    Page names (working titles), sub-tab ids/labels/status, href helpers,
+                          SHOW_PLACEHOLDER_MAPS
   lib/router.js           useHashRoute() + parseHash()
-  lib/scoring.js          clamp, levelFromScore, barColor
+  lib/scoring.js          clamp, levelFromScore, barColor (simulator)
   content/
     cases.js              All cases (single store) + casesForApplication / casesForQuestion
     questions.js          Per-question copy (framing, guidance, draft material)
-    applications.js       Per-application copy (intro, running example, what goes wrong)
-    mapScenes.js          Animated placeholder map scenes used on draft question pages
+    applications.js       Per-application copy (intro, what goes wrong, related questions)
+    mapScenes.js          Placeholder map scenes for draft question pages (colors are token names)
   components/             CaseCard/CaseGrid, CrossLink/CrossLinkCard, DraftBanner,
-                          ChapterSection/ChapterHeader, SubTabs, RelatedQuestions,
+                          ChapterSection/ChapterHeader/BulletList, SubTabs, RelatedQuestions,
                           MetricCard, DummyMapPanel
   pages/
     Home.jsx
@@ -51,8 +53,8 @@ src/
     AgricultureApplication.jsx
     FairnessQuestion.jsx
   labs/
-    FairnessTrainingLab.jsx   `framing` prop ("question" | "application") swaps header copy only
     IntegratedSimulatorTab.jsx
+tailwind.config.js        Maps token names to the CSS variables; border radius overridden to 0
 ```
 
 ### Routes
@@ -77,6 +79,17 @@ Each case in `src/content/cases.js`:
 
 Application pages filter by `application`, and question pages filter by `questions`.
 
+### Visual design system
+
+- **Look:** white page, very light gray (`subtle`) bands for case sections, near-black navy text, muted slate secondary text, one blue accent (`#1d4ed8`, hover `#1e40af`, tint `#eff6ff`). There are no gradients, dark panels, or second accent.
+- **Semantic colors**, used only where meaning requires it: `risk` (muted red) for Risk callouts and high-risk levels, `safe` (teal) for Responsible move callouts and good levels, `warn` (amber) for Draft banners and moderate levels. Callouts are a thin left border plus a light tint.
+- **Shape:** sharp corners everywhere (Tailwind `borderRadius` is overridden to 0, with only a 2px `sm` available), 1px light-gray borders, and no heavy shadows. Interactive cards get a blue left edge on hover.
+- **Typography:** system sans-serif for body and UI. A serif stack (Georgia / `ui-serif`) for page titles, chapter headings, and card titles. Muted uppercase section labels. Prose is capped at `max-w-prose`.
+- **Navigation:** text tabs with a 2px blue underline for the active main page and sub-tab. Both rows scroll horizontally on narrow screens, and the active sub-tab scrolls into view.
+- **Accessibility:** a visible `:focus-visible` outline in the accent color, AA-contrast text tokens, `aria-current` on active tabs, `aria-pressed` on simulator options, and placeholder animations disabled under `prefers-reduced-motion`.
+- **Where tokens live:** CSS variables in `:root` in `src/index.css` (change the accent there), mapped to Tailwind color names in `tailwind.config.js`. Shared component classes (`card`, `card-interactive`, `section-label`, `link`, `btn-primary`, `btn-secondary`, `option-btn`, `tab`, `callout-*`) are in `@layer components` in `index.css`.
+- **Placeholder maps** on draft question pages are restyled for the light theme. `SHOW_PLACEHOLDER_MAPS` in `src/config/navigation.js` turns them off everywhere.
+
 ---
 
 ## Current Implementation Status
@@ -89,17 +102,23 @@ Application pages filter by `application`, and question pages filter by `questio
 2. **GitHub Pages deployment pipeline**
    - `predeploy` + `deploy` scripts; README documents deploy and `curl -I -L` verification
 
-3. **Fairness Lab** (interactive transfer-learning narrative)
-   - Presets (Global North only / Balanced global / Monsoon-aware), region toggles, world coverage map, India raster ground truth vs prediction, error heatmap, fairness metrics
-
-4. **Restructure into two complementary views** (branch `restructure-two-pages`)
+3. **Restructure into two complementary views**
    - Home page, Applications page, Lifecycle Questions page, Simulator
    - Hash routing, navigation config, shared case store and schema
    - `App.jsx` decomposed into config / content / components / pages / labs
-   - Fairness question page fully built (framing, why it matters, lab, failure modes, best practices, checklist, cross-links)
-   - Agriculture application page fully built (running example, lab in application framing, domain failure points, two cases, cross-links)
+   - Fairness question page built (framing, why it matters, failure modes, best practices, checklist, cases, related questions)
+   - Agriculture application page built (intro, domain failure points, go-deeper links, two cases, related questions)
    - All remaining sub-pages render as drafts with `DraftBanner` and the existing case content
    - `package.json` `homepage` fixed to `https://aldinorizaldy.github.io/living-book-rai-eo`
+
+4. **Removed the Fairness Lab and the agriculture running example**
+   - The interactive "Fairness Lab: Crop Insurance Transfer Across Regions" and the EU-trained crop mapping running example were not meaningful to readers.
+   - Deleted `FairnessTrainingLab`, its presets and region data, and the fairness raster CSS. Git history keeps them recoverable.
+   - No replacement interactive content has been added yet.
+
+5. **Visual redesign** (see Visual design system)
+   - Light theme, blue accent, sharp corners, serif headings, centralized tokens
+   - Simulator restyled with logic unchanged
 
 ---
 
@@ -119,15 +138,14 @@ No hard engineering blockers.
 
 ## Upcoming Tasks (Next)
 
-1. **Draft pages to build** (using the Fairness / Agriculture pair as the template)
+1. **Design a meaningful interactive centerpiece** for the Fairness and Agriculture pages (to replace the removed lab)
+
+2. **Draft pages to build** (using the Fairness / Agriculture pair as the template)
    - Applications: Hazards & disaster response, Urban & public health, Forests & climate, Security & critical infrastructure
    - Questions: Training data, Evaluation beyond accuracy, Uncertainty & robustness, Transparency & accountability, Privacy & sensitive data
    - Generative AI & foundation models: currently guiding questions only
 
-2. **References**: add citations to question pages (best practices, checklists)
-
-3. **Fairness lab quality pass**
-   - Clearer legend for raster panels, before/after diff indicator, shareable scenario state in the URL
+3. **References**: add citations to question pages (best practices, checklists)
 
 4. **Paper track**: separate, narrower storyline (see Early Ideas alignment)
 
@@ -150,16 +168,16 @@ No hard engineering blockers.
 4. **Page names are working titles kept in one config file**
    - `src/config/navigation.js` holds main page names, sub-tab ids, labels, and built/draft status. Renaming happens there.
 
-5. **Preserve the Integrated Simulator unchanged**
-   - Reachable from the top nav and Home.
+5. **Centralized design tokens**
+   - Colors live as CSS variables in `src/index.css` and are consumed through Tailwind token names. Components use tokens and shared classes, not hard-coded hex values. Changing the accent takes one edit.
 
-6. **Reuse labs across pages via framing, not duplication**
-   - `FairnessTrainingLab` is used on both the Fairness and Agriculture pages. A `framing` prop changes only the header copy.
+6. **No interactive content unless it is meaningful to readers**
+   - The Fairness Lab was removed rather than kept as filler. Built pages may have no centerpiece until a better one is designed.
 
-7. **Deterministic dummy simulation logic for labs**
-   - Immediate interaction and causal storytelling without backend dependencies.
+7. **Preserve the Integrated Simulator's logic**
+   - Reachable from the top nav and Home; only its styling has changed.
 
-8. **Lightweight SVG/CSS and grid-cell visualizations instead of map SDKs**
+8. **Lightweight SVG/CSS visualizations instead of map SDKs**
 
 9. **Deploy via `gh-pages` branch from `dist/`**
 
@@ -168,16 +186,25 @@ No hard engineering blockers.
 ## Technical Debt and Known Issues
 
 1. **Draft pages**
-   - 10 of 12 sub-pages are drafts that reuse the earlier principle-tab material and animated placeholder maps. The UX is inconsistent with the built pair.
+   - 10 of 12 sub-pages are drafts that reuse the earlier principle-tab material. Some still show animated placeholder maps (toggle: `SHOW_PLACEHOLDER_MAPS`).
 
-2. **Content still partly placeholder**
+2. **No interactive centerpiece on the built pages**
+   - Fairness and Agriculture are text and cases only since the lab was removed.
+
+3. **Content still partly placeholder**
    - Case text is illustrative, not sourced. There are no references yet.
-   - The "Monsoon cloud persistence" case text is about flood nowcasting but is filed under Agriculture. Its wording should be adapted to crop monitoring, or the case should move to Hazards.
 
-3. **No automated tests**
-   - Changes are validated by `npm run build` plus a manual check of each route.
+4. **No automated tests**
+   - Changes are validated by `npm run build`, a server-side render of every route, and manual visual checks.
 
-4. **GitHub Pages live/stale mismatch** (see In Progress)
+5. **GitHub Pages live/stale mismatch** (see In Progress)
+
+### Open questions
+
+- **Monsoon cloud persistence:** the case text is about flood nowcasting but is filed under Agriculture. Reword it for crop monitoring, or move it to Hazards?
+- **Heatwave "Training data" tag:** the Heatwave case is also tagged with Training data (uneven historical sensor data). Keep or drop?
+- **New text needs review:** Fairness why-it-matters, failure modes, best practices, and checklist; the Agriculture "what goes wrong" list; the GenAI guiding questions.
+- **Placeholder maps:** keep them on the draft pages until each chapter is written, or switch them off now with `SHOW_PLACEHOLDER_MAPS`?
 
 ---
 
@@ -196,16 +223,20 @@ The **paper** needs a separate, narrower storyline than the Living Book, for exa
 
 ## Handoff Notes for Next AI Agent
 
-1. **Build the next pair using Fairness + Agriculture as the template.**
-   - Question page: framing question → why it matters → interactive lab (if any) → failure modes → best practices → checklist → see it in practice.
-   - Application page: intro → running example → domain "what goes wrong" → go deeper (links) → cases.
+1. **The Fairness and Agriculture pages currently have no interactive centerpiece.** The next step is to design a better one that is genuinely meaningful to readers, rather than restoring the removed Fairness Lab.
+
+2. **Build the next pair using Fairness + Agriculture as the template.**
+   - Question page: framing question → why it matters → failure modes → best practices → checklist → cases → related questions.
+   - Application page: intro → domain "what goes wrong" → go deeper (links) → cases → related questions.
    - A natural next pair: Uncertainty & robustness + Hazards & disaster response.
    - To promote a draft: write a page component in `src/pages/`, register it in `BUILT_PAGES` in `ApplicationsPage.jsx` / `QuestionsPage.jsx`, and set `status: "built"` in `config/navigation.js`.
 
-2. **Add the Generative AI & foundation models chapter**, starting from the guiding questions in `content/questions.js`.
+3. **Use the design tokens and shared classes** (`card`, `section-label`, `callout-*`, `btn-*`, `tab`) for new UI. Do not hard-code colors or add rounded corners.
 
-3. **Add references** to question-page guidance and checklists.
+4. **Add the Generative AI & foundation models chapter**, starting from the guiding questions in `content/questions.js`.
 
-4. **Start a paper track** with its own, narrower storyline.
+5. **Add references** to question-page guidance and checklists.
 
-5. **After each deploy, confirm live parity**: compare the asset hashes in the live `index.html` with the local `dist/index.html`.
+6. **Start a paper track** with its own, narrower storyline.
+
+7. **After each deploy, confirm live parity**: compare the asset hashes in the live `index.html` with the local `dist/index.html`.
