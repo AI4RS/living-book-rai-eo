@@ -6,18 +6,14 @@ export const APPLICATION_CONTENT = {
   agriculture: {
     intro:
       "EO crop maps and yield estimates feed insurance payouts, subsidies, and food-security early warning. When they are wrong, the error turns directly into money that does or does not reach farmers.",
-    runningExample: {
-      title: "Crop mapping across regions",
-      text: "A crop-type model trained on EU parcels is applied to smallholder farms in India. The two settings differ in almost every way the model relies on, so its accuracy drops exactly where farmers are most exposed.",
-    },
     whatGoesWrong: [
       {
         title: "Small, mixed fields",
-        text: "Smallholder plots are often smaller than a few pixels and intercropped, while EU training parcels are large and uniform.",
+        text: "Smallholder plots are often smaller than a few pixels and intercropped, while the parcels that dominate many training sets are large and uniform.",
       },
       {
         title: "Different crop calendars",
-        text: "Monsoon (kharif) and winter (rabi) seasons follow phenology the EU-trained model has never seen.",
+        text: "Monsoon (kharif) and winter (rabi) seasons follow phenology that models trained elsewhere may never have seen.",
       },
       {
         title: "Clouds in the growing season",

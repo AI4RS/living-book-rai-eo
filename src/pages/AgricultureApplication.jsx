@@ -5,7 +5,6 @@ import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findApplication } from "../config/navigation";
 import { APPLICATION_CONTENT } from "../content/applications";
 import { casesForApplication } from "../content/cases";
-import FairnessTrainingLab from "../labs/FairnessTrainingLab";
 
 const ID = "agriculture";
 
@@ -20,13 +19,6 @@ export default function AgricultureApplication() {
         title={findApplication(ID).label}
         lead={content.intro}
       />
-
-      <ChapterSection
-        title={`Running example: ${content.runningExample.title}`}
-        intro={content.runningExample.text}
-      />
-
-      <FairnessTrainingLab framing="application" />
 
       <ChapterSection title="What typically goes wrong in agriculture">
         <div className="grid gap-3 md:grid-cols-2">

@@ -1,11 +1,10 @@
 import { CheckSquare } from "lucide-react";
 import { CaseGrid } from "../components/CaseCard";
 import ChapterSection, { ChapterHeader } from "../components/ChapterSection";
-import { CrossLinkCard } from "../components/CrossLink";
+import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findQuestion } from "../config/navigation";
 import { casesForQuestion } from "../content/cases";
 import { QUESTION_CONTENT } from "../content/questions";
-import FairnessTrainingLab from "../labs/FairnessTrainingLab";
 
 const ID = "fairness";
 
@@ -31,8 +30,6 @@ export default function FairnessQuestion() {
           ))}
         </ul>
       </ChapterSection>
-
-      <FairnessTrainingLab framing="question" />
 
       <ChapterSection title="Typical failure modes">
         <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-3">
@@ -74,27 +71,12 @@ export default function FairnessQuestion() {
         </ChapterSection>
       </div>
 
-      <ChapterSection title="See it in practice">
-        <div className="grid gap-3 md:grid-cols-3">
-          <CrossLinkCard
-            application="agriculture"
-            description="The running example: an EU-trained crop map applied to Indian smallholder farms."
-          />
-          <CrossLinkCard
-            question="training-data"
-            description="Where coverage gaps come from in the first place."
-          />
-          <CrossLinkCard
-            question="evaluation"
-            description="How to measure performance per region and segment, not just overall."
-          />
-        </div>
-      </ChapterSection>
-
       <h3 className="pt-2 text-sm font-semibold uppercase tracking-wide text-slate-300">
         Cases touching fairness
       </h3>
       <CaseGrid cases={cases} linkApplication currentQuestion={ID} />
+
+      <RelatedQuestions ids={content.relatedQuestions} />
     </section>
   );
 }

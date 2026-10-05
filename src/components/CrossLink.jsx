@@ -27,7 +27,7 @@ export default function CrossLink({ question, application }) {
   );
 }
 
-// Card-sized link used in "See it in practice" / "Go deeper" blocks.
+// Card-sized link used in "Go deeper" blocks.
 export function CrossLinkCard({ question, application, description }) {
   const target = question ? findQuestion(question) : findApplication(application);
   if (!target) return null;
