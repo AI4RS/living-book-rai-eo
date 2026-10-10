@@ -81,14 +81,30 @@ Application pages filter by `application`, and question pages filter by `questio
 
 ### Visual design system
 
-- **Look:** white page, very light gray (`subtle`) bands for case sections, near-black navy text, muted slate secondary text, one blue accent (`#1d4ed8`, hover `#1e40af`, tint `#eff6ff`). There are no gradients, dark panels, or second accent.
+- **Branding:** the book is published under the IEEE GRSS Image Analysis and Data Fusion Technical Committee (IADF), through its Working Group on Responsible AI for Earth Observation (WG-RAI). WG-RAI has no logo, so it is named in text only.
+- **Logos** (`src/assets/`, imported so Vite applies the `/living-book-rai-eo/` base path):
+  - `IADF.webp`: the IADF logo, with transparent background.
+  - `grss-logo.svg`: the GRSS logo. This is a copy of the supplied `grss_logo.svg` (a letter-size page export) with only its `viewBox` tightened to the artwork plus a small clear margin. The artwork is not altered, cropped, or recolored.
+  - Logos are never recolored, stretched, cropped, or placed on imagery. Alt texts: "IEEE GRSS Image Analysis and Data Fusion logo" and "IEEE Geoscience and Remote Sensing Society logo".
+- **Logo placement:**
+  - **Header (all pages):** white bar with a bottom border. IADF logo (56px desktop / 40px phone), a 1px × 44px divider, then the serif bold site title with a muted description line (hidden on phone). The whole lockup links Home. The main nav and sub-tabs sit below.
+  - **Home hero:** full-width accent band (`components/HomeHero.jsx`) with no logos. It has an eyebrow, serif H1, lead, two square buttons (Questions, Applications), the WG-RAI credit line, and a decorative dotted ellipse (`aria-hidden`). The ellipse is full size and 0.4 opacity at ≥1280px and smaller and fainter below that, so text stays legible.
+  - **Footer (all pages):** navy band (`components/SiteFooter.jsx`). The IADF and GRSS logos sit on white tiles (12px padding, 64px / 48px phone), linking to the IADF TC page and grss-ieee.org, next to the "Living Book of the IEEE GRSS IADF… (WG-RAI)" credit. Page links and GitHub are on the right. Everything stacks on phone. External URLs live in `EXTERNAL_LINKS` in `config/navigation.js`.
+- **Colors:** white page, very light gray (`subtle`) bands for case sections, near-black navy text, muted slate secondary text.
+  - IADF blue accent `#2a4a9c` (hover `#1f3a80`, tint `#eaf1fb`), `navy` `#0b1f4b` for the footer, `iadf-tint` `#d8e8f8` for dots and light text on blue or navy, `line-strong` `#c5d1e3`. There are no gradients and no second accent.
+  - Contrast: white on accent is about 8.2:1, `iadf-tint` on accent about 6.6:1, and white on navy about 16:1.
 - **Semantic colors**, used only where meaning requires it: `risk` (muted red) for Risk callouts and high-risk levels, `safe` (teal) for Responsible move callouts and good levels, `warn` (amber) for Draft banners and moderate levels. Callouts are a thin left border plus a light tint.
-- **Shape:** sharp corners everywhere (Tailwind `borderRadius` is overridden to 0, with only a 2px `sm` available), 1px light-gray borders, and no heavy shadows. Interactive cards get a blue left edge on hover.
-- **Typography:** system sans-serif for body and UI. A serif stack (Georgia / `ui-serif`) for page titles, chapter headings, and card titles. Muted uppercase section labels. Prose is capped at `max-w-prose`.
-- **Navigation:** text tabs with a 2px blue underline for the active main page and sub-tab. Both rows scroll horizontally on narrow screens, and the active sub-tab scrolls into view.
-- **Accessibility:** a visible `:focus-visible` outline in the accent color, AA-contrast text tokens, `aria-current` on active tabs, `aria-pressed` on simulator options, and placeholder animations disabled under `prefers-reduced-motion`.
+- **Shape:** sharp corners everywhere (Tailwind `borderRadius` is overridden to 0, with only a 2px `sm` available), 1px light-gray borders, and no heavy shadows. Interactive cards get an accent left edge on hover.
+- **Typography:** Source Sans 3 for body and UI and Source Serif 4 for titles and headings, loaded from Google Fonts in `index.html`. They fall back to the system sans stack and to Georgia / `ui-serif`. Section labels are muted uppercase, and prose is capped at `max-w-prose`.
+- **Navigation:** text tabs with a 2px accent underline for the active main page and sub-tab. Both rows scroll horizontally on narrow screens, and the active sub-tab scrolls into view.
+- **Mobile:**
+  - Viewport meta is `width=device-width, initial-scale=1`.
+  - Buttons, tabs, sub-tabs, simulator options, footer links, and Home entry-card rows are at least 44px tall. Case cross-link chips are at least 36px.
+  - Every multi-column grid collapses to one column below `md`.
+  - Verified with no horizontal page scroll at 320, 390, 768, and 1280px.
+- **Accessibility:** a visible `:focus-visible` outline (accent, or white on the blue and navy bands), AA-contrast tokens, `aria-current` on active tabs, `aria-pressed` on simulator options, and placeholder animations disabled under `prefers-reduced-motion`. On Home the hero holds the page `h1`; on other pages the header title is the `h1`.
 - **Where tokens live:** CSS variables in `:root` in `src/index.css` (change the accent there), mapped to Tailwind color names in `tailwind.config.js`. Shared component classes (`card`, `card-interactive`, `section-label`, `link`, `btn-primary`, `btn-secondary`, `option-btn`, `tab`, `callout-*`) are in `@layer components` in `index.css`.
-- **Placeholder maps** on draft question pages are restyled for the light theme. `SHOW_PLACEHOLDER_MAPS` in `src/config/navigation.js` turns them off everywhere.
+- **Placeholder maps** on draft question pages use the light theme. `SHOW_PLACEHOLDER_MAPS` in `src/config/navigation.js` turns them off everywhere.
 
 ---
 
@@ -119,6 +135,11 @@ Application pages filter by `application`, and question pages filter by `questio
 5. **Visual redesign** (see Visual design system)
    - Light theme, blue accent, sharp corners, serif headings, centralized tokens
    - Simulator restyled with logic unchanged
+
+6. **IEEE GRSS IADF branding and mobile polish** (branch `iadf-branding`)
+   - IADF logo lockup in the header, Home hero band, navy footer with IADF and GRSS logos and the WG-RAI credit
+   - IADF blue accent, navy and iadf-tint tokens, Source Serif 4 / Source Sans 3
+   - 44px tap targets, one-column grids on phone, overflow checked from 320px up
 
 ---
 
