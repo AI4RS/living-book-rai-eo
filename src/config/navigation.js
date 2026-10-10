@@ -7,6 +7,13 @@ export const SITE_TITLE = "Responsible AI in Earth Observation Living Book";
 // everywhere.
 export const SHOW_PLACEHOLDER_MAPS = true;
 
+// Publisher and project links (footer).
+export const EXTERNAL_LINKS = {
+  grss: "https://www.grss-ieee.org",
+  iadf: "https://www.grss-ieee.org/technical-committees/image-analysis-and-data-fusion/",
+  github: "https://github.com/aldinorizaldy/living-book-rai-eo",
+};
+
 export const PAGES = {
   home: { id: "home", label: "Home" },
   applications: {

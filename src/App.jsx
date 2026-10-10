@@ -1,3 +1,6 @@
+import iadfLogo from "./assets/IADF.webp";
+import HomeHero from "./components/HomeHero";
+import SiteFooter from "./components/SiteFooter";
 import SubTabs from "./components/SubTabs";
 import { MAIN_NAV, PAGES, SITE_TITLE, SUB_TABS, hrefFor } from "./config/navigation";
 import IntegratedSimulatorTab from "./labs/IntegratedSimulatorTab";
@@ -22,21 +25,35 @@ function renderPage({ page, sub }) {
 export default function App() {
   const route = useHashRoute();
   const subTabs = SUB_TABS[route.page];
+  const isHome = route.page === PAGES.home.id;
+  // On Home the hero holds the page's h1, so the header title is plain text.
+  const TitleTag = isHome ? "p" : "h1";
 
   return (
-    <div className="min-h-screen bg-surface">
+    <div className="flex min-h-screen flex-col bg-surface">
       <header className="border-b border-line bg-surface">
-        <div className="mx-auto max-w-6xl px-4 pt-6">
-          <a href={hrefFor(PAGES.home.id)} className="inline-block">
-            <h1 className="font-serif text-2xl leading-tight text-ink md:text-3xl">
-              {SITE_TITLE}
-            </h1>
+        <div className="mx-auto max-w-6xl px-4 pt-5">
+          <a
+            href={hrefFor(PAGES.home.id)}
+            className="flex items-center gap-3 md:gap-4"
+          >
+            <img
+              src={iadfLogo}
+              alt="IEEE GRSS Image Analysis and Data Fusion logo"
+              className="h-10 w-auto shrink-0 md:h-14"
+            />
+            <span className="h-11 w-px shrink-0 bg-line-strong" aria-hidden="true" />
+            <span className="min-w-0">
+              <TitleTag className="font-serif text-lg font-bold leading-tight text-ink md:text-2xl">
+                {SITE_TITLE}
+              </TitleTag>
+              <span className="mt-0.5 hidden max-w-prose text-sm text-muted sm:block">
+                Explore Responsible AI in EO by application area or by the questions
+                you face across the AI lifecycle.
+              </span>
+            </span>
           </a>
-          <p className="mt-1 max-w-prose text-sm text-muted">
-            Explore Responsible AI in EO by application area or by the questions
-            you face across the AI lifecycle.
-          </p>
-          <nav aria-label="Main" className="mt-4 flex gap-6 overflow-x-auto">
+          <nav aria-label="Main" className="mt-3 flex gap-6 overflow-x-auto">
             {MAIN_NAV.map((item) => (
               <a
                 key={item.id}
@@ -59,7 +76,11 @@ export default function App() {
         </div>
       )}
 
-      <main className="mx-auto max-w-6xl px-4 py-10">{renderPage(route)}</main>
+      {isHome && <HomeHero />}
+
+      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">{renderPage(route)}</main>
+
+      <SiteFooter />
     </div>
   );
 }

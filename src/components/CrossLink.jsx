@@ -18,7 +18,7 @@ export default function CrossLink({ question, application }) {
     <a
       href={href}
       title={`${kind}: ${target.label}`}
-      className="inline-flex items-center gap-1 border border-line-strong bg-surface px-2 py-1 text-xs font-medium text-accent transition-colors hover:border-accent hover:bg-accent-tint"
+      className="inline-flex min-h-9 items-center gap-1 border border-line-strong bg-surface px-2.5 py-1.5 text-xs font-medium text-accent transition-colors hover:border-accent hover:bg-accent-tint"
     >
       {target.label}
       {target.status === "draft" && <span className="text-muted">(draft)</span>}

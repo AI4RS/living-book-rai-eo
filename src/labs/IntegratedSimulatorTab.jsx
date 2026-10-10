@@ -86,7 +86,7 @@ export default function IntegratedSimulatorTab() {
         <button
           onClick={() => setShowInfo((v) => !v)}
           aria-expanded={showInfo}
-          className="flex w-full items-center justify-between text-left"
+          className="flex min-h-11 w-full items-center justify-between text-left"
         >
           <span className="inline-flex items-center gap-2 font-semibold text-accent">
             <Info className="h-4 w-4" aria-hidden="true" />

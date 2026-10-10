@@ -1,0 +1,64 @@
+import { PAGES, hrefFor } from "../config/navigation";
+
+const HOME_LEAD =
+  "A living reference for building, evaluating, and deploying EO models that work fairly, safely, and accountably.";
+
+const heroButton =
+  "inline-flex min-h-[52px] w-full items-center justify-center px-6 text-[17px] font-bold transition-colors focus-visible:outline-white sm:w-auto";
+
+// Full-width accent band at the top of Home. No logos here: the header above
+// already carries the IADF logo.
+export default function HomeHero() {
+  return (
+    <section className="relative overflow-hidden bg-accent px-5 pb-12 pt-12 text-white md:px-16 md:pb-[104px] md:pt-24">
+      {/* Dotted ellipse echoing the IADF logo globe. Decorative only. */}
+      <svg
+        aria-hidden="true"
+        viewBox="0 0 520 360"
+        className="pointer-events-none absolute -right-36 top-1/2 w-[420px] -translate-y-1/2 opacity-15 lg:-right-24 lg:w-[520px] lg:opacity-20 xl:-right-10 xl:w-[640px] xl:opacity-40"
+      >
+        <defs>
+          <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
+            <circle cx="13" cy="13" r="7" fill="#D8E8F8" />
+          </pattern>
+          <clipPath id="el">
+            <ellipse cx="260" cy="180" rx="250" ry="170" />
+          </clipPath>
+        </defs>
+        <g clipPath="url(#el)">
+          <rect width="520" height="360" fill="url(#dots)" />
+        </g>
+      </svg>
+
+      <div className="relative mx-auto max-w-6xl">
+        <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-iadf-tint">
+          A living book by IEEE GRSS IADF · WG-RAI
+        </p>
+        <h1 className="mt-4 max-w-[720px] font-serif text-[34px] font-bold leading-[1.08] text-white md:text-[64px]">
+          Responsible AI in Earth Observation
+        </h1>
+        <p className="mt-6 max-w-[640px] text-lg leading-relaxed text-accent-tint md:text-xl">
+          {HOME_LEAD}
+        </p>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a
+            href={hrefFor(PAGES.questions.id)}
+            className={`${heroButton} bg-white text-accent-hover hover:bg-iadf-tint`}
+          >
+            Explore the Questions
+          </a>
+          <a
+            href={hrefFor(PAGES.applications.id)}
+            className={`${heroButton} border-2 border-white text-white hover:bg-white/10`}
+          >
+            Explore the Applications
+          </a>
+        </div>
+        <p className="mt-8 max-w-[560px] text-sm leading-relaxed text-iadf-tint">
+          Working Group on Responsible AI for Earth Observation (WG-RAI), IEEE GRSS
+          Image Analysis and Data Fusion Technical Committee
+        </p>
+      </div>
+    </section>
+  );
+}

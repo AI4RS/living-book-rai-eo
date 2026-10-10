@@ -10,13 +10,16 @@
   --color-ink: 15 23 42; /* #0f172a body text and headings */
   --color-muted: 71 85 105; /* #475569 secondary text (AA on white) */
   --color-line: 226 232 240; /* #e2e8f0 borders */
-  --color-line-strong: 203 213 225; /* #cbd5e1 stronger borders */
+  --color-line-strong: 197 209 227; /* #c5d1e3 stronger borders */
   --color-surface: 255 255 255; /* #ffffff page */
   --color-subtle: 248 250 252; /* #f8fafc alternate sections */
 
-  --color-accent: 29 78 216; /* #1d4ed8 */
-  --color-accent-hover: 30 64 175; /* #1e40af */
-  --color-accent-tint: 239 246 255; /* #eff6ff */
+  /* IEEE GRSS IADF brand blues. */
+  --color-accent: 42 74 156; /* #2a4a9c */
+  --color-accent-hover: 31 58 128; /* #1f3a80 */
+  --color-accent-tint: 234 241 251; /* #eaf1fb */
+  --color-navy: 11 31 75; /* #0b1f4b footer band */
+  --color-iadf-tint: 216 232 248; /* #d8e8f8 dots, light text on blue/navy */
 
   /* Semantic colors, used only where meaning requires it. */
   --color-risk: 185 28 28; /* #b91c1c */
@@ -65,16 +68,16 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center gap-1.5 border border-accent bg-accent px-4 py-2 text-sm font-medium text-white transition-colors hover:border-accent-hover hover:bg-accent-hover;
+    @apply inline-flex min-h-11 items-center justify-center gap-1.5 border border-accent bg-accent px-5 py-2.5 text-sm font-medium text-white transition-colors hover:border-accent-hover hover:bg-accent-hover;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-1.5 border border-accent bg-surface px-4 py-2 text-sm font-medium text-accent transition-colors hover:bg-accent-tint;
+    @apply inline-flex min-h-11 items-center justify-center gap-1.5 border border-accent bg-surface px-5 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent-tint;
   }
 
   /* Selectable option (simulator controls). Selected state via aria-pressed. */
   .option-btn {
-    @apply border border-line-strong bg-surface px-3 py-2 text-sm font-medium text-ink transition-colors hover:border-accent;
+    @apply min-h-11 border border-line-strong bg-surface px-3 py-2 text-sm font-medium text-ink transition-colors hover:border-accent;
   }
 
   .option-btn[aria-pressed="true"] {
@@ -83,7 +86,7 @@ body {
 
   /* Text tabs with a 2px underline for the active item. */
   .tab {
-    @apply -mb-px whitespace-nowrap border-b-2 border-transparent py-3 text-sm text-muted transition-colors hover:text-ink;
+    @apply -mb-px inline-flex min-h-11 shrink-0 items-center whitespace-nowrap border-b-2 border-transparent py-3 text-sm text-muted transition-colors hover:text-ink;
   }
 
   .tab[aria-current="page"] {

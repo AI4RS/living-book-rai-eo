@@ -1,5 +1,5 @@
 import { ArrowRight, Gauge, HelpCircle, Map } from "lucide-react";
-import ChapterSection, { BulletList, ChapterHeader } from "../components/ChapterSection";
+import ChapterSection, { BulletList } from "../components/ChapterSection";
 import {
   APPLICATION_TABS,
   PAGES,
@@ -25,8 +25,8 @@ function EntryCard({ icon: Icon, page, href, description, tabs, tabHref }) {
       <p className="mt-3 leading-relaxed text-muted">{description}</p>
       <ul className="mb-6 mt-5 divide-y divide-line border-y border-line text-sm">
         {tabs.map((tab) => (
-          <li key={tab.id} className="flex items-baseline justify-between gap-3 py-2">
-            <a href={tabHref(tab.id)} className="link">
+          <li key={tab.id} className="flex items-center justify-between gap-3">
+            <a href={tabHref(tab.id)} className="link flex min-h-11 flex-1 items-center py-2">
               {tab.label}
             </a>
             <span
@@ -50,13 +50,7 @@ function EntryCard({ icon: Icon, page, href, description, tabs, tabHref }) {
 export default function Home() {
   return (
     <article className="space-y-10">
-      <ChapterHeader
-        kicker="Introduction"
-        title="Responsible AI in Earth Observation"
-        lead="A living reference for building, evaluating, and deploying EO models that work fairly, safely, and accountably."
-      />
-
-      <ChapterSection title="Why it matters">
+      <ChapterSection title="Why it matters" className="border-t-0 pt-0">
         <BulletList items={WHY_IT_MATTERS} />
       </ChapterSection>
 

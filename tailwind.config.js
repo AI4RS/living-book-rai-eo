@@ -20,6 +20,8 @@ export default {
         line: { DEFAULT: token("line"), strong: token("line-strong") },
         surface: token("surface"),
         subtle: token("subtle"),
+        navy: token("navy"),
+        "iadf-tint": token("iadf-tint"),
         accent: {
           DEFAULT: token("accent"),
           hover: token("accent-hover"),
@@ -31,6 +33,7 @@ export default {
       },
       fontFamily: {
         sans: [
+          '"Source Sans 3"',
           "ui-sans-serif",
           "system-ui",
           "-apple-system",
@@ -40,7 +43,7 @@ export default {
           "Arial",
           "sans-serif",
         ],
-        serif: ["Georgia", "ui-serif", "Cambria", "Times New Roman", "serif"],
+        serif: ['"Source Serif 4"', "Georgia", "ui-serif", "Cambria", "Times New Roman", "serif"],
       },
     },
   },
