@@ -23,7 +23,7 @@ function ApplicationDraft({ id }) {
 
   return (
     <article className="space-y-10">
-      <DraftBanner note="The cases below come from the earlier principle tabs. Domain framing is still to be written." />
+      <DraftBanner note="Domain framing is still to be written. The cases below are a starting point." />
       <ChapterHeader kicker={PAGES.applications.label} title={tab.label} lead={content.intro} />
       {cases.length > 0 && <CaseGrid title="Cases" cases={cases} />}
       <RelatedQuestions

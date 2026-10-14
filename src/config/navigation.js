@@ -58,6 +58,12 @@ export const SUB_TABS = {
   questions: QUESTION_TABS,
 };
 
+// Retired sub-tab ids that should still open their successor, so old links keep
+// working: { page: { oldId: newId } }.
+export const SUB_TAB_ALIASES = {
+  applications: { "forests-climate": "forests" },
+};
+
 export const findApplication = (id) => APPLICATION_TABS.find((t) => t.id === id);
 export const findQuestion = (id) => QUESTION_TABS.find((t) => t.id === id);
 

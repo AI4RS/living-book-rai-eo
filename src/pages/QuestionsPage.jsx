@@ -25,7 +25,7 @@ function QuestionDraft({ id }) {
 
   return (
     <article className="space-y-10">
-      <DraftBanner note="Existing material from the earlier principle tabs is collected below until this chapter is written." />
+      <DraftBanner note="This chapter is still being written. The material below is a starting point." />
       <ChapterHeader
         kicker={`${PAGES.questions.label} · ${tab.label}`}
         title={content.framing}
