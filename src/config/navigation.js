@@ -37,7 +37,8 @@ export const APPLICATION_TABS = [
   { id: "agriculture", label: "Agriculture & food security", status: "built" },
   { id: "hazards", label: "Hazards & disaster response", status: "draft" },
   { id: "urban-health", label: "Urban & public health", status: "draft" },
-  { id: "forests-climate", label: "Forests & climate", status: "draft" },
+  { id: "forests", label: "Forests", status: "draft" },
+  { id: "climate", label: "Climate", status: "draft" },
   { id: "security-infrastructure", label: "Security & critical infrastructure", status: "draft" },
 ];
 

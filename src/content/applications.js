@@ -39,9 +39,15 @@ export const APPLICATION_CONTENT = {
     relatedQuestions: ["fairness", "privacy", "training-data"],
   },
 
-  "forests-climate": {
+  forests: {
     intro:
-      "Deforestation alerts and climate-risk layers trigger enforcement and shape adaptation budgets.",
+      "Deforestation alerts and tree-level inventories trigger enforcement and feed biomass and carbon estimates.",
+    relatedQuestions: ["transparency-accountability", "uncertainty-robustness"],
+  },
+
+  climate: {
+    intro:
+      "Climate-risk layers and scenario maps shape adaptation budgets and long-term planning.",
     relatedQuestions: ["transparency-accountability", "uncertainty-robustness"],
   },
 

@@ -101,11 +101,11 @@ export const CASES = [
     move: "Release only aggregated risk bands and store identifiable features in a private enclave.",
   },
 
-  // Forests & climate
+  // Forests
   {
     id: "deforestation-enforcement-trigger",
     title: "Deforestation enforcement trigger",
-    application: "forests-climate",
+    application: "forests",
     questions: ["transparency-accountability"],
     principles: ["transparency"],
     context:
@@ -113,10 +113,12 @@ export const CASES = [
     risk: "Insufficient traceability reduces procedural fairness and legal defensibility.",
     move: "Attach scene timestamp, cloud mask score, and baseline version to each alert package.",
   },
+
+  // Climate
   {
     id: "climate-adaptation-budget",
     title: "Climate adaptation budget planning",
-    application: "forests-climate",
+    application: "climate",
     questions: ["transparency-accountability"],
     principles: ["transparency"],
     context:
