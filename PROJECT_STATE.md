@@ -43,7 +43,7 @@ src/
     questions.js          Per-question copy (framing, guidance, draft material)
     applications.js       Per-application copy (intro, what goes wrong, related questions)
     mapScenes.js          Placeholder map scenes for draft question pages (colors are token names)
-  components/             CaseCard/CaseGrid, CrossLink/CrossLinkCard, DraftBanner,
+  components/             CaseCard/CaseGrid, CaseEvidence, CrossLink/CrossLinkCard, DraftBanner,
                           ChapterSection/ChapterHeader/BulletList, SubTabs, RelatedQuestions,
                           MetricCard, DummyMapPanel
   pages/
@@ -62,20 +62,21 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 `#/home` (also empty hash), `#/applications/<id>`, `#/questions/<id>`, `#/simulator`.
 `#/applications` and `#/questions` open their first sub-tab; unknown routes fall back to Home.
 
-- Applications: `agriculture`, `hazards`, `urban-health`, `forests-climate`, `security-infrastructure`
-- Questions: `fairness`, `training-data`, `evaluation`, `uncertainty-robustness`, `transparency-accountability`, `privacy`, `genai`
+- Applications: `agriculture`, `hazards`, `urban-health`, `forests`, `climate`, `security-infrastructure`
+- Questions: `fairness`, `training-data`, `evaluation`, `uncertainty-robustness`, `transparency-accountability`, `privacy`, `green-ai`, `genai`
 
 ### Content schema
 
 Each case in `src/content/cases.js`:
 
 ```js
-{ id, title, application, questions: [], principles: [], context, risk, move }
+{ id, title, application, questions: [], principles: [], context, risk, move, evidence? }
 ```
 
 - `application`: an application sub-tab id, or `null` for cross-cutting operational cases (data onboarding, drift, telemetry), which only appear on question pages.
 - `questions`: the question sub-tab ids the case touches.
-- `principles`: the original five-principle tag (fairness, privacy, transparency, accountability, robustness), kept for traceability.
+- `principles`: the original five-principle tag (fairness, privacy, transparency, accountability, robustness), kept for traceability. Newer cases may leave it empty.
+- `evidence` (optional): measured numbers from a published source, rendered on the card by `components/CaseEvidence.jsx` as a small table with a DOI link: `{ setting, columns: [baseline, improved], rows: [{ label, values: [a, b], change }], notes: [], source: { label, href } }`. Only real, cited values go here, and caveats (what was not measured or not counted) go in `notes`.
 
 Application pages filter by `application`, and question pages filter by `questions`.
 
@@ -141,6 +142,12 @@ Application pages filter by `application`, and question pages filter by `questio
    - IADF blue accent, navy and iadf-tint tokens, Source Serif 4 / Source Sans 3
    - 44px tap targets, one-column grids on phone, overflow checked from 320px up
 
+7. **Forests / Climate split and the first evidence-backed case** (branch `forests-green-ai`)
+   - "Forests & climate" split into separate Forests and Climate drafts; existing cases moved accordingly
+   - New question draft **Green AI & energy** (`green-ai`): framing, guiding questions (incl. training with less energy by fine-tuning pretrained / foundation models), key decisions
+   - New Forests case **Pretrained model for 3D tree mapping**, tagged Green AI, GenAI, and Training data, with real numbers from Rizaldy et al. (2026), *Remote Sensing of Environment* 345, 115564 (doi:10.1016/j.rse.2026.115564), checked against arXiv 2511.06331v3: training time 44.51 → 35.56 min, energy 0.5813 → 0.4605 kWh, estimated emissions 0.2215 → 0.1754 kg CO₂ (about −21%); mAP with 1% of labels 45.56 (scratch) vs 76.77 (pretrained), versus 76.72 with all labels
+   - Caveats shown on the card: the paper gives no accuracy figures for the energy runs ("similar accuracy"), and pretraining energy is not reported or counted
+
 ---
 
 ## In Progress
@@ -162,8 +169,8 @@ No hard engineering blockers.
 1. **Design a meaningful interactive centerpiece** for the Fairness and Agriculture pages (to replace the removed lab)
 
 2. **Draft pages to build** (using the Fairness / Agriculture pair as the template)
-   - Applications: Hazards & disaster response, Urban & public health, Forests & climate, Security & critical infrastructure
-   - Questions: Training data, Evaluation beyond accuracy, Uncertainty & robustness, Transparency & accountability, Privacy & sensitive data
+   - Applications: Hazards & disaster response, Urban & public health, Forests, Climate, Security & critical infrastructure
+   - Questions: Green AI & energy (a natural next pair with Forests, built around the tree-mapping case), Training data, Evaluation beyond accuracy, Uncertainty & robustness, Transparency & accountability, Privacy & sensitive data
    - Generative AI & foundation models: currently guiding questions only
 
 3. **References**: add citations to question pages (best practices, checklists)
@@ -225,6 +232,8 @@ No hard engineering blockers.
 - **Monsoon cloud persistence:** the case text is about flood nowcasting but is filed under Agriculture. Reword it for crop monitoring, or move it to Hazards?
 - **Heatwave "Training data" tag:** the Heatwave case is also tagged with Training data (uneven historical sensor data). Keep or drop?
 - **New text needs review:** Fairness why-it-matters, failure modes, best practices, and checklist; the Agriculture "what goes wrong" list; the GenAI guiding questions.
+- **Draft banner wording:** the shared draft banners say content comes "from the earlier principle tabs", which is not true for Green AI, GenAI, or the new tree-mapping case. Make the note per page?
+- **Old link:** `#/applications/forests-climate` now falls back to the first Applications sub-tab. Fine, or add a redirect to Forests?
 - **Placeholder maps:** keep them on the draft pages until each chapter is written, or switch them off now with `SHOW_PLACEHOLDER_MAPS`?
 
 ---
