@@ -3,11 +3,11 @@ import { ExternalLink } from "lucide-react";
 // Measured numbers behind a case (optional `evidence` field in content/cases.js).
 // Compares a baseline column with an improved column; `change` is shown under
 // the improved value.
-export default function CaseEvidence({ evidence }) {
+export default function CaseEvidence({ evidence, className = "" }) {
   const [baseline, improved] = evidence.columns;
 
   return (
-    <div className="mt-4 border-t border-line pt-4">
+    <div className={`mt-4 border-t border-line pt-4 ${className}`}>
       <p className="section-label">Evidence</p>
       <p className="mt-1 text-xs text-muted">{evidence.setting}</p>
       <table className="mt-3 w-full text-left text-xs">
