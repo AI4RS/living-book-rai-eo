@@ -1,3 +1,4 @@
+import CaseEvidence from "./CaseEvidence";
 import CrossLink from "./CrossLink";
 
 // One case from content/cases.js. On application pages it links out to the
@@ -17,6 +18,7 @@ export default function CaseCard({ item, linkQuestions = true, linkApplication =
       <p className="callout callout-safe mt-2">
         <span className="font-semibold text-safe">Responsible move:</span> {item.move}
       </p>
+      {item.evidence && <CaseEvidence evidence={item.evidence} />}
       {(showApplication || showQuestions) && (
         <div className="mt-auto space-y-2 pt-4">
           {showApplication && (

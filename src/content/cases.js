@@ -6,6 +6,10 @@
 //   for cross-cutting operational cases that only appear on question pages.
 // - questions: lifecycle question sub-tab ids the case touches.
 // - principles: the original five RAI principles the case was filed under.
+// - evidence (optional): measured numbers from a published source, shown as a
+//   small table on the card. Only real, cited values go here:
+//   { setting, columns: [baseline, improved], rows: [{ label, values: [a, b], change }],
+//     notes: [], source: { label, href } }
 
 export const CASES = [
   // Agriculture & food security
@@ -112,6 +116,41 @@ export const CASES = [
       "Enforcement teams cannot verify whether alerts came from cloudy scenes or stale baselines.",
     risk: "Insufficient traceability reduces procedural fairness and legal defensibility.",
     move: "Attach scene timestamp, cloud mask score, and baseline version to each alert package.",
+  },
+  {
+    id: "pretrained-tree-mapping",
+    title: "Pretrained model for 3D tree mapping",
+    application: "forests",
+    questions: ["green-ai", "genai", "training-data"],
+    principles: [],
+    context:
+      "Individual trees are mapped from drone LiDAR point clouds to feed forest inventories. The usual approach trains a new deep model from scratch for each site.",
+    risk: "Training from scratch for every site repeats the full energy and emissions cost and needs dense labels. With 0.01% of points labelled, the scratch model failed completely (mAP 0).",
+    move: "Fine-tune a backbone pretrained with self-supervision on unlabelled LiDAR, and measure and report energy and estimated CO₂ for every run.",
+    evidence: {
+      setting:
+        "Tree instance segmentation, SCION site (FOR-instance), one node with 4× NVIDIA A100, measured with CodeCarbon.",
+      columns: ["From scratch", "Pretrained + fine-tune"],
+      rows: [
+        { label: "Training time", values: ["44.51 min", "35.56 min"], change: "−20%" },
+        { label: "Energy", values: ["0.5813 kWh", "0.4605 kWh"], change: "−21%" },
+        { label: "Est. emissions", values: ["0.2215 kg CO₂", "0.1754 kg CO₂"], change: "−21%" },
+        {
+          label: "mAP, 1% of labels",
+          values: ["45.56", "76.77"],
+          change: "matches 76.72 with all labels",
+        },
+      ],
+      notes: [
+        "The paper reports that both energy runs reached similar accuracy, but gives no accuracy figures for them.",
+        "The mAP row comes from a separate label-reduction experiment on the same site.",
+        "Not counted: the one-off self-supervised pretraining (1200 epochs on about 2.3 billion unlabelled LiDAR points), whose energy the paper does not report. The saving pays off when the pretrained model is reused.",
+      ],
+      source: {
+        label: "Rizaldy et al. (2026), Remote Sensing of Environment 345, 115564",
+        href: "https://doi.org/10.1016/j.rse.2026.115564",
+      },
+    },
   },
 
   // Climate
