@@ -49,6 +49,7 @@ export const QUESTION_TABS = [
   { id: "uncertainty-robustness", label: "Uncertainty & robustness", status: "draft" },
   { id: "transparency-accountability", label: "Transparency & accountability", status: "draft" },
   { id: "privacy", label: "Privacy & sensitive data", status: "draft" },
+  { id: "green-ai", label: "Green AI & energy", status: "draft" },
   { id: "genai", label: "Generative AI & foundation models", status: "draft" },
 ];
 

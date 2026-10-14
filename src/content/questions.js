@@ -121,6 +121,25 @@ export const QUESTION_CONTENT = {
     relatedQuestions: ["transparency-accountability"],
   },
 
+  "green-ai": {
+    framing: "What does the model cost in energy and emissions, and can we get the same result with less?",
+    summary:
+      "Every training run uses electricity and emits CO₂. Responsible EO reports that cost next to accuracy and avoids paying it twice when a pretrained model already does the job.",
+    guidingQuestions: [
+      "How do we train a model with less energy? Start from a pretrained or foundation model and fine-tune it instead of training from scratch for every site or task.",
+      "How much time, energy, and estimated CO₂ did each training run take, and is it reported alongside accuracy?",
+      "Who pays the one-off pretraining cost, and over how many reuses is it amortised?",
+      "Does a smaller label budget plus a pretrained backbone reach the accuracy we need?",
+    ],
+    decisions: [
+      "Fine-tune a pretrained backbone before considering training from scratch",
+      "Measure energy and emissions for every run (for example with CodeCarbon)",
+      "Report duration, kWh, and estimated CO₂ next to accuracy metrics",
+      "Count pretraining cost once and share pretrained weights so it is amortised",
+    ],
+    relatedQuestions: ["genai", "training-data"],
+  },
+
   genai: {
     framing: "What changes when the model is a large pretrained foundation model, or generates content?",
     summary: "Placeholder. This chapter has not been written yet.",
@@ -130,6 +149,6 @@ export const QUESTION_CONTENT = {
       "How should generated or synthetic imagery be labelled so it is never mistaken for an observation?",
       "Who is accountable when a fine-tuned foundation model fails downstream: the provider or the adapter?",
     ],
-    relatedQuestions: ["training-data", "evaluation"],
+    relatedQuestions: ["training-data", "evaluation", "green-ai"],
   },
 };

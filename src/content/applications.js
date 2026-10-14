@@ -42,7 +42,7 @@ export const APPLICATION_CONTENT = {
   forests: {
     intro:
       "Deforestation alerts and tree-level inventories trigger enforcement and feed biomass and carbon estimates.",
-    relatedQuestions: ["transparency-accountability", "uncertainty-robustness"],
+    relatedQuestions: ["transparency-accountability", "uncertainty-robustness", "green-ai", "training-data"],
   },
 
   climate: {
