@@ -1,4 +1,5 @@
 import { PAGES, hrefFor } from "../config/navigation";
+import DottedEllipse from "./DottedEllipse";
 
 const HOME_LEAD =
   "A living reference for building, evaluating, and deploying EO models that work fairly, safely, and accountably.";
@@ -11,24 +12,7 @@ const heroButton =
 export default function HomeHero() {
   return (
     <section className="relative overflow-hidden bg-accent px-5 pb-12 pt-12 text-white md:px-16 md:pb-[104px] md:pt-24">
-      {/* Dotted ellipse echoing the IADF logo globe. Decorative only. */}
-      <svg
-        aria-hidden="true"
-        viewBox="0 0 520 360"
-        className="pointer-events-none absolute -right-36 top-1/2 w-[420px] -translate-y-1/2 opacity-15 lg:-right-24 lg:w-[520px] lg:opacity-20 xl:-right-10 xl:w-[640px] xl:opacity-40"
-      >
-        <defs>
-          <pattern id="dots" width="26" height="26" patternUnits="userSpaceOnUse">
-            <circle cx="13" cy="13" r="7" fill="#D8E8F8" />
-          </pattern>
-          <clipPath id="el">
-            <ellipse cx="260" cy="180" rx="250" ry="170" />
-          </clipPath>
-        </defs>
-        <g clipPath="url(#el)">
-          <rect width="520" height="360" fill="url(#dots)" />
-        </g>
-      </svg>
+      <DottedEllipse className="-right-36 w-[420px] opacity-15 lg:-right-24 lg:w-[520px] lg:opacity-20 xl:-right-10 xl:w-[640px] xl:opacity-40" />
 
       <div className="relative mx-auto max-w-6xl">
         <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-iadf-tint">

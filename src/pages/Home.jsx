@@ -110,9 +110,7 @@ export default function Home() {
           <Gauge className="mt-1 h-5 w-5 shrink-0 text-accent" aria-hidden="true" />
           <div>
             <h3 className="font-serif text-xl text-ink">{PAGES.simulator.longLabel}</h3>
-            <p className="mt-1 text-sm text-muted">
-              Test how resolution and label choices trade off privacy, fairness, and compute.
-            </p>
+            <p className="mt-1 text-sm text-muted">{PAGES.simulator.tagline}</p>
           </div>
         </div>
         <a href={hrefFor(PAGES.simulator.id)} className="btn-secondary shrink-0 self-start md:self-auto">

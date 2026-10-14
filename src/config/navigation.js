@@ -26,7 +26,12 @@ export const PAGES = {
     label: "Lifecycle Questions",
     tagline: "Start from a question you face while building an EO model.",
   },
-  simulator: { id: "simulator", label: "Simulator", longLabel: "Integrated Simulator" },
+  simulator: {
+    id: "simulator",
+    label: "Simulator",
+    longLabel: "Integrated Simulator",
+    tagline: "Test how resolution and label choices trade off privacy, fairness, and compute.",
+  },
 };
 
 // Top nav order.

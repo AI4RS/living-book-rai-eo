@@ -75,13 +75,6 @@ export default function IntegratedSimulatorTab() {
 
   return (
     <section className="space-y-8">
-      <header>
-        <p className="section-label">Simulator</p>
-        <h2 className="mt-2 font-serif text-3xl leading-tight text-ink md:text-4xl">
-          Integrated Simulator
-        </h2>
-      </header>
-
       <section className="callout callout-info">
         <button
           onClick={() => setShowInfo((v) => !v)}

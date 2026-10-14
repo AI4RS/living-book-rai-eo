@@ -1,5 +1,6 @@
 import iadfLogo from "./assets/IADF.webp";
 import HomeHero from "./components/HomeHero";
+import PageBanner from "./components/PageBanner";
 import SiteFooter from "./components/SiteFooter";
 import SubTabs from "./components/SubTabs";
 import { MAIN_NAV, PAGES, SITE_TITLE, SUB_TABS, hrefFor } from "./config/navigation";
@@ -31,7 +32,7 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-surface">
-      <header className="border-b border-line bg-surface">
+      <header className="bg-surface">
         <div className="mx-auto max-w-6xl px-4 pt-5">
           <a
             href={hrefFor(PAGES.home.id)}
@@ -68,6 +69,8 @@ export default function App() {
         </div>
       </header>
 
+      {isHome ? <HomeHero /> : <PageBanner page={PAGES[route.page]} />}
+
       {subTabs && (
         <div className="border-b border-line bg-subtle">
           <nav aria-label="Sections" className="mx-auto max-w-6xl px-4">
@@ -75,8 +78,6 @@ export default function App() {
           </nav>
         </div>
       )}
-
-      {isHome && <HomeHero />}
 
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">{renderPage(route)}</main>
 
