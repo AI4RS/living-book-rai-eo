@@ -2,6 +2,8 @@
 // modes, best practices, recommendations), each stated once. Application pages
 // link here instead of re-explaining.
 //
+// Built entries (status "built" in config/navigation.js) need: framing, summary,
+// whyItMatters, failureModes, bestPractices, checklist, relatedQuestions.
 // Draft entries carry the summary and design decisions from the original
 // principle tabs so no content is lost while the chapter is written.
 
@@ -125,17 +127,47 @@ export const QUESTION_CONTENT = {
     framing: "What does the model cost in energy and emissions, and can we get the same result with less?",
     summary:
       "Every training run uses electricity and emits CO₂. Responsible EO reports that cost next to accuracy and avoids paying it twice when a pretrained model already does the job.",
-    guidingQuestions: [
-      "How do we train a model with less energy? Start from a pretrained or foundation model and fine-tune it instead of training from scratch for every site or task.",
-      "How much time, energy, and estimated CO₂ did each training run take, and is it reported alongside accuracy?",
-      "Who pays the one-off pretraining cost, and over how many reuses is it amortised?",
-      "Does a smaller label budget plus a pretrained backbone reach the accuracy we need?",
+    whyItMatters: [
+      "EO models are retrained often: for every new site, sensor, season, and task. Each run uses GPU hours and electricity and emits CO₂, and the total grows with every deployment.",
+      "Large image archives and 3D point clouds make training heavy. When accuracy is the only number reported, the cost of a result stays invisible and methods cannot be compared on it.",
+      "Pretrained and foundation models change the trade-off. The large pretraining cost is paid once, while each downstream user fine-tunes many times, for every new site and task, at a lower cost per run.",
     ],
-    decisions: [
-      "Fine-tune a pretrained backbone before considering training from scratch",
-      "Measure energy and emissions for every run (for example with CodeCarbon)",
-      "Report duration, kWh, and estimated CO₂ next to accuracy metrics",
-      "Count pretraining cost once and share pretrained weights so it is amortised",
+    failureModes: [
+      {
+        title: "Retraining from scratch by default",
+        text: "Every new site starts from random weights, even when a suitable pretrained model already exists.",
+      },
+      {
+        title: "Energy is never measured",
+        text: "Projects and papers report accuracy only, so nobody knows what a result cost or whether a cheaper route existed.",
+      },
+      {
+        title: "Training past the target",
+        text: "Runs continue for a fixed epoch budget long after the needed accuracy has been reached.",
+      },
+      {
+        title: "Unequal comparisons",
+        text: "Energy is compared between runs that reached different accuracy, so a saving cannot be separated from a worse model.",
+      },
+      {
+        title: "Oversized for the task",
+        text: "A large model is trained or run where a smaller or partly frozen one reaches the accuracy the application needs.",
+      },
+    ],
+    bestPractices: [
+      "Start from a pretrained or foundation model and fine-tune it. Train from scratch only when no suitable model exists.",
+      "Set the target accuracy first, for example the best accuracy of a from-scratch model, and stop training as soon as it is reached.",
+      "Measure time, energy, and estimated CO₂ for every run with a tool such as CodeCarbon, and state the hardware.",
+      "Report energy and emissions next to accuracy, and compare methods at equal accuracy.",
+      "Share pretrained weights and code so the one-off pretraining cost is reused rather than repeated.",
+    ],
+    checklist: [
+      "A pretrained or foundation model was considered before training from scratch.",
+      "The target accuracy and stopping rule were set before training.",
+      "Time, energy, and estimated emissions were measured for each run, with the hardware stated.",
+      "Energy and emissions are reported next to accuracy.",
+      "Comparisons between methods are made at equal accuracy.",
+      "Pretrained weights and code are shared for reuse.",
     ],
     relatedQuestions: ["genai", "training-data"],
   },

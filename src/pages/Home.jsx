@@ -84,13 +84,21 @@ export default function Home() {
             of repeating them.
           </p>
           <p>
-            Start with the first finished pair:{" "}
+            Start with the finished pairs:{" "}
             <a href={questionHref("fairness")} className="link">
               Fairness
             </a>{" "}
-            and{" "}
+            with{" "}
             <a href={applicationHref("agriculture")} className="link">
               Agriculture & food security
+            </a>
+            , and{" "}
+            <a href={questionHref("green-ai")} className="link">
+              Green AI & energy
+            </a>{" "}
+            with{" "}
+            <a href={applicationHref("forests")} className="link">
+              Forests
             </a>
             . Pages marked draft collect existing material while they are written.
           </p>

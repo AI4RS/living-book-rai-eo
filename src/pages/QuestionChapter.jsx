@@ -6,16 +6,16 @@ import { PAGES, findQuestion } from "../config/navigation";
 import { casesForQuestion } from "../content/cases";
 import { QUESTION_CONTENT } from "../content/questions";
 
-const ID = "fairness";
-
-export default function FairnessQuestion() {
-  const content = QUESTION_CONTENT[ID];
-  const cases = casesForQuestion(ID);
+// Built question page. Everything comes from QUESTION_CONTENT[id].
+export default function QuestionChapter({ id }) {
+  const tab = findQuestion(id);
+  const content = QUESTION_CONTENT[id];
+  const cases = casesForQuestion(id);
 
   return (
     <article className="space-y-10">
       <ChapterHeader
-        kicker={`${PAGES.questions.label} · ${findQuestion(ID).label}`}
+        kicker={`${PAGES.questions.label} · ${tab.label}`}
         title={content.framing}
         lead={content.summary}
       />
@@ -62,10 +62,10 @@ export default function FairnessQuestion() {
       </div>
 
       <CaseGrid
-        title="Cases touching fairness"
+        title={`Cases touching ${tab.label}`}
         cases={cases}
         linkApplication
-        currentQuestion={ID}
+        currentQuestion={id}
       />
 
       <RelatedQuestions ids={content.relatedQuestions} />

@@ -5,15 +5,15 @@ import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findApplication } from "../config/navigation";
 import { APPLICATION_CONTENT } from "../content/applications";
 import { casesForApplication } from "../content/cases";
-import AgricultureApplication from "./AgricultureApplication";
+import ApplicationChapter from "./ApplicationChapter";
 
-const BUILT_PAGES = {
-  agriculture: AgricultureApplication,
-};
-
+// status "built" in config/navigation.js picks the full chapter layout.
 export default function ApplicationsPage({ sub }) {
-  const Built = BUILT_PAGES[sub];
-  return Built ? <Built /> : <ApplicationDraft id={sub} />;
+  return findApplication(sub).status === "built" ? (
+    <ApplicationChapter id={sub} />
+  ) : (
+    <ApplicationDraft id={sub} />
+  );
 }
 
 function ApplicationDraft({ id }) {

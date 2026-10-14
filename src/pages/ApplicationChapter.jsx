@@ -6,21 +6,20 @@ import { PAGES, findApplication } from "../config/navigation";
 import { APPLICATION_CONTENT } from "../content/applications";
 import { casesForApplication } from "../content/cases";
 
-const ID = "agriculture";
-
-export default function AgricultureApplication() {
-  const content = APPLICATION_CONTENT[ID];
-  const cases = casesForApplication(ID);
+// Built application page. Everything comes from APPLICATION_CONTENT[id].
+export default function ApplicationChapter({ id }) {
+  const content = APPLICATION_CONTENT[id];
+  const cases = casesForApplication(id);
 
   return (
     <article className="space-y-10">
       <ChapterHeader
         kicker={PAGES.applications.label}
-        title={findApplication(ID).label}
+        title={findApplication(id).label}
         lead={content.intro}
       />
 
-      <ChapterSection title="What typically goes wrong in agriculture">
+      <ChapterSection title={`What typically goes wrong in ${content.domainName}`}>
         <div className="grid gap-4 md:grid-cols-2">
           {content.whatGoesWrong.map((item) => (
             <div key={item.title} className="card p-4">
@@ -36,14 +35,9 @@ export default function AgricultureApplication() {
         intro="The general guidance for these problems lives on the question pages."
       >
         <div className="grid gap-4 md:grid-cols-2">
-          <CrossLinkCard
-            question="fairness"
-            description="Why models trained in one region fail in another, and a checklist for catching it."
-          />
-          <CrossLinkCard
-            question="uncertainty-robustness"
-            description="What to do when clouds, sensor gaps, or shifting conditions degrade inputs."
-          />
+          {content.goDeeper.map((item) => (
+            <CrossLinkCard key={item.question} {...item} />
+          ))}
         </div>
       </ChapterSection>
 

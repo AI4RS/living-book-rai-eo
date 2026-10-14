@@ -35,21 +35,21 @@ export const MAIN_NAV = [PAGES.home, PAGES.applications, PAGES.questions, PAGES.
 // status: "built" | "draft". First entry is the default sub-tab.
 export const APPLICATION_TABS = [
   { id: "agriculture", label: "Agriculture & food security", status: "built" },
+  { id: "forests", label: "Forests", status: "built" },
   { id: "hazards", label: "Hazards & disaster response", status: "draft" },
   { id: "urban-health", label: "Urban & public health", status: "draft" },
-  { id: "forests", label: "Forests", status: "draft" },
   { id: "climate", label: "Climate", status: "draft" },
   { id: "security-infrastructure", label: "Security & critical infrastructure", status: "draft" },
 ];
 
 export const QUESTION_TABS = [
   { id: "fairness", label: "Fairness", status: "built" },
+  { id: "green-ai", label: "Green AI & energy", status: "built" },
   { id: "training-data", label: "Training data", status: "draft" },
   { id: "evaluation", label: "Evaluation beyond accuracy", status: "draft" },
   { id: "uncertainty-robustness", label: "Uncertainty & robustness", status: "draft" },
   { id: "transparency-accountability", label: "Transparency & accountability", status: "draft" },
   { id: "privacy", label: "Privacy & sensitive data", status: "draft" },
-  { id: "green-ai", label: "Green AI & energy", status: "draft" },
   { id: "genai", label: "Generative AI & foundation models", status: "draft" },
 ];
 

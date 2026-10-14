@@ -6,15 +6,15 @@ import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, SHOW_PLACEHOLDER_MAPS, findQuestion } from "../config/navigation";
 import { casesForQuestion } from "../content/cases";
 import { QUESTION_CONTENT } from "../content/questions";
-import FairnessQuestion from "./FairnessQuestion";
+import QuestionChapter from "./QuestionChapter";
 
-const BUILT_PAGES = {
-  fairness: FairnessQuestion,
-};
-
+// status "built" in config/navigation.js picks the full chapter layout.
 export default function QuestionsPage({ sub }) {
-  const Built = BUILT_PAGES[sub];
-  return Built ? <Built /> : <QuestionDraft id={sub} />;
+  return findQuestion(sub).status === "built" ? (
+    <QuestionChapter id={sub} />
+  ) : (
+    <QuestionDraft id={sub} />
+  );
 }
 
 function QuestionDraft({ id }) {

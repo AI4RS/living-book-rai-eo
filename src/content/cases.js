@@ -107,17 +107,6 @@ export const CASES = [
 
   // Forests
   {
-    id: "deforestation-enforcement-trigger",
-    title: "Deforestation enforcement trigger",
-    application: "forests",
-    questions: ["transparency-accountability"],
-    principles: ["transparency"],
-    context:
-      "Enforcement teams cannot verify whether alerts came from cloudy scenes or stale baselines.",
-    risk: "Insufficient traceability reduces procedural fairness and legal defensibility.",
-    move: "Attach scene timestamp, cloud mask score, and baseline version to each alert package.",
-  },
-  {
     id: "pretrained-tree-mapping",
     title: "Pretrained model for 3D tree mapping",
     application: "forests",
@@ -189,6 +178,17 @@ export const CASES = [
   },
 
   // Cross-cutting operational cases (question pages only)
+  {
+    id: "deforestation-enforcement-trigger",
+    title: "Deforestation enforcement trigger",
+    application: null,
+    questions: ["transparency-accountability"],
+    principles: ["transparency"],
+    context:
+      "Enforcement teams cannot verify whether alerts came from cloudy scenes or stale baselines.",
+    risk: "Insufficient traceability reduces procedural fairness and legal defensibility.",
+    move: "Attach scene timestamp, cloud mask score, and baseline version to each alert package.",
+  },
   {
     id: "unauthorized-dataset-ingestion",
     title: "Unauthorized dataset ingestion",
