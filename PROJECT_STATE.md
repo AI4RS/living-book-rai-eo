@@ -11,7 +11,7 @@ The site is organized as **Home + Applications + Lifecycle Questions + Simulator
 - **Lifecycle Questions** has one sub-tab per question across the AI lifecycle. These pages give general guidance.
 - **Simulator** is the original Integrated Simulator. Its logic is unchanged; it has been restyled.
 
-The first finished pair is **Fairness** (question) and **Agriculture & food security** (application). Neither page currently has an interactive centerpiece: the earlier Fairness Lab and the EU-to-India crop-mapping running example were removed because they were not meaningful to readers. All other sub-pages are marked drafts that show the existing case content.
+Two finished pairs are built: **Fairness** with **Agriculture & food security**, and **Green AI & energy** with **Forests**. They sit in the first two sub-tabs of each page. The Forests / Green AI pair is built around a case with real, cited numbers (Rizaldy et al., 2026). None of the built pages has an interactive centerpiece: the earlier Fairness Lab and the EU-to-India crop-mapping running example were removed because they were not meaningful to readers. All other sub-pages are marked drafts that show the existing case content.
 
 The site uses a light, publication-style design: white background, one blue accent, sharp corners, serif headings, and theme tokens kept in one place.
 
@@ -48,10 +48,10 @@ src/
                           MetricCard, DummyMapPanel
   pages/
     Home.jsx
-    ApplicationsPage.jsx  Dispatches built page or generic ApplicationDraft
-    QuestionsPage.jsx     Dispatches built page or generic QuestionDraft
-    AgricultureApplication.jsx
-    FairnessQuestion.jsx
+    ApplicationsPage.jsx  status "built" → ApplicationChapter, otherwise ApplicationDraft
+    QuestionsPage.jsx     status "built" → QuestionChapter, otherwise QuestionDraft
+    ApplicationChapter.jsx  Built application layout, driven by content/applications.js
+    QuestionChapter.jsx     Built question layout, driven by content/questions.js
   labs/
     IntegratedSimulatorTab.jsx
 tailwind.config.js        Maps token names to the CSS variables; border radius overridden to 0
@@ -62,8 +62,8 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 `#/home` (also empty hash), `#/applications/<id>`, `#/questions/<id>`, `#/simulator`.
 `#/applications` and `#/questions` open their first sub-tab; unknown routes fall back to Home. Retired sub-tab ids map to their successor through `SUB_TAB_ALIASES` in `config/navigation.js` (`forests-climate` → `forests`).
 
-- Applications: `agriculture`, `hazards`, `urban-health`, `forests`, `climate`, `security-infrastructure`
-- Questions: `fairness`, `training-data`, `evaluation`, `uncertainty-robustness`, `transparency-accountability`, `privacy`, `green-ai`, `genai`
+- Applications: `agriculture`, `forests`, `hazards`, `urban-health`, `climate`, `security-infrastructure`
+- Questions: `fairness`, `green-ai`, `training-data`, `evaluation`, `uncertainty-robustness`, `transparency-accountability`, `privacy`, `genai`
 
 ### Content schema
 
@@ -148,6 +148,13 @@ Application pages filter by `application`, and question pages filter by `questio
    - New Forests case **Pretrained model for 3D tree mapping**, tagged Green AI, GenAI, and Training data, with real numbers from Rizaldy et al. (2026), *Remote Sensing of Environment* 345, 115564 (doi:10.1016/j.rse.2026.115564), checked against arXiv 2511.06331v3: training time 44.51 → 35.56 min, energy 0.5813 → 0.4605 kWh, estimated emissions 0.2215 → 0.1754 kg CO₂ (about −21%); mAP with 1% of labels 45.56 (scratch) vs 76.77 (pretrained), versus 76.72 with all labels
    - Notes shown on the card: the energy comparison is at equal accuracy (the fine-tuned run stops once it reaches the from-scratch model's best accuracy; clarified by the first author, the paper says "similar accuracy"); the mAP row comes from the same SCION experiments; pretraining energy is not reported or counted, framed from the end-user view (pretraining runs once, fine-tuning repeats per site and task)
 
+8. **Forests and Green AI & energy built as second tabs**
+   - Forests: intro, four forest-specific failure points, go-deeper links to Green AI and Training data, and the tree-mapping case on its own
+   - Green AI & energy: why it matters, five failure modes, best practices (fine-tune a pretrained or foundation model; stop at the target accuracy; measure and report energy at equal accuracy; share weights), checklist
+   - The deforestation enforcement case left Forests (`application: null`); it still appears on the Transparency & accountability question page
+   - Built pages are now two content-driven templates (`ApplicationChapter`, `QuestionChapter`); setting `status: "built"` in `config/navigation.js` switches a page to the full layout
+   - A case that is alone in its band spans the full width, with its evidence in a second column on large screens
+
 ---
 
 ## In Progress
@@ -169,8 +176,8 @@ No hard engineering blockers.
 1. **Design a meaningful interactive centerpiece** for the Fairness and Agriculture pages (to replace the removed lab)
 
 2. **Draft pages to build** (using the Fairness / Agriculture pair as the template)
-   - Applications: Hazards & disaster response, Urban & public health, Forests, Climate, Security & critical infrastructure
-   - Questions: Green AI & energy (a natural next pair with Forests, built around the tree-mapping case), Training data, Evaluation beyond accuracy, Uncertainty & robustness, Transparency & accountability, Privacy & sensitive data
+   - Applications: Hazards & disaster response, Urban & public health, Climate, Security & critical infrastructure
+   - Questions: Training data, Evaluation beyond accuracy, Uncertainty & robustness, Transparency & accountability, Privacy & sensitive data
    - Generative AI & foundation models: currently guiding questions only
 
 3. **References**: add citations to question pages (best practices, checklists)
@@ -214,10 +221,10 @@ No hard engineering blockers.
 ## Technical Debt and Known Issues
 
 1. **Draft pages**
-   - 10 of 12 sub-pages are drafts that reuse the earlier principle-tab material. Some still show animated placeholder maps (toggle: `SHOW_PLACEHOLDER_MAPS`).
+   - 10 of 14 sub-pages are drafts that reuse the earlier principle-tab material. Some still show animated placeholder maps (toggle: `SHOW_PLACEHOLDER_MAPS`).
 
 2. **No interactive centerpiece on the built pages**
-   - Fairness and Agriculture are text and cases only since the lab was removed.
+   - Fairness, Agriculture, Green AI, and Forests are text and cases only since the lab was removed.
 
 3. **Content still partly placeholder**
    - Case text is illustrative, not sourced. There are no references yet.
@@ -231,7 +238,7 @@ No hard engineering blockers.
 
 - **Monsoon cloud persistence:** the case text is about flood nowcasting but is filed under Agriculture. Reword it for crop monitoring, or move it to Hazards?
 - **Heatwave "Training data" tag:** the Heatwave case is also tagged with Training data (uneven historical sensor data). Keep or drop?
-- **New text needs review:** Fairness why-it-matters, failure modes, best practices, and checklist; the Agriculture "what goes wrong" list; the GenAI guiding questions.
+- **New text needs review:** Fairness why-it-matters, failure modes, best practices, and checklist; the Agriculture and Forests "what goes wrong" lists; the Green AI chapter; the GenAI guiding questions.
 - **Placeholder maps:** keep them on the draft pages until each chapter is written, or switch them off now with `SHOW_PLACEHOLDER_MAPS`?
 
 ---
@@ -251,13 +258,13 @@ The **paper** needs a separate, narrower storyline than the Living Book, for exa
 
 ## Handoff Notes for Next AI Agent
 
-1. **The Fairness and Agriculture pages currently have no interactive centerpiece.** The next step is to design a better one that is genuinely meaningful to readers, rather than restoring the removed Fairness Lab.
+1. **The built pages (Fairness, Agriculture, Green AI, Forests) currently have no interactive centerpiece.** The next step is to design a better one that is genuinely meaningful to readers, rather than restoring the removed Fairness Lab.
 
 2. **Build the next pair using Fairness + Agriculture as the template.**
    - Question page: framing question → why it matters → failure modes → best practices → checklist → cases → related questions.
    - Application page: intro → domain "what goes wrong" → go deeper (links) → cases → related questions.
    - A natural next pair: Uncertainty & robustness + Hazards & disaster response.
-   - To promote a draft: write a page component in `src/pages/`, register it in `BUILT_PAGES` in `ApplicationsPage.jsx` / `QuestionsPage.jsx`, and set `status: "built"` in `config/navigation.js`.
+   - To promote a draft: fill in the built fields listed at the top of `content/applications.js` or `content/questions.js`, then set `status: "built"` in `config/navigation.js`. No new page component is needed.
 
 3. **Use the design tokens and shared classes** (`card`, `section-label`, `callout-*`, `btn-*`, `tab`) for new UI. Do not hard-code colors or add rounded corners.
 
