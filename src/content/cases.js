@@ -142,9 +142,9 @@ export const CASES = [
         },
       ],
       notes: [
-        "The paper reports that both energy runs reached similar accuracy, but gives no accuracy figures for them.",
-        "The mAP row comes from a separate label-reduction experiment on the same site.",
-        "Not counted: the one-off self-supervised pretraining (1200 epochs on about 2.3 billion unlabelled LiDAR points), whose energy the paper does not report. The saving pays off when the pretrained model is reused.",
+        "Equal accuracy: the from-scratch model trains to its best accuracy, and the fine-tuned model stops as soon as it reaches that same accuracy. The saving is the energy needed to get the same result.",
+        "The mAP row comes from the same SCION experiments (label reduction).",
+        "Not counted: the self-supervised pretraining (1200 epochs on about 2.3 billion unlabelled LiDAR points), which the paper does not report. It runs once, while end users fine-tune many times for each new site and task, so the saving repeats with every reuse.",
       ],
       source: {
         label: "Rizaldy et al. (2026), Remote Sensing of Environment 345, 115564",

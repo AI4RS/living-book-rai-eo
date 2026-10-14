@@ -60,7 +60,7 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 ### Routes
 
 `#/home` (also empty hash), `#/applications/<id>`, `#/questions/<id>`, `#/simulator`.
-`#/applications` and `#/questions` open their first sub-tab; unknown routes fall back to Home.
+`#/applications` and `#/questions` open their first sub-tab; unknown routes fall back to Home. Retired sub-tab ids map to their successor through `SUB_TAB_ALIASES` in `config/navigation.js` (`forests-climate` → `forests`).
 
 - Applications: `agriculture`, `hazards`, `urban-health`, `forests`, `climate`, `security-infrastructure`
 - Questions: `fairness`, `training-data`, `evaluation`, `uncertainty-robustness`, `transparency-accountability`, `privacy`, `green-ai`, `genai`
@@ -146,7 +146,7 @@ Application pages filter by `application`, and question pages filter by `questio
    - "Forests & climate" split into separate Forests and Climate drafts; existing cases moved accordingly
    - New question draft **Green AI & energy** (`green-ai`): framing, guiding questions (incl. training with less energy by fine-tuning pretrained / foundation models), key decisions
    - New Forests case **Pretrained model for 3D tree mapping**, tagged Green AI, GenAI, and Training data, with real numbers from Rizaldy et al. (2026), *Remote Sensing of Environment* 345, 115564 (doi:10.1016/j.rse.2026.115564), checked against arXiv 2511.06331v3: training time 44.51 → 35.56 min, energy 0.5813 → 0.4605 kWh, estimated emissions 0.2215 → 0.1754 kg CO₂ (about −21%); mAP with 1% of labels 45.56 (scratch) vs 76.77 (pretrained), versus 76.72 with all labels
-   - Caveats shown on the card: the paper gives no accuracy figures for the energy runs ("similar accuracy"), and pretraining energy is not reported or counted
+   - Notes shown on the card: the energy comparison is at equal accuracy (the fine-tuned run stops once it reaches the from-scratch model's best accuracy; clarified by the first author, the paper says "similar accuracy"); the mAP row comes from the same SCION experiments; pretraining energy is not reported or counted, framed from the end-user view (pretraining runs once, fine-tuning repeats per site and task)
 
 ---
 
@@ -232,8 +232,6 @@ No hard engineering blockers.
 - **Monsoon cloud persistence:** the case text is about flood nowcasting but is filed under Agriculture. Reword it for crop monitoring, or move it to Hazards?
 - **Heatwave "Training data" tag:** the Heatwave case is also tagged with Training data (uneven historical sensor data). Keep or drop?
 - **New text needs review:** Fairness why-it-matters, failure modes, best practices, and checklist; the Agriculture "what goes wrong" list; the GenAI guiding questions.
-- **Draft banner wording:** the shared draft banners say content comes "from the earlier principle tabs", which is not true for Green AI, GenAI, or the new tree-mapping case. Make the note per page?
-- **Old link:** `#/applications/forests-climate` now falls back to the first Applications sub-tab. Fine, or add a redirect to Forests?
 - **Placeholder maps:** keep them on the draft pages until each chapter is written, or switch them off now with `SHOW_PLACEHOLDER_MAPS`?
 
 ---
