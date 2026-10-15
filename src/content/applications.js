@@ -57,8 +57,10 @@ export const APPLICATION_CONTENT = {
   forests: {
     domainName: "forests",
     contributor: "aldino-rizaldy",
-    intro:
-      "As a deep learning enthusiast working with Earth Observation data, I found that forest analysis is costly and can waste a lot of energy, especially when large-scale, high-resolution data such as LiDAR point clouds is involved. Tree-level maps from LiDAR point clouds and imagery feed forest inventories, biomass, and carbon estimates. They are produced site by site, so how a model is trained for each new forest matters.",
+    intro: [
+      "As a deep learning enthusiast working with Earth Observation data, I map forests tree by tree from LiDAR point clouds. These maps feed forest inventories, biomass, and carbon estimates, but producing them is expensive. Every tree has to be annotated by hand in 3D, which takes hours per plot, and every new site usually means training a new model from scratch. With large, high-resolution point clouds, that repeated training costs a lot of time and energy, much of it spent relearning what an earlier model already knew.",
+      "What I found is that pretraining changes this. I first pretrain a model on large amounts of unlabelled LiDAR, then fine-tune it with only a few labels for each new site. This few-shot approach is faster and more accurate: with only 1% of the labels it matches the same model fine-tuned on all of them, and reaching the accuracy of training from scratch takes about 21% less energy. It is how I now train deep learning models in a more responsible way.",
+    ],
     whatGoesWrong: [
       {
         title: "Dense, overlapping canopies",

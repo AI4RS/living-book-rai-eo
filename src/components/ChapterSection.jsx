@@ -10,7 +10,8 @@ export default function ChapterSection({ title, intro, children, className = "" 
   );
 }
 
-// Page header: small kicker, serif title (often the framing question), lead.
+// Page header: small kicker, serif title (often the framing question), optional
+// contributor credit, and a lead: one string or an array of paragraphs.
 export function ChapterHeader({ kicker, title, contributor, lead }) {
   return (
     <header>
@@ -24,7 +25,11 @@ export function ChapterHeader({ kicker, title, contributor, lead }) {
           {contributor.role}
         </p>
       )}
-      {lead && <p className="mt-4 max-w-prose text-lg leading-relaxed text-muted">{lead}</p>}
+      {[lead].flat().filter(Boolean).map((paragraph) => (
+        <p key={paragraph} className="mt-4 max-w-prose text-lg leading-relaxed text-muted">
+          {paragraph}
+        </p>
+      ))}
     </header>
   );
 }
