@@ -4,6 +4,7 @@ import { CrossLinkCard } from "../components/CrossLink";
 import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findApplication } from "../config/navigation";
 import { APPLICATION_CONTENT } from "../content/applications";
+import { CONTRIBUTORS } from "../content/contributors";
 import { casesForApplication } from "../content/cases";
 
 // Built application page. Everything comes from APPLICATION_CONTENT[id].
@@ -16,6 +17,7 @@ export default function ApplicationChapter({ id }) {
       <ChapterHeader
         kicker={PAGES.applications.label}
         title={findApplication(id).label}
+        contributor={CONTRIBUTORS[content.contributor]}
         lead={content.intro}
       />
 

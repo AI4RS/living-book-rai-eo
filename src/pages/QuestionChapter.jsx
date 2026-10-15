@@ -4,6 +4,7 @@ import ChapterSection, { BulletList, ChapterHeader } from "../components/Chapter
 import RelatedQuestions from "../components/RelatedQuestions";
 import { PAGES, findQuestion } from "../config/navigation";
 import { casesForQuestion } from "../content/cases";
+import { CONTRIBUTORS } from "../content/contributors";
 import { QUESTION_CONTENT } from "../content/questions";
 
 // Built question page. Everything comes from QUESTION_CONTENT[id].
@@ -17,6 +18,7 @@ export default function QuestionChapter({ id }) {
       <ChapterHeader
         kicker={`${PAGES.questions.label} · ${tab.label}`}
         title={content.framing}
+        contributor={CONTRIBUTORS[content.contributor]}
         lead={content.summary}
       />
 

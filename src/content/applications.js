@@ -56,8 +56,9 @@ export const APPLICATION_CONTENT = {
 
   forests: {
     domainName: "forests",
+    contributor: "aldino-rizaldy",
     intro:
-      "Tree-level maps from LiDAR point clouds and imagery feed forest inventories, biomass, and carbon estimates. They are produced site by site, so how a model is trained for each new forest matters.",
+      "As a deep learning enthusiast working with Earth Observation data, I found that forest analysis is costly and can waste a lot of energy, especially when large-scale, high-resolution data such as LiDAR point clouds is involved. Tree-level maps from LiDAR point clouds and imagery feed forest inventories, biomass, and carbon estimates. They are produced site by site, so how a model is trained for each new forest matters.",
     whatGoesWrong: [
       {
         title: "Dense, overlapping canopies",

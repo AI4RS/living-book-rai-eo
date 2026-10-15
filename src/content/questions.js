@@ -125,8 +125,9 @@ export const QUESTION_CONTENT = {
 
   "green-ai": {
     framing: "What does the model cost in energy and emissions, and can we get the same result with less?",
+    contributor: "aldino-rizaldy",
     summary:
-      "Every training run uses electricity and emits CO₂. Responsible EO reports that cost next to accuracy and avoids paying it twice when a pretrained model already does the job.",
+      "I found that many deep learning models, especially large ones, consume a lot of energy and can waste it. Every training run uses electricity and emits CO₂. Responsible EO reports that cost next to accuracy and avoids paying it twice when a pretrained model already does the job.",
     whyItMatters: [
       "EO models are retrained often: for every new site, sensor, season, and task. Each run uses GPU hours and electricity and emits CO₂, and the total grows with every deployment.",
       "Large image archives and 3D point clouds make training heavy. When accuracy is the only number reported, the cost of a result stays invisible and methods cannot be compared on it.",

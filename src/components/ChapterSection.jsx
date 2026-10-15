@@ -11,13 +11,19 @@ export default function ChapterSection({ title, intro, children, className = "" 
 }
 
 // Page header: small kicker, serif title (often the framing question), lead.
-export function ChapterHeader({ kicker, title, lead }) {
+export function ChapterHeader({ kicker, title, contributor, lead }) {
   return (
     <header>
       {kicker && <p className="section-label">{kicker}</p>}
       <h2 className="mt-2 max-w-3xl font-serif text-3xl leading-tight text-ink md:text-4xl">
         {title}
       </h2>
+      {contributor && (
+        <p className="mt-3 text-sm text-muted">
+          Contributor: <span className="font-semibold text-ink">{contributor.name}</span>,{" "}
+          {contributor.role}
+        </p>
+      )}
       {lead && <p className="mt-4 max-w-prose text-lg leading-relaxed text-muted">{lead}</p>}
     </header>
   );
