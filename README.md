@@ -5,11 +5,12 @@ Responsible AI in Earth Observation Living Book built with Vite + React + Tailwi
 ## Structure
 
 - **Home** (`#/home`): introduction and entry points
-- **Applications** (`#/applications/<id>`): domain specifics and cases (Agriculture is built, the others are drafts)
-- **Lifecycle Questions** (`#/questions/<id>`): general guidance per question (Fairness is built, the others are drafts)
+- **Lifecycle** (`#/lifecycle/<id>`): one chapter per lifecycle stage
+- **Principles** (`#/principles/<id>`): one chapter per principle (replaces Lifecycle Questions; old `#/questions/<id>` links redirect)
+- **Applications** (`#/applications/<id>`): one chapter per application domain
 - **Simulator** (`#/simulator`): the Integrated Simulator
 
-Both main pages are views over one case store (`src/content/cases.js`). Page names and sub-tabs are configured in `src/config/navigation.js`. See `PROJECT_STATE.md` for the architecture and roadmap.
+The chapters are currently an outline: each shows its section headings with placeholders. Page names, sub-tabs, taglines, and each part's section outline are configured in `src/config/navigation.js`, and every chapter renders through `src/pages/ChapterPage.jsx`. See `PROJECT_STATE.md` for the architecture and roadmap.
 
 ## Stack
 
