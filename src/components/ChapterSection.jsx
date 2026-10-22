@@ -34,16 +34,3 @@ export function ChapterHeader({ kicker, title, contributor, lead }) {
   );
 }
 
-// Bulleted prose list with square accent markers.
-export function BulletList({ items }) {
-  return (
-    <ul className="max-w-prose space-y-3 leading-relaxed text-ink">
-      {items.map((item) => (
-        <li key={item} className="flex gap-3">
-          <span className="mt-2.5 h-1.5 w-1.5 shrink-0 bg-accent" aria-hidden="true" />
-          <span>{item}</span>
-        </li>
-      ))}
-    </ul>
-  );
-}
