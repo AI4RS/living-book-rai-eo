@@ -6,21 +6,13 @@ import SubTabs from "./components/SubTabs";
 import { MAIN_NAV, PAGES, SITE_TITLE, SUB_TABS, hrefFor } from "./config/navigation";
 import IntegratedSimulatorTab from "./labs/IntegratedSimulatorTab";
 import { useHashRoute } from "./lib/router";
-import ApplicationsPage from "./pages/ApplicationsPage";
+import ChapterPage from "./pages/ChapterPage";
 import Home from "./pages/Home";
-import QuestionsPage from "./pages/QuestionsPage";
 
 function renderPage({ page, sub }) {
-  switch (page) {
-    case PAGES.applications.id:
-      return <ApplicationsPage sub={sub} />;
-    case PAGES.questions.id:
-      return <QuestionsPage sub={sub} />;
-    case PAGES.simulator.id:
-      return <IntegratedSimulatorTab />;
-    default:
-      return <Home />;
-  }
+  if (SUB_TABS[page]) return <ChapterPage page={page} sub={sub} />;
+  if (page === PAGES.simulator.id) return <IntegratedSimulatorTab />;
+  return <Home />;
 }
 
 export default function App() {
@@ -49,8 +41,8 @@ export default function App() {
                 {SITE_TITLE}
               </TitleTag>
               <span className="mt-0.5 hidden max-w-prose text-sm text-muted sm:block">
-                Explore Responsible AI in EO by application area or by the questions
-                you face across the AI lifecycle.
+                Explore Responsible AI in EO by lifecycle stage, by principle, or by
+                application area.
               </span>
             </span>
           </a>

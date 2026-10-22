@@ -4,6 +4,9 @@ import DottedEllipse from "./DottedEllipse";
 const HOME_LEAD =
   "A living reference for building, evaluating, and deploying EO models that work fairly, safely, and accountably.";
 
+// The three ways into the book; the first is the primary button.
+const HERO_LINKS = [PAGES.lifecycle, PAGES.principles, PAGES.applications];
+
 const heroButton =
   "inline-flex min-h-[52px] w-full items-center justify-center px-6 text-[17px] font-bold transition-colors focus-visible:outline-white sm:w-auto";
 
@@ -24,19 +27,20 @@ export default function HomeHero() {
         <p className="mt-6 max-w-[640px] text-lg leading-relaxed text-accent-tint md:text-xl">
           {HOME_LEAD}
         </p>
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <a
-            href={hrefFor(PAGES.questions.id)}
-            className={`${heroButton} bg-white text-accent-hover hover:bg-iadf-tint`}
-          >
-            Explore the Questions
-          </a>
-          <a
-            href={hrefFor(PAGES.applications.id)}
-            className={`${heroButton} border-2 border-white text-white hover:bg-white/10`}
-          >
-            Explore the Applications
-          </a>
+        <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+          {HERO_LINKS.map((page, index) => (
+            <a
+              key={page.id}
+              href={hrefFor(page.id)}
+              className={`${heroButton} ${
+                index === 0
+                  ? "bg-white text-accent-hover hover:bg-iadf-tint"
+                  : "border-2 border-white text-white hover:bg-white/10"
+              }`}
+            >
+              {page.label}
+            </a>
+          ))}
         </div>
         <p className="mt-8 max-w-[560px] text-sm leading-relaxed text-iadf-tint">
           Working Group on Responsible AI for Earth Observation (WG-RAI), IEEE GRSS

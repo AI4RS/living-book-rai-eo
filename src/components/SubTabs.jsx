@@ -21,11 +21,6 @@ export default function SubTabs({ page, tabs, active }) {
           className="tab"
         >
           {tab.label}
-          {tab.status === "draft" && (
-            <span className="ml-1.5 text-[10px] font-normal uppercase tracking-wide text-muted">
-              draft
-            </span>
-          )}
         </a>
       ))}
     </div>

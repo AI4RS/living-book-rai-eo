@@ -1,11 +1,7 @@
-// Single source for page names, sub-tab ids and labels.
+// Single source for page names, sub-tab ids and labels, and chapter outlines.
 // Page names are working titles: rename them here and the whole site follows.
 
 export const SITE_TITLE = "Responsible AI in Earth Observation Living Book";
-
-// Animated placeholder maps on draft question pages. Set to false to hide them
-// everywhere.
-export const SHOW_PLACEHOLDER_MAPS = true;
 
 // Publisher and project links (footer).
 export const EXTERNAL_LINKS = {
@@ -16,15 +12,20 @@ export const EXTERNAL_LINKS = {
 
 export const PAGES = {
   home: { id: "home", label: "Home" },
+  lifecycle: {
+    id: "lifecycle",
+    label: "Lifecycle",
+    tagline: "Follow an EO project stage by stage, from planning to its effects on people and planet.",
+  },
+  principles: {
+    id: "principles",
+    label: "Principles",
+    tagline: "Start from a principle and see the questions it raises across the lifecycle.",
+  },
   applications: {
     id: "applications",
     label: "Applications",
-    tagline: "Start from a domain and see what goes wrong there.",
-  },
-  questions: {
-    id: "questions",
-    label: "Lifecycle Questions",
-    tagline: "Start from a question you face while building an EO model.",
+    tagline: "Start from a domain and walk it through the lifecycle.",
   },
   simulator: {
     id: "simulator",
@@ -35,44 +36,95 @@ export const PAGES = {
 };
 
 // Top nav order.
-export const MAIN_NAV = [PAGES.home, PAGES.applications, PAGES.questions, PAGES.simulator];
-
-// status: "built" | "draft". First entry is the default sub-tab.
-export const APPLICATION_TABS = [
-  { id: "agriculture", label: "Agriculture & food security", status: "built" },
-  { id: "forests", label: "Forests", status: "built" },
-  { id: "hazards", label: "Hazards & disaster response", status: "draft" },
-  { id: "urban-health", label: "Urban & public health", status: "draft" },
-  { id: "climate", label: "Climate", status: "draft" },
-  { id: "security-infrastructure", label: "Security & critical infrastructure", status: "draft" },
+export const MAIN_NAV = [
+  PAGES.home,
+  PAGES.lifecycle,
+  PAGES.principles,
+  PAGES.applications,
+  PAGES.simulator,
 ];
 
-export const QUESTION_TABS = [
-  { id: "fairness", label: "Fairness", status: "built" },
-  { id: "green-ai", label: "Green AI & energy", status: "built" },
-  { id: "training-data", label: "Training data", status: "draft" },
-  { id: "evaluation", label: "Evaluation beyond accuracy", status: "draft" },
-  { id: "uncertainty-robustness", label: "Uncertainty & robustness", status: "draft" },
-  { id: "transparency-accountability", label: "Transparency & accountability", status: "draft" },
-  { id: "privacy", label: "Privacy & sensitive data", status: "draft" },
-  { id: "genai", label: "Generative AI & foundation models", status: "draft" },
+// Sub-tabs per page. First entry is the default sub-tab. A tab may name a
+// `contributor` (an id in content/contributors.js) to credit on its chapter.
+export const LIFECYCLE_TABS = [
+  { id: "plan-design", label: "Plan & Design" },
+  { id: "collect-process-data", label: "Collect & Process Data" },
+  { id: "build-use-model", label: "Build & Use Model" },
+  { id: "verify-validate", label: "Verify & Validate" },
+  { id: "deploy-use", label: "Deploy & Use" },
+  { id: "operate-monitor", label: "Operate & Monitor" },
+  { id: "people-planet", label: "People & Planet" },
+];
+
+export const PRINCIPLE_TABS = [
+  { id: "fairness", label: "Fairness" },
+  { id: "explainability-transparency", label: "Explainability & transparency" },
+  { id: "uncertainty-robustness", label: "Uncertainty & robustness" },
+  { id: "privacy", label: "Privacy" },
+  { id: "accountability", label: "Accountability" },
+  { id: "sustainability", label: "Sustainability (Green AI)" },
+  { id: "reproducibility-documentation", label: "Reproducibility & documentation" },
+  { id: "stakeholder-engagement", label: "Stakeholder engagement" },
+];
+
+export const APPLICATION_TABS = [
+  { id: "agriculture", label: "Agriculture & food security" },
+  { id: "forests", label: "Forests" },
+  { id: "hazards", label: "Hazards & disaster response" },
+  { id: "urban-health", label: "Urban & public health" },
+  { id: "climate", label: "Climate" },
+  { id: "security-infrastructure", label: "Security & critical infrastructure" },
 ];
 
 export const SUB_TABS = {
+  lifecycle: LIFECYCLE_TABS,
+  principles: PRINCIPLE_TABS,
   applications: APPLICATION_TABS,
-  questions: QUESTION_TABS,
+};
+
+// Section headings every chapter of a part shares, in order.
+export const CHAPTER_SECTIONS = {
+  lifecycle: [
+    "What happens at this stage",
+    "Who is involved",
+    "Principles at this stage",
+    "In practice",
+    "Checklist",
+  ],
+  principles: [
+    "Opening",
+    "What it means in EO",
+    "Where it shows up in the lifecycle",
+    "Questions and how to address them",
+    "Cases",
+    "Checklist",
+    "References",
+  ],
+  applications: [
+    "Opening",
+    "Why it matters in this domain",
+    "Walk through the lifecycle",
+    "Principles most at stake",
+    "Cases",
+    "References",
+  ],
+};
+
+// Retired page ids that should still open their successor: { oldPage: newPage }.
+export const PAGE_ALIASES = {
+  questions: "principles",
 };
 
 // Retired sub-tab ids that should still open their successor, so old links keep
-// working: { page: { oldId: newId } }.
+// working: { page: { oldId: newId } }. Keyed by the page after PAGE_ALIASES.
+// Unknown ids open the page's first sub-tab.
 export const SUB_TAB_ALIASES = {
   applications: { "forests-climate": "forests" },
+  principles: {
+    "green-ai": "sustainability",
+    "transparency-accountability": "explainability-transparency",
+  },
 };
 
-export const findApplication = (id) => APPLICATION_TABS.find((t) => t.id === id);
-export const findQuestion = (id) => QUESTION_TABS.find((t) => t.id === id);
-
-// Hash helpers. Routes look like #/home, #/simulator, #/questions/fairness.
+// Hash helpers. Routes look like #/home, #/simulator, #/principles/fairness.
 export const hrefFor = (page, sub) => (sub ? `#/${page}/${sub}` : `#/${page}`);
-export const applicationHref = (id) => hrefFor(PAGES.applications.id, id);
-export const questionHref = (id) => hrefFor(PAGES.questions.id, id);
