@@ -5,7 +5,7 @@ export const SITE_TITLE = "Responsible AI in Earth Observation Living Book";
 
 // Project links (footer).
 export const EXTERNAL_LINKS = {
-  github: "https://github.com/aldinorizaldy/living-book-rai-eo",
+  github: "https://github.com/ai4rs/living-book-rai-eo",
 };
 
 export const PAGES = {

@@ -43,7 +43,7 @@ npm run build
 
 Repository remote:
 
-`https://github.com/aldinorizaldy/living-book-rai-eo.git`
+`https://github.com/ai4rs/living-book-rai-eo.git`
 
 Push source branch:
 
@@ -68,11 +68,11 @@ In GitHub repository settings:
 Verify deployment from terminal:
 
 ```bash
-curl -I -L https://aldinorizaldy.github.io/living-book-rai-eo/
+curl -I -L https://ai4rs.github.io/living-book-rai-eo/
 ```
 
 Expected result: `HTTP/2 200` (it may take 1-5 minutes after first publish).
 
 Live URL:
 
-`https://aldinorizaldy.github.io/living-book-rai-eo/`
+`https://ai4rs.github.io/living-book-rai-eo/`

@@ -25,7 +25,7 @@ The site uses a light, publication-style design: white background, one blue acce
 - **Icons:** Lucide React
 - **Routing:** hash-based, no router dependency (`src/lib/router.js`)
 - **Build/Deploy:** `vite build` + `gh-pages -d dist`
-- **Hosting:** GitHub Pages project site (`/living-book-rai-eo/`)
+- **Hosting:** GitHub Pages project site (`/living-book-rai-eo/`) at https://ai4rs.github.io/living-book-rai-eo/, repo https://github.com/ai4rs/living-book-rai-eo (moved to the ai4rs org, see Completed Tasks 10)
 - **Local tooling:** Conda env (`rai-eo-node`) with Node.js 20 + npm
 
 ### Folder layout
@@ -123,7 +123,7 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - Fairness question page built (framing, why it matters, failure modes, best practices, checklist, cases, related questions)
    - Agriculture application page built (intro, domain failure points, go-deeper links, two cases, related questions)
    - All remaining sub-pages render as drafts with `DraftBanner` and the existing case content
-   - `package.json` `homepage` fixed to `https://aldinorizaldy.github.io/living-book-rai-eo`
+   - `package.json` `homepage` fixed to `https://ai4rs.github.io/living-book-rai-eo`
 
 4. **Removed the Fairness Lab and the agriculture running example**
    - The interactive "Fairness Lab: Crop Insurance Transfer Across Regions" and the EU-trained crop mapping running example were not meaningful to readers.
@@ -158,6 +158,11 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - Home rewritten as three placeholder sections with entry cards; hero has three buttons; header description updated.
    - Removed the old content and the code that only served it: `content/cases.js`, `questions.js`, `applications.js`, `mapScenes.js`, the question and application chapter and draft pages, `CaseCard`, `CaseEvidence`, `CrossLink`, `RelatedQuestions`, `DummyMapPanel`, `BulletList`, `SHOW_PLACEHOLDER_MAPS` and the map animation CSS. All of it, including the evidence-backed tree-mapping case (Rizaldy et al., 2026, doi:10.1016/j.rse.2026.115564), is in git history; last present at `abe84e6`.
    - Old `#/questions/<id>` and `#/applications/forests-climate` links redirect (see Routes).
+
+10. **Repo moved to the ai4rs organization** (2026-10-26)
+   - The repository moved from the personal `aldinorizaldy` account to the `ai4rs` organization; the repo name is unchanged.
+   - New URLs: repo https://github.com/ai4rs/living-book-rai-eo, site https://ai4rs.github.io/living-book-rai-eo/.
+   - Updated `package.json` `homepage`, the footer GitHub link (`EXTERNAL_LINKS` in `config/navigation.js`), and README. `vite.config.js` `base: "/living-book-rai-eo/"` is unchanged because the repo name is the same.
 
 ---
 

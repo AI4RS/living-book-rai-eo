@@ -2,7 +2,7 @@
   "name": "living-book-rai-eo",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://aldinorizaldy.github.io/living-book-rai-eo",
+  "homepage": "https://ai4rs.github.io/living-book-rai-eo",
   "type": "module",
   "scripts": {
     "dev": "vite",
