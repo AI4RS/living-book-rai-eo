@@ -1,7 +1,6 @@
 import { useId } from "react";
 
-// Dotted ellipse echoing the IADF logo globe. Decorative only; size, position,
-// and opacity come from className.
+// Decorative dotted ellipse; size, position, and opacity come from className.
 export default function DottedEllipse({ className = "" }) {
   const id = useId();
   return (

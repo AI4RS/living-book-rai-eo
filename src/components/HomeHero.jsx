@@ -10,8 +10,7 @@ const HERO_LINKS = [PAGES.lifecycle, PAGES.principles, PAGES.applications];
 const heroButton =
   "inline-flex min-h-[52px] w-full items-center justify-center px-6 text-[17px] font-bold transition-colors focus-visible:outline-white sm:w-auto";
 
-// Full-width accent band at the top of Home. No logos here: the header above
-// already carries the IADF logo.
+// Full-width accent band at the top of Home.
 export default function HomeHero() {
   return (
     <section className="relative overflow-hidden bg-accent px-5 pb-12 pt-12 text-white md:px-16 md:pb-[104px] md:pt-24">

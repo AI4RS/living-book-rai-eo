@@ -1,4 +1,3 @@
-import iadfLogo from "./assets/IADF.webp";
 import HomeHero from "./components/HomeHero";
 import PageBanner from "./components/PageBanner";
 import SiteFooter from "./components/SiteFooter";
@@ -26,24 +25,13 @@ export default function App() {
     <div className="flex min-h-screen flex-col bg-surface">
       <header className="bg-surface">
         <div className="mx-auto max-w-6xl px-4 pt-5">
-          <a
-            href={hrefFor(PAGES.home.id)}
-            className="flex items-center gap-3 md:gap-4"
-          >
-            <img
-              src={iadfLogo}
-              alt="IEEE GRSS Image Analysis and Data Fusion logo"
-              className="h-10 w-auto shrink-0 md:h-14"
-            />
-            <span className="h-11 w-px shrink-0 bg-line-strong" aria-hidden="true" />
-            <span className="min-w-0">
-              <TitleTag className="font-serif text-lg font-bold leading-tight text-ink md:text-2xl">
-                {SITE_TITLE}
-              </TitleTag>
-              <span className="mt-0.5 hidden max-w-prose text-sm text-muted sm:block">
-                Explore Responsible AI in EO by lifecycle stage, by principle, or by
-                application area.
-              </span>
+          <a href={hrefFor(PAGES.home.id)} className="block">
+            <TitleTag className="font-serif text-lg font-bold leading-tight text-ink md:text-2xl">
+              {SITE_TITLE}
+            </TitleTag>
+            <span className="mt-0.5 hidden max-w-prose text-sm text-muted sm:block">
+              Explore Responsible AI in EO by lifecycle stage, by principle, or by
+              application area.
             </span>
           </a>
           <nav aria-label="Main" className="mt-3 flex gap-6 overflow-x-auto">
