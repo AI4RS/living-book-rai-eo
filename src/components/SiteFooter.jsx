@@ -9,9 +9,8 @@ export default function SiteFooter() {
   return (
     <footer className="mt-16 bg-navy text-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 md:flex-row md:items-start md:justify-between">
-        <p className="max-w-md text-sm leading-relaxed text-iadf-tint">
-          Living Book of the IEEE GRSS Image Analysis and Data Fusion Technical
-          Committee (IADF), Working Group on Responsible AI for Earth Observation
+        <p className="max-w-md text-sm leading-relaxed text-accent-soft">
+          Living Book of the Working Group on Responsible AI for Earth Observation
           (WG-RAI).
         </p>
 

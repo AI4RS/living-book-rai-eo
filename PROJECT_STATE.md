@@ -83,16 +83,15 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
 
 ### Visual design system
 
-- **Branding:** the book is published under the IEEE GRSS Image Analysis and Data Fusion Technical Committee (IADF), through its Working Group on Responsible AI for Earth Observation (WG-RAI). WG-RAI has no logo, so it is named in text only.
-- **No logos or external GRSS / IADF links** (removed on 2026-10-26). The IADF and GRSS logo files are in git history (`src/assets/IADF.webp`, `src/assets/grss-logo.svg`, last present before that commit). The IADF / WG-RAI credit remains as text in the Home hero and footer.
+- **Branding:** the book is credited to the Working Group on Responsible AI for Earth Observation (WG-RAI), in text only. All IEEE GRSS and IADF identification (logos, links, names) was removed on 2026-10-26; the logo files (`src/assets/IADF.webp`, `src/assets/grss-logo.svg`) and the earlier wording are in git history.
 - **Layout:**
   - **Header (all pages):** white bar with the serif bold site title and a muted description line ("by lifecycle stage, by principle, or by application area"; hidden on phone). The title links Home. The main nav and sub-tabs sit below.
   - **Home hero:** full-width accent band (`components/HomeHero.jsx`). It has an eyebrow, serif H1, lead, three square buttons (Lifecycle, Principles, Applications; the first is filled), the WG-RAI credit line, and a decorative dotted ellipse (`aria-hidden`). The ellipse is full size and 0.4 opacity at ≥1280px and smaller and fainter below that, so text stays legible.
   - **Page banner (all other pages):** a slim accent band (`components/PageBanner.jsx`) between the header and the sub-tabs, showing the page name (`longLabel` or `label`) and its `tagline` from `config/navigation.js`, with a smaller dotted ellipse. Every page therefore has white header → blue band → content; Home's band is the tall hero. The ellipse is shared with the hero (`components/DottedEllipse.jsx`).
-  - **Footer (all pages):** navy band (`components/SiteFooter.jsx`). The "Living Book of the IEEE GRSS IADF… (WG-RAI)" credit as text, no logos. Page links and GitHub are on the right. Everything stacks on phone. The GitHub URL lives in `EXTERNAL_LINKS` in `config/navigation.js`.
+  - **Footer (all pages):** navy band (`components/SiteFooter.jsx`). The "Living Book of the Working Group on Responsible AI for Earth Observation (WG-RAI)" credit as text. Page links and GitHub are on the right. Everything stacks on phone. The GitHub URL lives in `EXTERNAL_LINKS` in `config/navigation.js`.
 - **Colors:** white page, very light gray (`subtle`) for the sub-tab bar, near-black navy text, muted slate secondary text.
-  - IADF blue accent `#2a4a9c` (hover `#1f3a80`, tint `#eaf1fb`), `navy` `#0b1f4b` for the footer, `iadf-tint` `#d8e8f8` for dots and light text on blue or navy, `line-strong` `#c5d1e3`. There are no gradients and no second accent.
-  - Contrast: white on accent is about 8.2:1, `iadf-tint` on accent about 6.6:1, and white on navy about 16:1.
+  - Blue accent `#2a4a9c` (hover `#1f3a80`, tint `#eaf1fb`), `navy` `#0b1f4b` for the footer, `accent-soft` `#d8e8f8` for dots and light text on blue or navy, `line-strong` `#c5d1e3`. There are no gradients and no second accent.
+  - Contrast: white on accent is about 8.2:1, `accent-soft` on accent about 6.6:1, and white on navy about 16:1.
 - **Semantic colors**, used only where meaning requires it: `risk` (muted red) for Risk callouts and high-risk levels, `safe` (teal) for Responsible move callouts and good levels, `warn` (amber) for Draft banners and moderate levels. Callouts are a thin left border plus a light tint.
 - **Shape:** sharp corners everywhere (Tailwind `borderRadius` is overridden to 0, with only a 2px `sm` available), 1px light-gray borders, and no heavy shadows. Interactive cards get an accent left edge on hover.
 - **Typography:** Source Sans 3 for body and UI and Source Serif 4 for titles and headings, loaded from Google Fonts in `index.html`. They fall back to the system sans stack and to Georgia / `ui-serif`. Section labels are muted uppercase, and prose is capped at `max-w-prose`.
@@ -135,9 +134,9 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - Light theme, blue accent, sharp corners, serif headings, centralized tokens
    - Simulator restyled with logic unchanged
 
-6. **IEEE GRSS IADF branding and mobile polish** (branch `iadf-branding`)
-   - IADF logo lockup in the header, Home hero band, navy footer with IADF and GRSS logos and the WG-RAI credit
-   - IADF blue accent, navy and iadf-tint tokens, Source Serif 4 / Source Sans 3
+6. **Branding and mobile polish** (later stripped of GRSS / IADF identification, see Branding)
+   - Logo lockup in the header, Home hero band, navy footer with logos and the WG-RAI credit (logos since removed)
+   - Blue accent, navy and accent-soft tokens, Source Serif 4 / Source Sans 3
    - 44px tap targets, one-column grids on phone, overflow checked from 320px up
 
 7. **Forests / Climate split and the first evidence-backed case** (branch `forests-green-ai`)

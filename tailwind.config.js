@@ -21,7 +21,7 @@ export default {
         surface: token("surface"),
         subtle: token("subtle"),
         navy: token("navy"),
-        "iadf-tint": token("iadf-tint"),
+        "accent-soft": token("accent-soft"),
         accent: {
           DEFAULT: token("accent"),
           hover: token("accent-hover"),

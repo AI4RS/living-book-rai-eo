@@ -14,12 +14,12 @@
   --color-surface: 255 255 255; /* #ffffff page */
   --color-subtle: 248 250 252; /* #f8fafc alternate sections */
 
-  /* IEEE GRSS IADF brand blues. */
+  /* Brand blues. */
   --color-accent: 42 74 156; /* #2a4a9c */
   --color-accent-hover: 31 58 128; /* #1f3a80 */
   --color-accent-tint: 234 241 251; /* #eaf1fb */
   --color-navy: 11 31 75; /* #0b1f4b footer band */
-  --color-iadf-tint: 216 232 248; /* #d8e8f8 dots, light text on blue/navy */
+  --color-accent-soft: 216 232 248; /* #d8e8f8 dots, light text on blue/navy */
 
   /* Semantic colors, used only where meaning requires it. */
   --color-risk: 185 28 28; /* #b91c1c */
