@@ -1,12 +1,13 @@
 import HomeHero from "./components/HomeHero";
 import PageBanner from "./components/PageBanner";
 import SiteFooter from "./components/SiteFooter";
-import SubTabs from "./components/SubTabs";
-import { MAIN_NAV, PAGES, SITE_TITLE, SUB_TABS, hrefFor } from "./config/navigation";
+import ChapterNav from "./components/ChapterNav";
+import { CHAPTERS, MAIN_NAV, PAGES, SITE_TITLE, hrefFor } from "./config/navigation";
 import IntegratedSimulatorTab from "./labs/IntegratedSimulatorTab";
 import { useHashRoute } from "./lib/router";
 import ChapterPage from "./pages/ChapterPage";
 import Home from "./pages/Home";
+import PartLanding from "./pages/PartLanding";
 
 // The hash holds the route, so the skip link moves focus itself instead of
 // navigating to #main-content.
@@ -15,15 +16,25 @@ function skipToContent(event) {
   document.getElementById("main-content")?.focus();
 }
 
-function renderPage({ page, sub }) {
-  if (SUB_TABS[page]) return <ChapterPage page={page} sub={sub} />;
+// Lifecycle, Principles and Applications: chapter list on the left, then the
+// part's landing page or one of its chapters.
+function PartPage({ page, chapter }) {
+  return (
+    <div className="md:grid md:grid-cols-[15rem_minmax(0,1fr)] md:gap-10 lg:grid-cols-[16rem_minmax(0,1fr)] lg:gap-14">
+      <ChapterNav page={page} current={chapter} />
+      {chapter ? <ChapterPage page={page} chapter={chapter} /> : <PartLanding page={page} />}
+    </div>
+  );
+}
+
+function renderPage({ page, chapter }) {
+  if (CHAPTERS[page]) return <PartPage page={page} chapter={chapter} />;
   if (page === PAGES.simulator.id) return <IntegratedSimulatorTab />;
   return <Home />;
 }
 
 export default function App() {
   const route = useHashRoute();
-  const subTabs = SUB_TABS[route.page];
   const isHome = route.page === PAGES.home.id;
   // On Home the hero holds the page's h1, so the header title is plain text.
   const TitleTag = isHome ? "p" : "h1";
@@ -60,14 +71,6 @@ export default function App() {
       </header>
 
       {isHome ? <HomeHero /> : <PageBanner page={PAGES[route.page]} />}
-
-      {subTabs && (
-        <div className="border-b border-line bg-subtle">
-          <nav aria-label="Sections" className="mx-auto max-w-6xl px-4">
-            <SubTabs page={route.page} tabs={subTabs} active={route.sub} />
-          </nav>
-        </div>
-      )}
 
       <main
         id="main-content"

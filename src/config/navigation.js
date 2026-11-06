@@ -1,4 +1,4 @@
-// Single source for page names, sub-tab ids and labels, and chapter outlines.
+// Single source for page names, chapter ids and labels, and chapter outlines.
 // Page names are working titles: rename them here and the whole site follows.
 
 export const SITE_TITLE = "Responsible AI in Earth Observation Living Book";
@@ -42,14 +42,16 @@ export const MAIN_NAV = [
   PAGES.simulator,
 ];
 
-// Sub-tabs per page. First entry is the default sub-tab. A tab may name a
-// `contributor` (an id in content/contributors.js) to credit on its chapter,
-// and a one-line `tagline` shown under its title.
+// Chapters per part, in reading order (the order of the chapter list, and of
+// Previous / Next). A chapter may name a `contributor` (an id in
+// content/contributors.js) to credit on its page, and a one-line `tagline`
+// shown under its title and in the part's chapter list. Each part opens on a
+// landing page (pages/PartLanding.jsx; intro text in content/parts.js).
 //
 // Lifecycle stages are EO-specific names over the seven stages of the NIST AI
 // RMF 1.0 lifecycle (Fig. 2); `nist` keeps the original NIST stage name. Ids
 // stay as they were so links keep working.
-export const LIFECYCLE_TABS = [
+export const LIFECYCLE_CHAPTERS = [
   {
     id: "plan-design",
     label: "Define the EO problem",
@@ -94,7 +96,7 @@ export const LIFECYCLE_TABS = [
   },
 ];
 
-export const PRINCIPLE_TABS = [
+export const PRINCIPLE_CHAPTERS = [
   { id: "fairness", label: "Fairness" },
   { id: "explainability-transparency", label: "Explainability & transparency" },
   { id: "uncertainty-robustness", label: "Uncertainty & robustness" },
@@ -105,7 +107,7 @@ export const PRINCIPLE_TABS = [
   { id: "stakeholder-engagement", label: "Stakeholder engagement" },
 ];
 
-export const APPLICATION_TABS = [
+export const APPLICATION_CHAPTERS = [
   { id: "agriculture", label: "Agriculture & food security" },
   { id: "forests", label: "Forests" },
   { id: "hazards", label: "Hazards & disaster response" },
@@ -114,11 +116,14 @@ export const APPLICATION_TABS = [
   { id: "security-infrastructure", label: "Security & critical infrastructure" },
 ];
 
-export const SUB_TABS = {
-  lifecycle: LIFECYCLE_TABS,
-  principles: PRINCIPLE_TABS,
-  applications: APPLICATION_TABS,
+export const CHAPTERS = {
+  lifecycle: LIFECYCLE_CHAPTERS,
+  principles: PRINCIPLE_CHAPTERS,
+  applications: APPLICATION_CHAPTERS,
 };
+
+// Lifecycle stages are a sequence, so their chapter lists are numbered.
+export const NUMBERED_PARTS = ["lifecycle"];
 
 // Section headings every chapter of a part shares, in order.
 export const CHAPTER_SECTIONS = {
@@ -153,10 +158,10 @@ export const PAGE_ALIASES = {
   questions: "principles",
 };
 
-// Retired sub-tab ids that should still open their successor, so old links keep
-// working: { page: { oldId: newId } }. Keyed by the page after PAGE_ALIASES.
-// Unknown ids open the page's first sub-tab.
-export const SUB_TAB_ALIASES = {
+// Retired chapter ids that should still open their successor, so old links
+// keep working: { page: { oldId: newId } }. Keyed by the page after
+// PAGE_ALIASES. Unknown ids open the part's landing page.
+export const CHAPTER_ALIASES = {
   applications: { "forests-climate": "forests" },
   principles: {
     "green-ai": "sustainability",
@@ -164,5 +169,10 @@ export const SUB_TAB_ALIASES = {
   },
 };
 
+// A part's chapter list in reading order: its landing page ("Overview",
+// id null) first, then its chapters. Drives the chapter sidebar and
+// Previous / Next.
+export const readingOrder = (page) => [{ id: null, label: "Overview" }, ...CHAPTERS[page]];
+
 // Hash helpers. Routes look like #/home, #/simulator, #/principles/fairness.
-export const hrefFor = (page, sub) => (sub ? `#/${page}/${sub}` : `#/${page}`);
+export const hrefFor = (page, chapter) => (chapter ? `#/${page}/${chapter}` : `#/${page}`);

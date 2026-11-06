@@ -93,6 +93,16 @@ body {
     @apply border-accent font-semibold text-accent;
   }
 
+  /* Chapter list (sidebar and the mobile Chapters disclosure). The current item
+     gets the same accent and weight as the active top-nav tab. */
+  .chapter-link {
+    @apply flex min-h-11 items-start gap-2 border-l-2 border-transparent py-2.5 pl-3 pr-2 text-sm leading-snug text-muted transition-colors hover:border-line-strong hover:text-ink;
+  }
+
+  .chapter-link[aria-current="page"] {
+    @apply border-accent font-semibold text-accent;
+  }
+
   /* Visually hidden until focused with the keyboard. */
   .skip-link {
     @apply absolute left-4 top-4 z-50 -translate-y-24 bg-accent px-4 py-2 text-sm font-semibold text-white focus:translate-y-0;
