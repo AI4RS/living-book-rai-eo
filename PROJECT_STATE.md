@@ -24,7 +24,7 @@ The site uses a light, publication-style design: white background, one blue acce
 - **Styling:** Tailwind CSS with design tokens (see Visual design system) + a few CSS keyframe animations
 - **Icons:** Lucide React
 - **Routing:** hash-based, no router dependency (`src/lib/router.js`)
-- **Build/Deploy:** `vite build` + `gh-pages -d dist`
+- **Build/Deploy:** GitHub Actions (`.github/workflows/deploy.yml`): on every push to `main` (or a manual "Run workflow"), `npm ci` + `npm run build`, then `dist/` is published with `actions/deploy-pages`. Settings → Pages → Source is **GitHub Actions**.
 - **Hosting:** GitHub Pages project site (`/living-book-rai-eo/`) at https://ai4rs.github.io/living-book-rai-eo/, repo https://github.com/ai4rs/living-book-rai-eo (moved to the ai4rs org, see Completed Tasks 10)
 - **Local tooling:** Conda env (`rai-eo-node`) with Node.js 20 + npm
 
@@ -191,13 +191,16 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - "Where this lifecycle comes from" note with NIST and OECD references on the first stage page.
    - `ChapterHeader` gained an optional `note` line under the title.
 
+13. **Deploys moved to GitHub Actions** (2026-11-06)
+   - `.github/workflows/deploy.yml` builds and publishes on every push to `main`; Pages source switched to GitHub Actions. First manual run succeeded and the live site matched the local build.
+
 ---
 
 ## In Progress
 
 1. **Production parity verification between local and GitHub Pages**
-   - The live URL has intermittently served older hashed assets than the `gh-pages` tip.
-   - After each deploy, compare the asset hashes in the live `index.html` with `dist/index.html`.
+   - Under the old `gh-pages` branch flow the live URL intermittently served older hashed assets. Since 2026-11-06 deploys go through GitHub Actions; keep checking parity for a few deploys to see whether that is resolved.
+   - After each deploy, check the workflow run is green in the Actions tab and compare the asset hashes in the live `index.html` with a local `npm run build`.
 
 ---
 
@@ -246,7 +249,8 @@ No hard engineering blockers.
 
 8. **Lightweight SVG/CSS visualizations instead of map SDKs**
 
-9. **Deploy via `gh-pages` branch from `dist/`**
+9. **Deploy with GitHub Actions on push to `main`**
+   - Replaced the `gh-pages` branch flow (`npm run deploy`) on 2026-11-06, so pushing and going live are one step. The `gh-pages` branch and the `gh-pages` / `deploy` npm scripts remain but are not served; they can be removed once the workflow has proven reliable.
 
 ---
 
@@ -293,4 +297,4 @@ The **paper** needs a separate, narrower storyline than the Living Book, for exa
 
 5. **Start a paper track** with its own, narrower storyline.
 
-6. **After each deploy, confirm live parity**: compare the asset hashes in the live `index.html` with the local `dist/index.html`.
+6. **Pushing to `main` deploys the site.** Push only when the user asks, since a push is also a release. After the workflow run finishes, confirm live parity: compare the asset hashes in the live `index.html` with a local `npm run build`.

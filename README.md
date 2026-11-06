@@ -41,29 +41,17 @@ npm run build
 
 ## Deploy to GitHub Pages
 
-Repository remote:
+Repository: `https://github.com/ai4rs/living-book-rai-eo.git`
 
-`https://github.com/ai4rs/living-book-rai-eo.git`
-
-Push source branch:
+The site deploys itself. Every push to `main` runs the **Deploy to GitHub Pages** workflow (`.github/workflows/deploy.yml`), which runs `npm ci` and `npm run build` and publishes `dist/`. It usually goes live within one to two minutes.
 
 ```bash
-git push -u origin main
+git push origin main
 ```
 
-Deploy static site:
-
-```bash
-conda activate rai-eo-node
-cd .../living-book-rai-eo
-npm run deploy
-```
-
-In GitHub repository settings:
-
-1. Go to **Settings -> Pages**
-2. Set **Source** to **Deploy from a branch**
-3. Select branch **gh-pages** and folder **/ (root)**
+- Follow a deploy in the repository's **Actions** tab. To redeploy without a new commit, open **Deploy to GitHub Pages** there and click **Run workflow**.
+- Repository setting this relies on: **Settings -> Pages -> Source: GitHub Actions**.
+- `npm run deploy` (the older `gh-pages` branch flow) is no longer used: with the source set to GitHub Actions, the `gh-pages` branch is not served.
 
 Verify deployment from terminal:
 
@@ -71,7 +59,7 @@ Verify deployment from terminal:
 curl -I -L https://ai4rs.github.io/living-book-rai-eo/
 ```
 
-Expected result: `HTTP/2 200` (it may take 1-5 minutes after first publish).
+Expected result: `HTTP/2 200`.
 
 Live URL:
 
