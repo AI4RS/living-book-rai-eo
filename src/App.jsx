@@ -8,6 +8,13 @@ import { useHashRoute } from "./lib/router";
 import ChapterPage from "./pages/ChapterPage";
 import Home from "./pages/Home";
 
+// The hash holds the route, so the skip link moves focus itself instead of
+// navigating to #main-content.
+function skipToContent(event) {
+  event.preventDefault();
+  document.getElementById("main-content")?.focus();
+}
+
 function renderPage({ page, sub }) {
   if (SUB_TABS[page]) return <ChapterPage page={page} sub={sub} />;
   if (page === PAGES.simulator.id) return <IntegratedSimulatorTab />;
@@ -23,6 +30,9 @@ export default function App() {
 
   return (
     <div className="flex min-h-screen flex-col bg-surface">
+      <a href="#main-content" onClick={skipToContent} className="skip-link">
+        Skip to content
+      </a>
       <header className="bg-surface">
         <div className="mx-auto max-w-6xl px-4 pt-5">
           <a href={hrefFor(PAGES.home.id)} className="block">
@@ -34,7 +44,7 @@ export default function App() {
               application area.
             </span>
           </a>
-          <nav aria-label="Main" className="mt-3 flex gap-6 overflow-x-auto">
+          <nav aria-label="Main" className="scroll-row mt-3 flex gap-6">
             {MAIN_NAV.map((item) => (
               <a
                 key={item.id}
@@ -59,7 +69,11 @@ export default function App() {
         </div>
       )}
 
-      <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-10">{renderPage(route)}</main>
+      <main
+        id="main-content"
+        tabIndex={-1}
+        className="mx-auto w-full max-w-6xl flex-1 px-4 py-10 focus:outline-none"
+      >{renderPage(route)}</main>
 
       <SiteFooter />
     </div>

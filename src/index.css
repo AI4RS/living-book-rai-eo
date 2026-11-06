@@ -86,11 +86,28 @@ body {
 
   /* Text tabs with a 2px underline for the active item. */
   .tab {
-    @apply -mb-px inline-flex min-h-11 shrink-0 items-center whitespace-nowrap border-b-2 border-transparent py-3 text-sm text-muted transition-colors hover:text-ink;
+    @apply inline-flex min-h-11 shrink-0 items-center whitespace-nowrap border-b-2 border-transparent py-3 text-sm text-muted transition-colors hover:text-ink;
   }
 
   .tab[aria-current="page"] {
     @apply border-accent font-semibold text-accent;
+  }
+
+  /* Visually hidden until focused with the keyboard. */
+  .skip-link {
+    @apply absolute left-4 top-4 z-50 -translate-y-24 bg-accent px-4 py-2 text-sm font-semibold text-white focus:translate-y-0;
+  }
+
+  /* A row that may scroll sideways on narrow screens, with the scrollbar
+     hidden and no vertical scrolling. */
+  .scroll-row {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+  }
+
+  .scroll-row::-webkit-scrollbar {
+    display: none;
   }
 
   /* Thin left border + light tint callouts. */
