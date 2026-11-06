@@ -43,15 +43,55 @@ export const MAIN_NAV = [
 ];
 
 // Sub-tabs per page. First entry is the default sub-tab. A tab may name a
-// `contributor` (an id in content/contributors.js) to credit on its chapter.
+// `contributor` (an id in content/contributors.js) to credit on its chapter,
+// and a one-line `tagline` shown under its title.
+//
+// Lifecycle stages are EO-specific names over the seven stages of the NIST AI
+// RMF 1.0 lifecycle (Fig. 2); `nist` keeps the original NIST stage name. Ids
+// stay as they were so links keep working.
 export const LIFECYCLE_TABS = [
-  { id: "plan-design", label: "Plan & Design" },
-  { id: "collect-process-data", label: "Collect & Process Data" },
-  { id: "build-use-model", label: "Build & Use Model" },
-  { id: "verify-validate", label: "Verify & Validate" },
-  { id: "deploy-use", label: "Deploy & Use" },
-  { id: "operate-monitor", label: "Operate & Monitor" },
-  { id: "people-planet", label: "People & Planet" },
+  {
+    id: "plan-design",
+    label: "Define the EO problem",
+    tagline: "The decision the map supports, the area of interest, and the spatial and temporal scale.",
+    nist: "Plan & Design",
+  },
+  {
+    id: "collect-process-data",
+    label: "Acquire imagery & reference data",
+    tagline: "Sensors, revisit and cloud cover, preprocessing, and ground truth labels.",
+    nist: "Collect & Process Data",
+  },
+  {
+    id: "build-use-model",
+    label: "Train & adapt models",
+    tagline: "From task-specific networks to fine-tuned foundation models, across sensors and regions.",
+    nist: "Build & Use Model",
+  },
+  {
+    id: "verify-validate",
+    label: "Validate across space & time",
+    tagline: "Spatially independent test sets, accuracy assessment, uncertainty, and domain shift.",
+    nist: "Verify & Validate",
+  },
+  {
+    id: "deploy-use",
+    label: "Produce & deliver map products",
+    tagline: "Maps, area estimates, uncertainty layers, metadata, and how they reach users.",
+    nist: "Deploy & Use",
+  },
+  {
+    id: "operate-monitor",
+    label: "Monitor & update",
+    tagline: "Sensor changes, seasonal and long-term drift, model updates, and compute cost.",
+    nist: "Operate & Monitor",
+  },
+  {
+    id: "people-planet",
+    label: "People & planet",
+    tagline: "Communities who are mapped or affected, data sovereignty, dual use, and environmental footprint.",
+    nist: "People & Planet (Use or Impacted by)",
+  },
 ];
 
 export const PRINCIPLE_TABS = [

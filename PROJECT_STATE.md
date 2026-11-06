@@ -41,8 +41,10 @@ src/
   lib/scoring.js          clamp, levelFromScore, barColor (simulator)
   content/
     contributors.js       People who can be credited on a chapter (by id)
+    lifecycle.js          LIFECYCLE_SOURCE: "Where this lifecycle comes from" note + references
     team.js               WHO_WE_ARE: title, intro, contribute line, people (Home "Who we are")
   components/             ChapterSection/ChapterHeader, DraftBanner, SubTabs, PageBanner, TeamList,
+                          SourceNote,
                           HomeHero, DottedEllipse, SiteFooter, MetricCard (simulator)
   pages/
     Home.jsx              Placeholder sections, entry cards, and Who we are
@@ -57,7 +59,7 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 `#/home` (also empty hash), `#/lifecycle/<id>`, `#/principles/<id>`, `#/applications/<id>`, `#/simulator`.
 A page without a sub-tab opens its first sub-tab; unknown pages fall back to Home and unknown sub-tab ids to the page's first sub-tab.
 
-- Lifecycle: `plan-design`, `collect-process-data`, `build-use-model`, `verify-validate`, `deploy-use`, `operate-monitor`, `people-planet`
+- Lifecycle: `plan-design`, `collect-process-data`, `build-use-model`, `verify-validate`, `deploy-use`, `operate-monitor`, `people-planet` (ids follow the NIST AI RMF stage names; the visible labels are EO-specific, see Content schema)
 - Principles: `fairness`, `explainability-transparency`, `uncertainty-robustness`, `privacy`, `accountability`, `sustainability`, `reproducibility-documentation`, `stakeholder-engagement`
 - Applications: `agriculture`, `forests`, `hazards`, `urban-health`, `climate`, `security-infrastructure`
 
@@ -74,7 +76,20 @@ A page without a sub-tab opens its first sub-tab; unknown pages fall back to Hom
 There is no chapter content yet. Structure lives in `config/navigation.js`:
 
 - `PAGES`: id, label, optional `longLabel`, and the one-line `tagline` shown in the page banner and on the Home entry cards.
-- `LIFECYCLE_TABS`, `PRINCIPLE_TABS`, `APPLICATION_TABS`: `{ id, label, contributor? }`. `contributor` is an id in `content/contributors.js`; `ChapterPage` then shows "Contributor: name, role" under the title.
+- `LIFECYCLE_TABS`, `PRINCIPLE_TABS`, `APPLICATION_TABS`: `{ id, label, tagline?, nist?, contributor? }`. `tagline` shows as the lead under the chapter title. `contributor` is an id in `content/contributors.js`; `ChapterPage` then shows "Contributor: name, role" under the title.
+- **Lifecycle stages are EO-adapted labels over the seven NIST AI RMF 1.0 stages (Fig. 2).** Ids are unchanged from the NIST-named version, so routes did not change. Each stage's `nist` field holds the original NIST name, shown under the title as "NIST AI RMF stage: …":
+
+  | id | Label | `nist` |
+  |---|---|---|
+  | `plan-design` | Define the EO problem | Plan & Design |
+  | `collect-process-data` | Acquire imagery & reference data | Collect & Process Data |
+  | `build-use-model` | Train & adapt models | Build & Use Model |
+  | `verify-validate` | Validate across space & time | Verify & Validate |
+  | `deploy-use` | Produce & deliver map products | Deploy & Use |
+  | `operate-monitor` | Monitor & update | Operate & Monitor |
+  | `people-planet` | People & planet | People & Planet (Use or Impacted by) |
+
+- `content/lifecycle.js` (`LIFECYCLE_SOURCE`): the "Where this lifecycle comes from" note (NIST AI RMF 1.0, adapted from the OECD Framework for the Classification of AI Systems, 2022; why NIST over ISO/IEC 22989 / 23894, the EU AI Act, the OECD AI Principles) with two references (doi:10.6028/NIST.AI.100-1, doi:10.1787/cb6d9eca-en). Rendered by `components/SourceNote.jsx` at the top of the first stage page, which is what `#/lifecycle` opens. The Lifecycle part has no separate landing page.
 - `CHAPTER_SECTIONS`: the section headings for each part, defined once and shared by every chapter of that part.
   - Lifecycle: What happens at this stage · Who is involved · Principles at this stage · In practice · Checklist
   - Principles: Opening · What it means in EO · Where it shows up in the lifecycle · Questions and how to address them · Cases · Checklist · References
@@ -170,6 +185,11 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - The three people are **placeholders** (`[Name]`, `[Role in the book]`, `[Affiliation]`, `[Link]`) to be replaced. `content/contributors.js` (chapter credits) is separate and not pulled in.
    - The section names no working group, organization, or initiative.
    - Built to move later: a separate "Who we are" tab only needs a page in `config/navigation.js` and a route that renders `WHO_WE_ARE` with `TeamList`, then the Home section can be removed or shortened to a link.
+
+12. **Lifecycle adapted to EO, with its source cited**
+   - Seven stages keep the NIST AI RMF spine and ids; labels and one-line taglines are EO-specific, and `nist` keeps the NIST name (see Content schema).
+   - "Where this lifecycle comes from" note with NIST and OECD references on the first stage page.
+   - `ChapterHeader` gained an optional `note` line under the title.
 
 ---
 

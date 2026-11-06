@@ -10,15 +10,17 @@ export default function ChapterSection({ title, intro, children, className = "" 
   );
 }
 
-// Page header: small kicker, serif title (often the framing question), optional
-// contributor credit, and a lead: one string or an array of paragraphs.
-export function ChapterHeader({ kicker, title, contributor, lead }) {
+// Page header: small kicker, serif title (often the framing question), an
+// optional muted note under the title, optional contributor credit, and a lead:
+// one string or an array of paragraphs.
+export function ChapterHeader({ kicker, title, note, contributor, lead }) {
   return (
     <header>
       {kicker && <p className="section-label">{kicker}</p>}
       <h2 className="mt-2 max-w-3xl font-serif text-3xl leading-tight text-ink md:text-4xl">
         {title}
       </h2>
+      {note && <p className="mt-2 text-sm text-muted">{note}</p>}
       {contributor && (
         <p className="mt-3 text-sm text-muted">
           Contributor: <span className="font-semibold text-ink">{contributor.name}</span>,{" "}
