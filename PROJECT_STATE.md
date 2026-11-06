@@ -8,7 +8,7 @@ The site is organized as **Home + Lifecycle + Principles + Applications + Simula
 
 - **Home** has the hero, then three sections: what Responsible AI in EO is, why it matters, how to read the book (entry cards for the three parts), and who we are (the people behind the book, plus a line on contributing).
 - **Lifecycle** has a landing page and one chapter per lifecycle stage (seven stages, numbered).
-- **Principles** has a landing page and one chapter per principle (fairness, explainability, uncertainty, privacy, accountability, sustainability, reproducibility, stakeholder engagement). It replaces the former Lifecycle Questions page.
+- **Principles** has a landing page and one chapter per principle: Transparency, Fairness, Privacy, Robustness & security, Uncertainty & reliability, Energy efficiency (Green AI), Human oversight & agency, Social impact. It replaces the former Lifecycle Questions page.
 - **Applications** has a landing page and one chapter per application domain.
 
 Each part is navigated with a left-side chapter list (Overview + chapters) instead of a row of sub-tabs; see **Navigation pattern**.
@@ -65,15 +65,26 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 `parseHash` returns `{ page, chapter }`. A part without a chapter id, or with an unknown one, opens the part's landing page (`chapter: null`); unknown pages fall back to Home.
 
 - Lifecycle: `plan-design`, `collect-process-data`, `build-use-model`, `verify-validate`, `deploy-use`, `operate-monitor`, `people-planet` (ids follow the NIST AI RMF stage names; the visible labels are EO-specific, see Content schema)
-- Principles: `fairness`, `explainability-transparency`, `uncertainty-robustness`, `privacy`, `accountability`, `sustainability`, `reproducibility-documentation`, `stakeholder-engagement`
+- Principles: `transparency`, `fairness`, `privacy`, `robustness-security`, `uncertainty-reliability`, `energy-efficiency`, `human-oversight-agency`, `social-impact` (revised 2026-11-06, see Completed Tasks 15)
 - Applications: `agriculture`, `forests`, `hazards`, `urban-health`, `climate`, `security-infrastructure`
 
 **Old links.** `parseHash` first applies `PAGE_ALIASES` (page level: `questions` → `principles`), then `CHAPTER_ALIASES` for the resolved page (both in `config/navigation.js`):
 
-- `#/questions/fairness`, `uncertainty-robustness`, `privacy` → the principle with the same id
-- `#/questions/green-ai` → `#/principles/sustainability`
-- `#/questions/transparency-accountability` → `#/principles/explainability-transparency`
-- any other old question id (`training-data`, `evaluation`, `genai`) → the first principle (Fairness)
+- Retired principle ids (`#/principles/<old>`) and old question ids (`#/questions/<old>`) map through `CHAPTER_ALIASES.principles`:
+
+  | Old id | Opens |
+  |---|---|
+  | `explainability-transparency` | `transparency` |
+  | `reproducibility-documentation` | `transparency` |
+  | `uncertainty-robustness` (also an old question id) | `uncertainty-reliability` |
+  | `accountability` | `human-oversight-agency` |
+  | `sustainability` | `energy-efficiency` |
+  | `stakeholder-engagement` | `social-impact` |
+  | `green-ai` (question) | `energy-efficiency` |
+  | `transparency-accountability` (question) | `transparency` |
+  | `fairness`, `privacy` (principle and question) | same id, unchanged |
+
+- any other old question id (`training-data`, `evaluation`, `genai`) → the Principles landing page
 - `#/applications/forests-climate` → `#/applications/forests`
 
 ### Content schema
@@ -81,7 +92,7 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 There is no chapter content yet. Structure lives in `config/navigation.js`:
 
 - `PAGES`: id, label, optional `longLabel`, and the one-line `tagline` shown in the page banner and on the Home entry cards.
-- `LIFECYCLE_CHAPTERS`, `PRINCIPLE_CHAPTERS`, `APPLICATION_CHAPTERS` (collected in `CHAPTERS`), in reading order: `{ id, label, tagline?, nist?, contributor? }`. `tagline` shows as the lead under the chapter title and on the part's landing-page card (only Lifecycle stages have taglines so far). `contributor` is an id in `content/contributors.js`; `ChapterPage` then shows "Contributor: name, role" under the title.
+- `LIFECYCLE_CHAPTERS`, `PRINCIPLE_CHAPTERS`, `APPLICATION_CHAPTERS` (collected in `CHAPTERS`), in reading order: `{ id, label, tagline?, nist?, contributor? }`. `tagline` shows as the lead under the chapter title and on the part's landing-page card (Lifecycle stages and principles have taglines; applications do not yet). `contributor` is an id in `content/contributors.js`; `ChapterPage` then shows "Contributor: name, role" under the title.
 - **Lifecycle stages are EO-adapted labels over the seven NIST AI RMF 1.0 stages (Fig. 2).** Ids are unchanged from the NIST-named version, so routes did not change. Each stage's `nist` field holds the original NIST name, shown under the title as "NIST AI RMF stage: …":
 
   | id | Label | `nist` |
@@ -209,6 +220,11 @@ When chapters get written, add a content store keyed by part and chapter id and 
    - Lifecycle source note moved from a box on the first stage into the Lifecycle landing intro, at the normal reading width.
    - Top nav scrollbar fixed and hidden when the row scrolls; skip link added.
    - Removed `SubTabs.jsx`, `SourceNote.jsx`, `content/lifecycle.js`; renamed `*_TABS` → `*_CHAPTERS`, `SUB_TABS` → `CHAPTERS`, `SUB_TAB_ALIASES` → `CHAPTER_ALIASES`.
+
+15. **Revised principle list** (2026-11-06)
+   - Eight principles, in order: Transparency, Fairness, Privacy, Robustness & security, Uncertainty & reliability, Energy efficiency (Green AI), Human oversight & agency, Social impact, each with a one-line tagline in `PRINCIPLE_CHAPTERS`. No source note.
+   - Removed `explainability-transparency`, `uncertainty-robustness`, `accountability`, `sustainability`, `reproducibility-documentation`, `stakeholder-engagement`; old ids and question ids redirect (see Routes).
+   - Chapter template and placeholders unchanged; nothing else referenced principles by id.
 
 ---
 

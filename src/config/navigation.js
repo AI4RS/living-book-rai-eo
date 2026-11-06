@@ -97,14 +97,46 @@ export const LIFECYCLE_CHAPTERS = [
 ];
 
 export const PRINCIPLE_CHAPTERS = [
-  { id: "fairness", label: "Fairness" },
-  { id: "explainability-transparency", label: "Explainability & transparency" },
-  { id: "uncertainty-robustness", label: "Uncertainty & robustness" },
-  { id: "privacy", label: "Privacy" },
-  { id: "accountability", label: "Accountability" },
-  { id: "sustainability", label: "Sustainability (Green AI)" },
-  { id: "reproducibility-documentation", label: "Reproducibility & documentation" },
-  { id: "stakeholder-engagement", label: "Stakeholder engagement" },
+  {
+    id: "transparency",
+    label: "Transparency",
+    tagline: "Data, models, assumptions and outputs can be inspected and understood by the people who use or are affected by them.",
+  },
+  {
+    id: "fairness",
+    label: "Fairness",
+    tagline: "Models and services don't systematically disadvantage regions, communities or user groups.",
+  },
+  {
+    id: "privacy",
+    label: "Privacy",
+    tagline: "Personal and sensitive information, including locations seen from space, stays protected from collection to reporting.",
+  },
+  {
+    id: "robustness-security",
+    label: "Robustness & security",
+    tagline: "Reliable under clouds, sensor changes and shifts in region or season, and resistant to deliberate manipulation.",
+  },
+  {
+    id: "uncertainty-reliability",
+    label: "Uncertainty & reliability",
+    tagline: "Every output carries a trustworthy indication of how far it can be relied on.",
+  },
+  {
+    id: "energy-efficiency",
+    label: "Energy efficiency (Green AI)",
+    tagline: "The energy and emissions of training and running models are measured, reduced and reported.",
+  },
+  {
+    id: "human-oversight-agency",
+    label: "Human oversight & agency",
+    tagline: "People can understand, supervise, override or stop the system, and responsibility stays with people.",
+  },
+  {
+    id: "social-impact",
+    label: "Social impact",
+    tagline: "Effects on people, institutions and society, and the engagement needed to keep them beneficial.",
+  },
 ];
 
 export const APPLICATION_CHAPTERS = [
@@ -163,9 +195,18 @@ export const PAGE_ALIASES = {
 // PAGE_ALIASES. Unknown ids open the part's landing page.
 export const CHAPTER_ALIASES = {
   applications: { "forests-climate": "forests" },
+  // Retired principle ids, and question ids from the former Lifecycle
+  // Questions page (#/questions/<id> resolves through PAGE_ALIASES first).
+  // fairness and privacy kept their ids.
   principles: {
-    "green-ai": "sustainability",
-    "transparency-accountability": "explainability-transparency",
+    "explainability-transparency": "transparency",
+    "reproducibility-documentation": "transparency",
+    "uncertainty-robustness": "uncertainty-reliability",
+    accountability: "human-oversight-agency",
+    sustainability: "energy-efficiency",
+    "stakeholder-engagement": "social-impact",
+    "green-ai": "energy-efficiency",
+    "transparency-accountability": "transparency",
   },
 };
 
