@@ -6,7 +6,7 @@ The project is a deployed **Responsible AI (RAI) in Earth Observation (EO) Livin
 
 The site is organized as **Home + Lifecycle + Principles + Applications + Simulator**:
 
-- **Home** has the hero, then three sections: what Responsible AI in EO is, why it matters, and how to read the book (entry cards for the three parts).
+- **Home** has the hero, then three sections: what Responsible AI in EO is, why it matters, how to read the book (entry cards for the three parts), and who we are (the people behind the book, plus a line on contributing).
 - **Lifecycle** has one sub-tab per lifecycle stage, from Plan & Design to People & Planet.
 - **Principles** has one sub-tab per principle (fairness, explainability, uncertainty, privacy, accountability, sustainability, reproducibility, stakeholder engagement). It replaces the former Lifecycle Questions page.
 - **Applications** has one sub-tab per application domain.
@@ -41,10 +41,11 @@ src/
   lib/scoring.js          clamp, levelFromScore, barColor (simulator)
   content/
     contributors.js       People who can be credited on a chapter (by id)
-  components/             ChapterSection/ChapterHeader, DraftBanner, SubTabs, PageBanner,
+    team.js               WHO_WE_ARE: title, intro, contribute line, people (Home "Who we are")
+  components/             ChapterSection/ChapterHeader, DraftBanner, SubTabs, PageBanner, TeamList,
                           HomeHero, DottedEllipse, SiteFooter, MetricCard (simulator)
   pages/
-    Home.jsx              Three placeholder sections and entry cards
+    Home.jsx              Placeholder sections, entry cards, and Who we are
     ChapterPage.jsx       The one template for every Lifecycle, Principles and Applications chapter
   labs/
     IntegratedSimulatorTab.jsx
@@ -163,6 +164,12 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - The repository moved from the personal `aldinorizaldy` account to the `ai4rs` organization; the repo name is unchanged.
    - New URLs: repo https://github.com/ai4rs/living-book-rai-eo, site https://ai4rs.github.io/living-book-rai-eo/.
    - Updated `package.json` `homepage`, the footer GitHub link (`EXTERNAL_LINKS` in `config/navigation.js`), and README. `vite.config.js` `base: "/living-book-rai-eo/"` is unchanged because the repo name is the same.
+
+11. **"Who we are" section on Home** (after "How to read the book")
+   - Data in `src/content/team.js` (`WHO_WE_ARE`: title, intro, contribute line, `people: [{ name, role, affiliation, link? }]`, where `link` is `{ label, href }`, and without `href` the label shows as plain text). Rendered by `components/TeamList.jsx`; the contribute line links to `EXTERNAL_LINKS.github`.
+   - The three people are **placeholders** (`[Name]`, `[Role in the book]`, `[Affiliation]`, `[Link]`) to be replaced. `content/contributors.js` (chapter credits) is separate and not pulled in.
+   - The section names no working group, organization, or initiative.
+   - Built to move later: a separate "Who we are" tab only needs a page in `config/navigation.js` and a route that renders `WHO_WE_ARE` with `TeamList`, then the Home section can be removed or shortened to a link.
 
 ---
 

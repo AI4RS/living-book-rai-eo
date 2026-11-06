@@ -1,6 +1,8 @@
 import { ArrowRight, BookOpen, Map, RefreshCw } from "lucide-react";
 import ChapterSection from "../components/ChapterSection";
-import { PAGES, hrefFor } from "../config/navigation";
+import TeamList from "../components/TeamList";
+import { EXTERNAL_LINKS, PAGES, hrefFor } from "../config/navigation";
+import { WHO_WE_ARE } from "../content/team";
 
 const ENTRIES = [
   { page: PAGES.lifecycle, icon: RefreshCw },
@@ -39,6 +41,21 @@ export default function Home() {
             <EntryCard key={entry.page.id} {...entry} />
           ))}
         </div>
+      </ChapterSection>
+      <ChapterSection title={WHO_WE_ARE.title} intro={WHO_WE_ARE.intro}>
+        <TeamList people={WHO_WE_ARE.people} />
+        <p className="mt-6 max-w-prose text-muted">
+          {WHO_WE_ARE.contribute.text}{" "}
+          <a
+            href={EXTERNAL_LINKS.github}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="link"
+          >
+            {WHO_WE_ARE.contribute.linkLabel}
+          </a>
+          .
+        </p>
       </ChapterSection>
     </article>
   );
