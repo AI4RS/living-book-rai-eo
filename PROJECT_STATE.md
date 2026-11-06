@@ -266,7 +266,7 @@ No hard engineering blockers.
 8. **Lightweight SVG/CSS visualizations instead of map SDKs**
 
 9. **Deploy with GitHub Actions on push to `main`**
-   - Replaced the `gh-pages` branch flow (`npm run deploy`) on 2026-11-06, so pushing and going live are one step. The `gh-pages` branch and the `gh-pages` / `deploy` npm scripts remain but are not served; they can be removed once the workflow has proven reliable.
+   - Replaced the `gh-pages` branch flow (`npm run deploy`) on 2026-11-06, so pushing and going live are one step. The `gh-pages` branch, the `deploy` / `predeploy` scripts and the `gh-pages` package were removed the same day.
 
 ---
 

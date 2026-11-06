@@ -17,7 +17,7 @@ The chapters are currently an outline: each shows its section headings with plac
 - React + Vite
 - Tailwind CSS
 - Lucide React
-- GitHub Pages deployment via `gh-pages`
+- GitHub Pages deployment via GitHub Actions
 
 ## Local development (Conda)
 
@@ -51,7 +51,6 @@ git push origin main
 
 - Follow a deploy in the repository's **Actions** tab. To redeploy without a new commit, open **Deploy to GitHub Pages** there and click **Run workflow**.
 - Repository setting this relies on: **Settings -> Pages -> Source: GitHub Actions**.
-- `npm run deploy` (the older `gh-pages` branch flow) is no longer used: with the source set to GitHub Actions, the `gh-pages` branch is not served.
 
 Verify deployment from terminal:
 
