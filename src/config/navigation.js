@@ -28,8 +28,7 @@ export const PAGES = {
   simulator: {
     id: "simulator",
     label: "Simulator",
-    longLabel: "Integrated Simulator",
-    tagline: "Test how resolution and label choices trade off privacy, fairness, and compute.",
+    tagline: "Interactive examples, coming soon.",
   },
 };
 

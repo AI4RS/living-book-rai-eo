@@ -75,15 +75,6 @@ body {
     @apply inline-flex min-h-11 items-center justify-center gap-1.5 border border-accent bg-surface px-5 py-2.5 text-sm font-medium text-accent transition-colors hover:bg-accent-tint;
   }
 
-  /* Selectable option (simulator controls). Selected state via aria-pressed. */
-  .option-btn {
-    @apply min-h-11 border border-line-strong bg-surface px-3 py-2 text-sm font-medium text-ink transition-colors hover:border-accent;
-  }
-
-  .option-btn[aria-pressed="true"] {
-    @apply border-accent bg-accent-tint text-accent;
-  }
-
   /* Text tabs with a 2px underline for the active item. */
   .tab {
     @apply inline-flex min-h-11 shrink-0 items-center whitespace-nowrap border-b-2 border-transparent py-3 text-sm text-muted transition-colors hover:text-ink;

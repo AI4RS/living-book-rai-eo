@@ -8,7 +8,7 @@ Responsible AI in Earth Observation Living Book built with Vite + React + Tailwi
 - **Lifecycle** (`#/lifecycle`, `#/lifecycle/<id>`): landing page, then one chapter per lifecycle stage
 - **Principles** (`#/principles`, `#/principles/<id>`): landing page, then one chapter per principle (replaces Lifecycle Questions; old `#/questions/<id>` links redirect)
 - **Applications** (`#/applications`, `#/applications/<id>`): landing page, then one chapter per application domain
-- **Simulator** (`#/simulator`): the Integrated Simulator
+- **Simulator** (`#/simulator`): placeholder, an interactive simulator is coming soon
 
 The chapters are currently an outline: each shows its section headings with placeholders. Lifecycle, Principles, and Applications each open on a landing page (`#/lifecycle` etc.) with a left-side chapter list. Page names, chapters, taglines, and each part's section outline are configured in `src/config/navigation.js`; landing-page intros live in `src/content/parts.js`. Every landing page renders through `src/pages/PartLanding.jsx` and every chapter through `src/pages/ChapterPage.jsx`. See `PROJECT_STATE.md` for the architecture and roadmap.
 

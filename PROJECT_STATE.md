@@ -12,7 +12,7 @@ The site is organized as **Home + Lifecycle + Principles + Applications + Simula
 - **Applications** has a landing page and one chapter per application domain.
 
 Each part is navigated with a left-side chapter list (Overview + chapters) instead of a row of sub-tabs; see **Navigation pattern**.
-- **Simulator** is the original Integrated Simulator. Its logic is unchanged; it has been restyled.
+- **Simulator** is a "coming soon" placeholder (`pages/SimulatorPage.jsx`). The earlier Integrated Simulator used dummy numbers from no study and was removed on 2026-11-06; its last version is at commit `7564000`.
 
 The book is currently an **outline**: every chapter page renders its section headings from one shared template, each with a "To be written." placeholder and a draft banner. All earlier chapter content (cases, question guidance, application copy) was removed in the restructure and can be recovered from git history (last present at `abe84e6`). That includes the evidence-backed tree-mapping case built on Rizaldy et al. (2026), which was the book's only cited case.
 
@@ -42,20 +42,18 @@ src/
                           taglines (CHAPTERS), NUMBERED_PARTS, each part's chapter section
                           outline, page and chapter aliases, readingOrder, hrefFor
   lib/router.js           useHashRoute() + parseHash()
-  lib/scoring.js          clamp, levelFromScore, barColor (simulator)
   content/
     contributors.js       People who can be credited on a chapter (by id)
     parts.js              PART_INTROS: intro text and references for each part's landing page
     team.js               WHO_WE_ARE: title, intro, contribute line, people (Home "Who we are")
   components/             ChapterSection/ChapterHeader, ChapterNav (sidebar + mobile Chapters
                           disclosure), DraftBanner, PageBanner, TeamList,
-                          HomeHero, DottedEllipse, SiteFooter, MetricCard (simulator)
+                          HomeHero, DottedEllipse, SiteFooter
   pages/
     Home.jsx              Placeholder sections, entry cards, and Who we are
     PartLanding.jsx       The one landing page for Lifecycle, Principles and Applications
     ChapterPage.jsx       The one template for every chapter, ending with Previous / Next
-  labs/
-    IntegratedSimulatorTab.jsx
+    SimulatorPage.jsx     "Coming soon" placeholder for the Simulator
 tailwind.config.js        Maps token names to the CSS variables; border radius overridden to 0
 ```
 
@@ -91,7 +89,7 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 
 There is no chapter content yet. Structure lives in `config/navigation.js`:
 
-- `PAGES`: id, label, optional `longLabel`, and the one-line `tagline` shown in the page banner and on the Home entry cards.
+- `PAGES`: id, label, and the one-line `tagline` shown in the page banner and on the Home entry cards.
 - `LIFECYCLE_CHAPTERS`, `PRINCIPLE_CHAPTERS`, `APPLICATION_CHAPTERS` (collected in `CHAPTERS`), in reading order: `{ id, label, tagline?, nist?, contributor? }`. `tagline` shows as the lead under the chapter title and on the part's landing-page card (Lifecycle stages and principles have taglines; applications do not yet). `contributor` is an id in `content/contributors.js`; `ChapterPage` then shows "Contributor: name, role" under the title.
 - **Lifecycle stages are EO-adapted labels over the seven NIST AI RMF 1.0 stages (Fig. 2).** Ids are unchanged from the NIST-named version, so routes did not change. Each stage's `nist` field holds the original NIST name, shown under the title as "NIST AI RMF stage: …":
 
@@ -119,7 +117,7 @@ When chapters get written, add a content store keyed by part and chapter id and 
 - **Layout:**
   - **Header (all pages):** white bar with the serif bold site title and a muted description line ("by lifecycle stage, by principle, or by application area"; hidden on phone). The title links Home. The main nav sits below. A "Skip to content" link appears on keyboard focus and moves focus to `<main>` (it does not change the hash route).
   - **Home hero:** full-width accent band (`components/HomeHero.jsx`). It has an eyebrow, serif H1, lead, three square buttons (Lifecycle, Principles, Applications; the first is filled), and a decorative dotted ellipse (`aria-hidden`). The ellipse is full size and 0.4 opacity at ≥1280px and smaller and fainter below that, so text stays legible.
-  - **Page banner (all other pages):** a slim accent band (`components/PageBanner.jsx`) under the header, showing the page name (`longLabel` or `label`) and its `tagline` from `config/navigation.js`, with a smaller dotted ellipse. Every page therefore has white header → blue band → content; Home's band is the tall hero. The ellipse is shared with the hero (`components/DottedEllipse.jsx`).
+  - **Page banner (all other pages):** a slim accent band (`components/PageBanner.jsx`) under the header, showing the page `label` and its `tagline` from `config/navigation.js`, with a smaller dotted ellipse. Every page therefore has white header → blue band → content; Home's band is the tall hero. The ellipse is shared with the hero (`components/DottedEllipse.jsx`).
   - **Footer (all pages):** navy band (`components/SiteFooter.jsx`). The site title as text. Page links and GitHub are on the right. Everything stacks on phone. The GitHub URL lives in `EXTERNAL_LINKS` in `config/navigation.js`.
 - **Colors:** white page, very light gray (`subtle`) for alternate sections, near-black navy text, muted slate secondary text.
   - Blue accent `#2a4a9c` (hover `#1f3a80`, tint `#eaf1fb`), `navy` `#0b1f4b` for the footer, `accent-soft` `#d8e8f8` for dots and light text on blue or navy, `line-strong` `#c5d1e3`. There are no gradients and no second accent.
@@ -134,11 +132,11 @@ When chapters get written, add a content store keyed by part and chapter id and 
   - **Previous / Next** links at the end of every chapter, in the chapter list's order (the first chapter's Previous is the part overview).
 - **Mobile:**
   - Viewport meta is `width=device-width, initial-scale=1`.
-  - Buttons, tabs, chapter-list items, the Chapters disclosure, simulator options, and footer links are at least 44px tall. Home entry cards are whole-card links.
+  - Buttons, tabs, chapter-list items, the Chapters disclosure, and footer links are at least 44px tall. Home entry cards are whole-card links.
   - Every multi-column grid collapses to one column below `md`.
   - Verified with no horizontal page scroll at 390 and 1280px after the restructure (320 and 768px before it).
-- **Accessibility:** a visible `:focus-visible` outline (accent, or white on the blue and navy bands), AA-contrast tokens, `aria-current` on the active tab and chapter-list item, a skip link, `aria-pressed` on simulator options. On Home the hero holds the page `h1`; on other pages the header title is the `h1`.
-- **Where tokens live:** CSS variables in `:root` in `src/index.css` (change the accent there), mapped to Tailwind color names in `tailwind.config.js`. Shared component classes (`card`, `card-interactive`, `section-label`, `link`, `btn-primary`, `btn-secondary`, `option-btn`, `tab`, `chapter-link`, `scroll-row`, `skip-link`, `callout-*`) are in `@layer components` in `index.css`.
+- **Accessibility:** a visible `:focus-visible` outline (accent, or white on the blue and navy bands), AA-contrast tokens, `aria-current` on the active tab and chapter-list item, a skip link. On Home the hero holds the page `h1`; on other pages the header title is the `h1`.
+- **Where tokens live:** CSS variables in `:root` in `src/index.css` (change the accent there), mapped to Tailwind color names in `tailwind.config.js`. Shared component classes (`card`, `card-interactive`, `section-label`, `link`, `btn-primary`, `btn-secondary`, `tab`, `chapter-link`, `scroll-row`, `skip-link`, `callout-*`) are in `@layer components` in `index.css`.
 
 ---
 
@@ -226,6 +224,11 @@ When chapters get written, add a content store keyed by part and chapter id and 
    - Removed `explainability-transparency`, `uncertainty-robustness`, `accountability`, `sustainability`, `reproducibility-documentation`, `stakeholder-engagement`; old ids and question ids redirect (see Routes).
    - Chapter template and placeholders unchanged; nothing else referenced principles by id.
 
+16. **Dummy simulator replaced by a placeholder** (2026-11-06)
+   - The Simulator page keeps its nav entry and `#/simulator` route but now shows only the banner (tagline "Interactive examples, coming soon.") and a "Coming soon" line.
+   - Removed `labs/IntegratedSimulatorTab.jsx`, `components/MetricCard.jsx`, `lib/scoring.js`, the `option-btn` style and `longLabel`. Last commit with the dummy simulator: `7564000`.
+   - The callout (`callout-risk` / `-safe` / `-info`) and button (`btn-primary` / `-secondary`) classes are kept as part of the design system, though no page uses them right now.
+
 ---
 
 ## In Progress
@@ -276,8 +279,8 @@ No hard engineering blockers.
 6. **No interactive content unless it is meaningful to readers**
    - The Fairness Lab was removed rather than kept as filler. Chapters get an interactive element only when one is genuinely useful to readers.
 
-7. **Preserve the Integrated Simulator's logic**
-   - Reachable from the top nav and Home; only its styling has changed.
+7. **No made-up numbers on the site**
+   - The dummy Integrated Simulator was replaced by a placeholder rather than kept as an illustration. A future simulator must run on a real Earth observation model or published results.
 
 8. **Lightweight SVG/CSS visualizations instead of map SDKs**
 
@@ -300,7 +303,7 @@ No hard engineering blockers.
 
 ### Open questions
 
-- **Simulator:** keep or drop under the new structure? It is still in the top nav and footer but no longer linked from Home.
+- **Simulator:** a real, interactive simulator is planned. Which Earth observation model, dataset or published results it should be built on is still open.
 
 ---
 

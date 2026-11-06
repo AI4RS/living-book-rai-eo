@@ -3,11 +3,11 @@ import PageBanner from "./components/PageBanner";
 import SiteFooter from "./components/SiteFooter";
 import ChapterNav from "./components/ChapterNav";
 import { CHAPTERS, MAIN_NAV, PAGES, SITE_TITLE, hrefFor } from "./config/navigation";
-import IntegratedSimulatorTab from "./labs/IntegratedSimulatorTab";
 import { useHashRoute } from "./lib/router";
 import ChapterPage from "./pages/ChapterPage";
 import Home from "./pages/Home";
 import PartLanding from "./pages/PartLanding";
+import SimulatorPage from "./pages/SimulatorPage";
 
 // The hash holds the route, so the skip link moves focus itself instead of
 // navigating to #main-content.
@@ -29,7 +29,7 @@ function PartPage({ page, chapter }) {
 
 function renderPage({ page, chapter }) {
   if (CHAPTERS[page]) return <PartPage page={page} chapter={chapter} />;
-  if (page === PAGES.simulator.id) return <IntegratedSimulatorTab />;
+  if (page === PAGES.simulator.id) return <SimulatorPage />;
   return <Home />;
 }
 
