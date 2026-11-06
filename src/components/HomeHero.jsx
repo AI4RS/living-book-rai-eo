@@ -18,7 +18,7 @@ export default function HomeHero() {
 
       <div className="relative mx-auto max-w-6xl">
         <p className="text-[13px] font-bold uppercase tracking-[0.14em] text-accent-soft">
-          A living book by WG-RAI
+          A living book
         </p>
         <h1 className="mt-4 max-w-[720px] font-serif text-[34px] font-bold leading-[1.08] text-white md:text-[64px]">
           Responsible AI in Earth Observation
@@ -41,9 +41,6 @@ export default function HomeHero() {
             </a>
           ))}
         </div>
-        <p className="mt-8 max-w-[560px] text-sm leading-relaxed text-accent-soft">
-          Working Group on Responsible AI for Earth Observation (WG-RAI)
-        </p>
       </div>
     </section>
   );

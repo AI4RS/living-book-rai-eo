@@ -84,12 +84,12 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
 
 ### Visual design system
 
-- **Branding:** the book is credited to the Working Group on Responsible AI for Earth Observation (WG-RAI), in text only. All IEEE GRSS and IADF identification (logos, links, names) was removed on 2026-10-26; the logo files (`src/assets/IADF.webp`, `src/assets/grss-logo.svg`) and the earlier wording are in git history.
+- **Branding:** none. The book names no working group, organization, or initiative. All IEEE GRSS and IADF identification (logos, links, names) was removed on 2026-10-26, and the WG-RAI credit on 2026-11-06; the logo files (`src/assets/IADF.webp`, `src/assets/grss-logo.svg`) and the earlier wording are in git history.
 - **Layout:**
   - **Header (all pages):** white bar with the serif bold site title and a muted description line ("by lifecycle stage, by principle, or by application area"; hidden on phone). The title links Home. The main nav and sub-tabs sit below.
-  - **Home hero:** full-width accent band (`components/HomeHero.jsx`). It has an eyebrow, serif H1, lead, three square buttons (Lifecycle, Principles, Applications; the first is filled), the WG-RAI credit line, and a decorative dotted ellipse (`aria-hidden`). The ellipse is full size and 0.4 opacity at ≥1280px and smaller and fainter below that, so text stays legible.
+  - **Home hero:** full-width accent band (`components/HomeHero.jsx`). It has an eyebrow, serif H1, lead, three square buttons (Lifecycle, Principles, Applications; the first is filled), and a decorative dotted ellipse (`aria-hidden`). The ellipse is full size and 0.4 opacity at ≥1280px and smaller and fainter below that, so text stays legible.
   - **Page banner (all other pages):** a slim accent band (`components/PageBanner.jsx`) between the header and the sub-tabs, showing the page name (`longLabel` or `label`) and its `tagline` from `config/navigation.js`, with a smaller dotted ellipse. Every page therefore has white header → blue band → content; Home's band is the tall hero. The ellipse is shared with the hero (`components/DottedEllipse.jsx`).
-  - **Footer (all pages):** navy band (`components/SiteFooter.jsx`). The "Living Book of the Working Group on Responsible AI for Earth Observation (WG-RAI)" credit as text. Page links and GitHub are on the right. Everything stacks on phone. The GitHub URL lives in `EXTERNAL_LINKS` in `config/navigation.js`.
+  - **Footer (all pages):** navy band (`components/SiteFooter.jsx`). The site title as text. Page links and GitHub are on the right. Everything stacks on phone. The GitHub URL lives in `EXTERNAL_LINKS` in `config/navigation.js`.
 - **Colors:** white page, very light gray (`subtle`) for the sub-tab bar, near-black navy text, muted slate secondary text.
   - Blue accent `#2a4a9c` (hover `#1f3a80`, tint `#eaf1fb`), `navy` `#0b1f4b` for the footer, `accent-soft` `#d8e8f8` for dots and light text on blue or navy, `line-strong` `#c5d1e3`. There are no gradients and no second accent.
   - Contrast: white on accent is about 8.2:1, `accent-soft` on accent about 6.6:1, and white on navy about 16:1.
@@ -136,7 +136,7 @@ When chapters get written, add a content store keyed by part and sub-tab id and 
    - Simulator restyled with logic unchanged
 
 6. **Branding and mobile polish** (later stripped of GRSS / IADF identification, see Branding)
-   - Logo lockup in the header, Home hero band, navy footer with logos and the WG-RAI credit (logos since removed)
+   - Logo lockup in the header, Home hero band, navy footer with logos and a group credit (both since removed)
    - Blue accent, navy and accent-soft tokens, Source Serif 4 / Source Sans 3
    - 44px tap targets, one-column grids on phone, overflow checked from 320px up
 

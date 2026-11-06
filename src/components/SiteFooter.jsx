@@ -1,4 +1,4 @@
-import { EXTERNAL_LINKS, MAIN_NAV, PAGES, hrefFor } from "../config/navigation";
+import { EXTERNAL_LINKS, MAIN_NAV, PAGES, SITE_TITLE, hrefFor } from "../config/navigation";
 
 const footerLink =
   "inline-flex min-h-11 items-center text-white underline-offset-4 hover:underline focus-visible:outline-white";
@@ -10,8 +10,7 @@ export default function SiteFooter() {
     <footer className="mt-16 bg-navy text-white">
       <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-12 md:flex-row md:items-start md:justify-between">
         <p className="max-w-md text-sm leading-relaxed text-accent-soft">
-          Living Book of the Working Group on Responsible AI for Earth Observation
-          (WG-RAI).
+          {SITE_TITLE}
         </p>
 
         <nav aria-label="Footer">
