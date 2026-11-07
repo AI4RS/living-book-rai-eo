@@ -9,8 +9,8 @@ export const WHO_WE_ARE = {
   title: "Who we are",
   intro: "This Living Book is written by the people below. It is open to contributions.",
   contribute: {
-    text: "Want to contribute? Open an issue or a pull request",
-    linkLabel: "on GitHub",
+    text: "Want to contribute? Each chapter is one Markdown file; start with the",
+    linkLabel: "contributor guide on GitHub",
   },
   // PLACEHOLDER entries: replace with real people.
   people: [

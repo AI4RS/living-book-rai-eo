@@ -111,6 +111,100 @@ body {
     display: none;
   }
 
+  /* Chapter text rendered from Markdown (lib/markdown.js). Paragraphs and
+     lists keep a reading width; tables and figures may use the full column. */
+  .chapter-prose {
+    @apply text-base leading-relaxed text-ink;
+  }
+
+  .chapter-prose > * + * {
+    @apply mt-4;
+  }
+
+  .chapter-prose :is(p, ul, ol, blockquote, h4, h5, h6) {
+    @apply max-w-prose;
+  }
+
+  .chapter-prose :is(h4, h5, h6) {
+    @apply font-serif leading-snug text-ink;
+  }
+
+  .chapter-prose h4 {
+    @apply mt-8 text-xl;
+  }
+
+  .chapter-prose :is(h5, h6) {
+    @apply mt-6 text-lg;
+  }
+
+  .chapter-prose :is(h4, h5, h6) + * {
+    @apply mt-2;
+  }
+
+  .chapter-prose a {
+    @apply break-words text-accent underline-offset-2 hover:text-accent-hover hover:underline;
+  }
+
+  .chapter-prose ul {
+    @apply list-disc space-y-1 pl-6;
+  }
+
+  .chapter-prose ol {
+    @apply list-decimal space-y-1 pl-6;
+  }
+
+  .chapter-prose li > :is(ul, ol) {
+    @apply mt-1;
+  }
+
+  .chapter-prose li::marker {
+    @apply text-muted;
+  }
+
+  .chapter-prose blockquote {
+    @apply border-l-4 border-line-strong pl-4 text-muted;
+  }
+
+  .chapter-prose strong {
+    @apply font-semibold;
+  }
+
+  .chapter-prose code {
+    @apply bg-subtle px-1 font-mono text-[0.9em];
+  }
+
+  .chapter-prose pre {
+    @apply overflow-x-auto border border-line bg-subtle p-4 text-sm;
+  }
+
+  .chapter-prose pre code {
+    @apply bg-transparent p-0;
+  }
+
+  .chapter-prose img {
+    @apply h-auto max-w-full border border-line;
+  }
+
+  .chapter-prose hr {
+    @apply border-line;
+  }
+
+  .chapter-prose .table-scroll {
+    @apply max-w-full overflow-x-auto;
+  }
+
+  .chapter-prose table {
+    @apply w-full border-collapse text-left text-sm;
+  }
+
+  .chapter-prose th {
+    @apply border-b-2 border-line-strong px-3 py-2 font-semibold;
+  }
+
+  .chapter-prose td {
+    @apply border-b border-line px-3 py-2 align-top;
+  }
+
   /* Thin left border + light tint callouts. */
   .callout {
     @apply border-l-4 px-4 py-3 text-sm text-ink;

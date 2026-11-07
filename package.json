@@ -6,11 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/check-chapters.mjs",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "check:chapters": "node scripts/check-chapters.mjs"
   },
   "dependencies": {
     "lucide-react": "^0.542.0",
+    "marked": "^18.1.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },

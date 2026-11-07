@@ -1,0 +1,23 @@
+# Check every pull request to main: chapter files, then a full build.
+# Nothing is published; deploys happen only from deploy.yml after merging.
+name: Check pull request
+
+on:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run check:chapters
+      - run: npm run build

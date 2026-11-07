@@ -3,9 +3,13 @@
 
 export const SITE_TITLE = "Responsible AI in Earth Observation Living Book";
 
-// Project links (footer).
+// Project links: the footer, chapter "Edit this chapter" links, and the
+// contributor guide link on Home.
+const GITHUB = "https://github.com/ai4rs/living-book-rai-eo";
+
 export const EXTERNAL_LINKS = {
-  github: "https://github.com/ai4rs/living-book-rai-eo",
+  github: GITHUB,
+  contributing: `${GITHUB}/blob/main/CONTRIBUTING.md`,
 };
 
 export const PAGES = {
@@ -42,10 +46,11 @@ export const MAIN_NAV = [
 ];
 
 // Chapters per part, in reading order (the order of the chapter list, and of
-// Previous / Next). A chapter may name a `contributor` (an id in
-// content/contributors.js) to credit on its page, and a one-line `tagline`
-// shown under its title and in the part's chapter list. Each part opens on a
-// landing page (pages/PartLanding.jsx; intro text in content/parts.js).
+// Previous / Next). A chapter may have a one-line `tagline` shown under its
+// title and in the part's chapter list. Each part opens on a landing page
+// (pages/PartLanding.jsx; intro text in content/parts.js). A chapter's text,
+// status and contributors live in its Markdown file,
+// src/content/chapters/<part>/<id>.md (see CONTRIBUTING.md).
 //
 // Lifecycle stages are EO-specific names over the seven stages of the NIST AI
 // RMF 1.0 lifecycle (Fig. 2); `nist` keeps the original NIST stage name. Ids
@@ -156,7 +161,8 @@ export const CHAPTERS = {
 // Lifecycle stages are a sequence, so their chapter lists are numbered.
 export const NUMBERED_PARTS = ["lifecycle"];
 
-// Section headings every chapter of a part shares, in order.
+// Section headings every chapter of a part shares, in order. Each chapter file
+// has one "## " heading per entry; scripts/check-chapters.mjs checks them.
 export const CHAPTER_SECTIONS = {
   lifecycle: [
     "What happens at this stage",

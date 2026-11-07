@@ -11,9 +11,9 @@ export default function ChapterSection({ title, intro, children, className = "" 
 }
 
 // Page header: small kicker, serif title (often the framing question), an
-// optional muted note under the title, optional contributor credit, and a lead:
-// one string or an array of paragraphs.
-export function ChapterHeader({ kicker, title, note, contributor, lead }) {
+// optional muted note under the title, optional contributor credits
+// ([{ name, role? }]), and a lead: one string or an array of paragraphs.
+export function ChapterHeader({ kicker, title, note, contributors = [], lead }) {
   return (
     <header>
       {kicker && <p className="section-label">{kicker}</p>}
@@ -21,10 +21,16 @@ export function ChapterHeader({ kicker, title, note, contributor, lead }) {
         {title}
       </h2>
       {note && <p className="mt-2 text-sm text-muted">{note}</p>}
-      {contributor && (
+      {contributors.length > 0 && (
         <p className="mt-3 text-sm text-muted">
-          Contributor: <span className="font-semibold text-ink">{contributor.name}</span>,{" "}
-          {contributor.role}
+          {contributors.length === 1 ? "Contributor" : "Contributors"}:{" "}
+          {contributors.map((person, i) => (
+            <span key={`${i}-${person.name}`}>
+              {i > 0 && "; "}
+              <span className="font-semibold text-ink">{person.name}</span>
+              {person.role && `, ${person.role}`}
+            </span>
+          ))}
         </p>
       )}
       {[lead].flat().filter(Boolean).map((paragraph) => (

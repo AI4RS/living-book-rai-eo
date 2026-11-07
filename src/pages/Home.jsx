@@ -47,7 +47,7 @@ export default function Home() {
         <p className="mt-6 max-w-prose text-muted">
           {WHO_WE_ARE.contribute.text}{" "}
           <a
-            href={EXTERNAL_LINKS.github}
+            href={EXTERNAL_LINKS.contributing}
             target="_blank"
             rel="noopener noreferrer"
             className="link"

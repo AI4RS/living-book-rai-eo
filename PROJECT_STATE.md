@@ -14,7 +14,7 @@ The site is organized as **Home + Lifecycle + Principles + Applications + Simula
 Each part is navigated with a left-side chapter list (Overview + chapters) instead of a row of sub-tabs; see **Navigation pattern**.
 - **Simulator** is a "coming soon" placeholder (`pages/SimulatorPage.jsx`). The earlier Integrated Simulator used dummy numbers from no study and was removed on 2026-11-06; its last version is at commit `7564000`.
 
-The book is currently an **outline**: every chapter page renders its section headings from one shared template, each with a "To be written." placeholder and a draft banner. All earlier chapter content (cases, question guidance, application copy) was removed in the restructure and can be recovered from git history (last present at `abe84e6`). That includes the evidence-backed tree-mapping case built on Rizaldy et al. (2026), which was the book's only cited case.
+The book is currently an **outline**: each chapter is a Markdown file (`src/content/chapters/<part>/<id>.md`) whose sections all still read "To be written.", so every chapter page shows its section headings with placeholders and a draft banner. Contributors write chapters by editing those files and opening a pull request (see `CONTRIBUTING.md`). All earlier chapter content (cases, question guidance, application copy) was removed in the restructure and can be recovered from git history (last present at `abe84e6`). That includes the evidence-backed tree-mapping case built on Rizaldy et al. (2026), which was the book's only cited case.
 
 The site uses a light, publication-style design: white background, one blue accent, sharp corners, serif headings, and theme tokens kept in one place.
 
@@ -26,7 +26,9 @@ The site uses a light, publication-style design: white background, one blue acce
 - **Styling:** Tailwind CSS with design tokens (see Visual design system) + a few CSS keyframe animations
 - **Icons:** Lucide React
 - **Routing:** hash-based, no router dependency (`src/lib/router.js`)
-- **Build/Deploy:** GitHub Actions (`.github/workflows/deploy.yml`): on every push to `main` (or a manual "Run workflow"), `npm ci` + `npm run build`, then `dist/` is published with `actions/deploy-pages`. Settings → Pages → Source is **GitHub Actions**.
+- **Chapter text:** Markdown files rendered with `marked` (no MDX); front matter read by a small built-in parser (`src/lib/chapterFile.js`), no YAML library.
+- **Build/Deploy:** GitHub Actions (`.github/workflows/deploy.yml`): on every push to `main` (or a manual "Run workflow"), `npm ci` + `npm run build`, then `dist/` is published with `actions/deploy-pages`. Settings → Pages → Source is **GitHub Actions**. `npm run build` first runs the chapter check (`prebuild`).
+- **Pull request check:** `.github/workflows/check.yml` runs `npm ci`, `npm run check:chapters` and `npm run build` on every pull request to `main`. It does not deploy.
 - **Hosting:** GitHub Pages project site (`/living-book-rai-eo/`) at https://ai4rs.github.io/living-book-rai-eo/, repo https://github.com/ai4rs/living-book-rai-eo (moved to the ai4rs org, see Completed Tasks 10)
 - **Local tooling:** Conda env (`rai-eo-node`) with Node.js 20 + npm
 
@@ -41,9 +43,14 @@ src/
   config/navigation.js    Page names (working titles) and taglines, chapter ids, labels and
                           taglines (CHAPTERS), NUMBERED_PARTS, each part's chapter section
                           outline, page and chapter aliases, readingOrder, hrefFor
-  lib/router.js           useHashRoute() + parseHash()
+  lib/
+    router.js             useHashRoute() + parseHash()
+    chapterFile.js        Front matter parser, section splitter, outline check (shared with
+                          scripts/check-chapters.mjs, so no Vite-only code here)
+    chapters.js           Loads every chapter file with import.meta.glob; loadChapter(part, id)
+    markdown.js           Markdown to HTML (marked): ### -> h4, figure base path, external links
   content/
-    contributors.js       People who can be credited on a chapter (by id)
+    chapters/<part>/<id>.md  One Markdown file per chapter (21): front matter + "##" sections
     parts.js              PART_INTROS: intro text and references for each part's landing page
     team.js               WHO_WE_ARE: title, intro, contribute line, people (Home "Who we are")
   components/             ChapterSection/ChapterHeader, ChapterNav (sidebar + mobile Chapters
@@ -55,6 +62,12 @@ src/
     ChapterPage.jsx       The one template for every chapter, ending with Previous / Next
     SimulatorPage.jsx     "Coming soon" placeholder for the Simulator
 tailwind.config.js        Maps token names to the CSS variables; border radius overridden to 0
+public/figures/<part>/<id>/  Chapter figures (created when the first figure is added)
+scripts/check-chapters.mjs   The chapter check (npm run check:chapters; also runs before build)
+.github/                  deploy.yml, check.yml (PR check), pull_request_template.md,
+                          ISSUE_TEMPLATE/chapter.md ("Write or improve a chapter")
+CONTRIBUTING.md           Contributor guide: chapter table, what goes in each section, Markdown,
+                          browser and local workflows
 ```
 
 ### Routes
@@ -87,10 +100,10 @@ tailwind.config.js        Maps token names to the CSS variables; border radius o
 
 ### Content schema
 
-There is no chapter content yet. Structure lives in `config/navigation.js`:
+Structure, owned by the maintainers, lives in `config/navigation.js`. Chapter text, owned by contributors, lives in one Markdown file per chapter (see **Chapter files** below).
 
 - `PAGES`: id, label, and the one-line `tagline` shown in the page banner and on the Home entry cards.
-- `LIFECYCLE_CHAPTERS`, `PRINCIPLE_CHAPTERS`, `APPLICATION_CHAPTERS` (collected in `CHAPTERS`), in reading order: `{ id, label, tagline?, nist?, contributor? }`. `tagline` shows as the lead under the chapter title and on the part's landing-page card (Lifecycle stages and principles have taglines; applications do not yet). `contributor` is an id in `content/contributors.js`; `ChapterPage` then shows "Contributor: name, role" under the title.
+- `LIFECYCLE_CHAPTERS`, `PRINCIPLE_CHAPTERS`, `APPLICATION_CHAPTERS` (collected in `CHAPTERS`), in reading order: `{ id, label, tagline?, nist? }`. `tagline` shows as the lead under the chapter title and on the part's landing-page card (Lifecycle stages and principles have taglines; applications do not yet). Contributor credits moved to the chapter files' front matter; `content/contributors.js` and the `contributor` field were removed.
 - **Lifecycle stages are EO-adapted labels over the seven NIST AI RMF 1.0 stages (Fig. 2).** Ids are unchanged from the NIST-named version, so routes did not change. Each stage's `nist` field holds the original NIST name, shown under the title as "NIST AI RMF stage: …":
 
   | id | Label | `nist` |
@@ -109,7 +122,24 @@ There is no chapter content yet. Structure lives in `config/navigation.js`:
   - Principles: Opening · What it means in EO · Where it shows up in the lifecycle · Questions and how to address them · Cases · Checklist · References
   - Applications: Opening · Why it matters in this domain · Walk through the lifecycle · Principles most at stake · Cases · References
 
-When chapters get written, add a content store keyed by part and chapter id and render it in `ChapterPage` in place of the placeholder, keeping the shared section outline.
+### Chapter files
+
+- **Location:** `src/content/chapters/<part>/<chapter-id>.md`, one per chapter in `CHAPTERS` (21). Figures go in `public/figures/<part>/<chapter-id>/` and are written `![Alt](figures/<part>/<chapter-id>/name.png)`; `lib/markdown.js` prefixes `import.meta.env.BASE_URL`, so they load under `npm run dev` and on `/living-book-rai-eo/`.
+- **Front matter** (fixed shape, parsed by `parseChapterFile` in `lib/chapterFile.js`):
+
+  ```md
+  ---
+  status: draft            # draft | ready; "ready" hides the draft banner
+  contributors:            # or: contributors: []
+    - name: Jane Doe
+      role: Researcher, Example University
+  ---
+  ```
+
+  Only `status` and `contributors` (each with `name`, optional `role`) are read. Other fields are ignored with a warning. Quotes and trailing `# comments` are allowed.
+- **Body:** one `## ` heading per entry of the part's `CHAPTER_SECTIONS`, in order. Title, tagline and NIST note stay in `navigation.js`, not in the file.
+- **How `ChapterPage` renders it:** `loadChapter(part, id)` (`lib/chapters.js`, `import.meta.glob(..., { query: "?raw", eager: true })`) parses the file and splits it at `## ` (outside code blocks). Each section is a `ChapterSection` with the heading as its section label. A body that is empty or exactly `To be written.` shows the muted placeholder; anything else is rendered by `marked` into a `.chapter-prose` div (styles in `index.css`, tokens only; `###` becomes h4; tables scroll in their own box; raw HTML is escaped; external links open in a new tab). Sections render in file order, including headings not in the outline. A missing file renders the full outline as placeholders. The draft banner shows unless `status: ready` (its "Only the section outline is in place." note only while every section is a placeholder). Contributors show under the title ("Contributor(s): name, role; …"). The page ends with "Edit this chapter on GitHub" (`EXTERNAL_LINKS.github` + `/edit/main/` + the file path), then Previous / Next.
+- **Check:** `scripts/check-chapters.mjs` (`npm run check:chapters`, also `prebuild`). **Errors** (exit 1, so build and the PR check fail): a `.md` file that matches no chapter, or broken front matter (missing or unclosed block, bad `status`, malformed contributor lines, a contributor without a name). **Warnings**: a chapter with no file, headings not in the outline, missing, duplicated or out-of-order outline headings, and text before the first `##`. Every message names the file and says how to fix it.
 
 ### Visual design system
 
@@ -229,6 +259,14 @@ When chapters get written, add a content store keyed by part and chapter id and 
    - Removed `labs/IntegratedSimulatorTab.jsx`, `components/MetricCard.jsx`, `lib/scoring.js`, the `option-btn` style and `longLabel`. Last commit with the dummy simulator: `7564000`.
    - The callout (`callout-risk` / `-safe` / `-info`) and button (`btn-primary` / `-secondary`) classes are kept as part of the design system, though no page uses them right now.
 
+17. **Chapters as Markdown files, and contributor docs** (2026-11-07)
+   - 21 chapter files in `src/content/chapters/<part>/<id>.md` with front matter (`status`, `contributors`) and the part's `##` outline, all "To be written." for now. Rendered by `ChapterPage` with `marked` and the `.chapter-prose` styles (see Content schema → Chapter files).
+   - "Edit this chapter on GitHub" link on every chapter, so people without push access can fork, edit and open a pull request in the browser.
+   - `content/contributors.js` and the `contributor` chapter field removed (nothing used them); credits now live in each file's front matter.
+   - `scripts/check-chapters.mjs` (`npm run check:chapters`, also runs before `npm run build`) and the pull request workflow `.github/workflows/check.yml` (no deploy).
+   - `CONTRIBUTING.md` (chapter table, what goes in each section, Markdown cheat sheet, figures, references, credits, browser and local workflows, review), `.github/pull_request_template.md`, `.github/ISSUE_TEMPLATE/chapter.md`. The README now leads with contributing; Home's contribute line links to `CONTRIBUTING.md`.
+   - Verified with temporary test content in Principles › Fairness (paragraphs, `###`, lists, chapter links, a table, a figure under the base path, references, a contributor, `status: ready`) at 390px and 1280px via `npm run build && npm run preview`, then reverted.
+
 ---
 
 ## In Progress
@@ -247,7 +285,7 @@ No hard engineering blockers.
 
 ## Upcoming Tasks (Next)
 
-1. **Write the chapters** into the outline: Home sections, then Principles, Lifecycle and Applications. The removed Forests / Green AI material and the tree-mapping case (at `abe84e6`) are a natural starting point for Sustainability and Forests.
+1. **Write the chapters** in their Markdown files (`src/content/chapters/`), following `CONTRIBUTING.md`: Principles first, then Lifecycle and Applications; Home's first two sections separately (still in `pages/Home.jsx`). The removed Forests / Green AI material and the tree-mapping case (at `abe84e6`) are a natural starting point for Energy efficiency and Forests.
 
 2. **References**: each principle and application chapter has a References section to fill.
 
@@ -264,8 +302,9 @@ No hard engineering blockers.
    - Lifecycle chapters point to the principle questions for their stage instead of repeating them.
    - Applications walk one domain through the lifecycle stages and name the principles most at stake there.
 
-2. **One outline per part, one chapter template**
+2. **One outline per part, one chapter template, one Markdown file per chapter**
    - Each part's section headings are defined once in `config/navigation.js` and rendered by `pages/ChapterPage.jsx`, so every chapter of a part has the same shape.
+   - Chapter text is plain Markdown so domain experts can write it without React, in the GitHub web editor or locally. Structure (titles, taglines, NIST notes, outline) stays in `navigation.js` with the maintainers; `scripts/check-chapters.mjs` keeps the two in line.
 
 3. **Hash routing without react-router**
    - `#/page/sub` routes are linkable and work on GitHub Pages without 404 fallbacks or new dependencies. This replaces the earlier decision to use a single-page, tab-driven UI without routes: the site is still a single-page app, but every page now has a shareable URL.
@@ -292,12 +331,12 @@ No hard engineering blockers.
 ## Technical Debt and Known Issues
 
 1. **Every chapter is a placeholder**
-   - All 21 chapter pages show only their section outline and a draft banner. Home's first two sections are placeholders too.
+   - All 21 chapter files contain only their section outline, so every chapter page shows placeholders and a draft banner. Home's first two sections are placeholders too.
 
 2. **No references yet**
 
 3. **No automated tests**
-   - Changes are validated by `npm run build`, a server-side render of every route (including the old aliases), and manual visual checks.
+   - Changes are validated by `npm run build` (which runs the chapter check first), a server-side render of every route (including the old aliases), and manual visual checks.
 
 4. **GitHub Pages live/stale mismatch** (see In Progress)
 
@@ -322,9 +361,9 @@ The **paper** needs a separate, narrower storyline than the Living Book, for exa
 
 ## Handoff Notes for Next AI Agent
 
-1. **The book is an outline.** Every chapter renders from `pages/ChapterPage.jsx` with the part's section list from `CHAPTER_SECTIONS` in `config/navigation.js`. Change a section heading there once and every chapter of that part follows.
+1. **The book is an outline.** Every chapter renders from `pages/ChapterPage.jsx`, with its text from `src/content/chapters/<part>/<id>.md`. The part's section list is `CHAPTER_SECTIONS` in `config/navigation.js`; to rename a section heading, change it there and in every chapter file of that part (`npm run check:chapters` lists any file left behind).
 
-2. **To write a chapter:** add a content store keyed by part and chapter id, and render it in `ChapterPage` in place of the "To be written." placeholder. Keep the shared outline and the division of labor in decision 1. Credit an author with `contributor` on the sub-tab entry.
+2. **To write a chapter:** edit its Markdown file (see `CONTRIBUTING.md` and Content schema → Chapter files). Keep the shared outline and the division of labor in decision 1. Credit authors under `contributors:` in the file's front matter; set `status: ready` when done. Don't move chapter text into `.js` files.
 
 3. **Recover old material from git** where useful: `git show abe84e6:src/content/cases.js` (including the tree-mapping case with its evidence table), `questions.js`, `applications.js`, and `src/components/CaseEvidence.jsx`.
 
